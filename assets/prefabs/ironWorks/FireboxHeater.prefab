@@ -1,0 +1,11 @@
+{
+    "MachineDefinition":
+    {
+        "blockInputSlots":1,
+        "requirementsProvided":["Heater"],
+        "automaticProcessing":true,
+        "OutputEntityType":"SELF"
+    },
+    "ProcessingAction":{},
+    "Network":{}
+}

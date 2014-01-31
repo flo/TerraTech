@@ -1,0 +1,13 @@
+{
+    "id":"TerraTech",
+    "version":"0.1.0",
+    "author":"",
+    "displayName":"TerraTech",
+    "description":"Use Metals to make useful things",
+    "dependencies" :
+    [
+        {"id":"Machines"},
+        {"id":"Core"}
+    ],
+    "isServerSideOnly":false
+}

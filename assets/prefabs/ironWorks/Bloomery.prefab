@@ -1,0 +1,20 @@
+{
+    "MachineDefinition":
+    {
+        "blockInputSlots":1,
+        "blockOutputSlots":1,
+        "requirementsProvided":["Furnace"],
+        "automaticProcessing":true,
+        "InputEntityType":"SELF"
+    },
+    "ProcessingAction":
+    {
+        "screenId":"BLOOMERYUI"
+    },
+    "Heated":
+    {
+        "temperatureLossPerSecond":1,
+        "temperatureAbsorptionRate":0.015
+    },
+    "Network":{}
+}

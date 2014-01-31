@@ -1,0 +1,14 @@
+{
+    "displayName":"Bloomery",
+    "rotation":"horizontal",
+    "tiles":{
+            "sides":"bloomery_side",
+            "front":"bloomery_front",
+            "top":"bloomery_top",
+            "bottom":"bloomery_bottom"
+        },
+    "entity":
+    {
+        "prefab":"Bloomery"
+    }
+}

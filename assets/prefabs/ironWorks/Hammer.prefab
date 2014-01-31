@@ -1,0 +1,12 @@
+{
+    "parent":"engine:iconItem",
+    "Item":{
+        "name":"Hammer",
+        "icon":"ironWorks.Hammer",
+        "renderWithIcon":true
+    },
+    ProcessRequirementsProvider:
+    {
+        "requirements":"Hammer"
+    }
+}

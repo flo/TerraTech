@@ -1,0 +1,8 @@
+{
+    "displayName":"Anvil",
+    "rotation":"horizontal",
+    "entity":
+    {
+        "prefab":"Anvil"
+    }
+}

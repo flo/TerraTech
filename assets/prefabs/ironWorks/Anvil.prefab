@@ -1,0 +1,11 @@
+{
+    "MachineDefinition":
+    {
+        "blockInputSlots":1,
+        "blockOutputSlots":1,
+        "requirementInputSlots":1,
+        "requirementsProvided":["Anvil"]
+    },
+    "ProcessingAction":{},
+    "Network":{}
+}

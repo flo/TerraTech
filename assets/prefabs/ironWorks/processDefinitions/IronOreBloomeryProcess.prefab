@@ -1,0 +1,31 @@
+{
+    "ProcessDefinition":
+    {
+        "processingTime":5000
+    },
+    "RequirementInput":
+    {
+        "requirements":
+        [
+            "Furnace"
+        ]
+    },
+    "BlockInput":
+    {
+        "blocks":
+        {
+            "IronOre":1
+        }
+    },
+    "ItemOutput":
+    {
+        "items":
+        {
+            "TerraTech:IronBloom":1
+        }
+    },
+    "HeatInput":
+    {
+        "temperature":1538
+    }
+}

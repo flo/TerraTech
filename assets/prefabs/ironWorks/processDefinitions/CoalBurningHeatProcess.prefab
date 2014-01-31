@@ -1,0 +1,25 @@
+{
+    "ProcessDefinition":
+    {
+        "processingTime":20000
+    },
+    "RequirementInput":
+    {
+        "requirements":
+        [
+            "Heater"
+        ]
+    },
+    "ItemInput":
+    {
+        "items":
+        {
+            "TerraTech:Coal":1
+        }
+    },
+    "HeatOutput":
+    {
+        "temperature":2000
+    },
+    "RemoveHeatOutput":{}
+}

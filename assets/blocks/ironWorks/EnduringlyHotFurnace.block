@@ -1,0 +1,13 @@
+{
+    "displayName":"Enduringly Hot Furnace",
+    "rotation":"horizontal",
+    "tiles":{
+            "sides":"furnace_side",
+            "front":"furnace_front_on",
+            "topBottom":"furnace_top"
+        },
+    "entity":
+    {
+        "prefab":"EnduringlyHotFurnace"
+    }
+}

@@ -1,0 +1,13 @@
+{
+    "displayName":"FireBox Heater",
+    "rotation":"horizontal",
+    "tiles":{
+            "sides":"furnace_side",
+            "front":"furnace_front_off",
+            "topBottom":"furnace_top"
+        },
+    "entity":
+    {
+        "prefab":"FireBoxHeater"
+    }
+}

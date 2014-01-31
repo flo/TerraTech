@@ -1,0 +1,9 @@
+{
+    "parent":"engine:iconItem",
+    "Item":{
+        "name":"Iron Bloom",
+        "icon":"ironWorks.IronBloom",
+        "stackId":"ironWorks:IronBloom",
+        "renderWithIcon":true
+    }
+}

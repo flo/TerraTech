@@ -1,0 +1,9 @@
+{
+    "parent":"engine:iconItem",
+    "Item":{
+        "name":"Coal",
+        "icon":"ironWorks.Coal",
+        "stackId":"ironWorks:Coal",
+        "renderWithIcon":true
+    }
+}

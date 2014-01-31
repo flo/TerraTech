@@ -1,0 +1,19 @@
+{
+    "MachineDefinition":
+    {
+        "blockInputSlots":1,
+        "blockOutputSlots":1,
+        "requirementsProvided":["Furnace"],
+        "InputEntityType":"SELF"
+    },
+    "ProcessingAction":{},
+    "Heated":
+    {
+        "temperature":5000
+    },
+    "Heater":
+    {
+        "temperature":5000
+    },
+    "Network":{}
+}
