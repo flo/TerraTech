@@ -4,8 +4,7 @@
         "blockInputSlots":1,
         "blockOutputSlots":1,
         "requirementsProvided":["Furnace"],
-        "automaticProcessing":true,
-        "InputEntityType":"SELF"
+        "automaticProcessing":true
     },
     "ProcessingAction":
     {

@@ -22,7 +22,7 @@ import org.terasology.logic.manager.GUIManager;
 import org.terasology.registry.In;
 import org.terasology.terraTech.ironWorks.ui.UIScreenBloomery;
 
-@RegisterSystem(RegisterMode.AUTHORITY)
+@RegisterSystem(RegisterMode.CLIENT)
 public class BloomeryClientSystem implements ComponentSystem {
     @In
     GUIManager guiManager;

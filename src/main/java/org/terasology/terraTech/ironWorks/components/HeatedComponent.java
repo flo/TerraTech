@@ -16,6 +16,7 @@
 package org.terasology.terraTech.ironWorks.components;
 
 import org.terasology.entitySystem.Component;
+import org.terasology.network.Replicate;
 import org.terasology.world.block.ForceBlockActive;
 
 /**
@@ -23,7 +24,10 @@ import org.terasology.world.block.ForceBlockActive;
  */
 @ForceBlockActive
 public class HeatedComponent implements Component {
+    @Replicate
     public float temperature;
+    @Replicate
     public float temperatureLossPerSecond;
+    @Replicate
     public float temperatureAbsorptionRate;
 }

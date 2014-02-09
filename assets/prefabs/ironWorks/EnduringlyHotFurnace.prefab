@@ -3,8 +3,7 @@
     {
         "blockInputSlots":1,
         "blockOutputSlots":1,
-        "requirementsProvided":["Furnace"],
-        "InputEntityType":"SELF"
+        "requirementsProvided":["Furnace"]
     },
     "ProcessingAction":{},
     "Heated":

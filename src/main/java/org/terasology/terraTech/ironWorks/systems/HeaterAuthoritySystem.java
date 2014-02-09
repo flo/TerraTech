@@ -18,10 +18,14 @@ package org.terasology.terraTech.ironWorks.systems;
 import org.terasology.engine.Time;
 import org.terasology.entitySystem.entity.EntityManager;
 import org.terasology.entitySystem.entity.EntityRef;
+import org.terasology.entitySystem.entity.lifecycleEvents.OnChangedComponent;
+import org.terasology.entitySystem.event.ReceiveEvent;
 import org.terasology.entitySystem.systems.RegisterMode;
 import org.terasology.entitySystem.systems.RegisterSystem;
 import org.terasology.entitySystem.systems.UpdateSubscriberSystem;
 import org.terasology.logic.location.LocationComponent;
+import org.terasology.machines.components.ProcessingMachineComponent;
+import org.terasology.machines.events.ProcessingMachineChanged;
 import org.terasology.math.Vector3i;
 import org.terasology.registry.In;
 import org.terasology.terraTech.ironWorks.components.HeatedComponent;
@@ -74,6 +78,11 @@ public class HeaterAuthoritySystem implements UpdateSubscriberSystem {
                 }
             }
         }
+    }
+
+    @ReceiveEvent(components = {HeatedComponent.class, ProcessingMachineComponent.class})
+    public void onHeatedChanged(OnChangedComponent event, EntityRef processingMachine) {
+        processingMachine.send(new ProcessingMachineChanged());
     }
 
     @Override

@@ -1,5 +1,5 @@
 /*
- * Copyright 2014 MovingBlocks
+ * Copyright 2013 MovingBlocks
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -13,20 +13,19 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.terasology.terraTech.ironWorks.components;
+package org.terasology.terraTech.gameType.events;
 
-import org.terasology.entitySystem.Component;
-import org.terasology.math.Side;
-import org.terasology.network.Replicate;
-import org.terasology.world.block.ForceBlockActive;
+import org.lwjgl.input.Keyboard;
+import org.terasology.input.BindButtonEvent;
+import org.terasology.input.DefaultBinding;
+import org.terasology.input.InputType;
+import org.terasology.input.RegisterBindButton;
 
 /**
- * Created by Josharias on 1/23/14.
+ * @author Immortius
  */
-@ForceBlockActive
-public class HeaterComponent implements Component {
-    @Replicate
-    public float temperature;
-    @Replicate
-    public Side heatDirection = Side.TOP;
+@RegisterBindButton(id = "humanMachine", description = "Open Player Machine")
+@DefaultBinding(type = InputType.KEY, id = Keyboard.KEY_M)
+public class PlayerProcessingButton extends BindButtonEvent {
+
 }

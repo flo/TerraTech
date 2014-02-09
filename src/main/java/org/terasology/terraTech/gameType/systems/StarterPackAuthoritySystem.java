@@ -21,10 +21,10 @@ import org.terasology.entitySystem.systems.ComponentSystem;
 import org.terasology.entitySystem.systems.RegisterSystem;
 import org.terasology.logic.console.Command;
 import org.terasology.logic.inventory.InventoryManager;
-import org.terasology.logic.inventory.SlotBasedInventoryManager;
+import org.terasology.logic.inventory.action.GiveItemAction;
+import org.terasology.logic.inventory.action.RemoveItemAction;
 import org.terasology.machines.ExtendedInventoryManager;
 import org.terasology.network.ClientComponent;
-import org.terasology.registry.CoreRegistry;
 import org.terasology.registry.In;
 import org.terasology.world.block.BlockManager;
 import org.terasology.world.block.items.BlockItemFactory;
@@ -52,13 +52,13 @@ public class StarterPackAuthoritySystem implements ComponentSystem {
 
         EntityRef player = client.getComponent(ClientComponent.class).character;
 
-        inventoryManager.giveItem(player, blockFactory.newInstance(blockManager.getBlockFamily("EnduringlyHotFurnace"), 1));
-        inventoryManager.giveItem(player, blockFactory.newInstance(blockManager.getBlockFamily("Bloomery"), 1));
-        inventoryManager.giveItem(player, blockFactory.newInstance(blockManager.getBlockFamily("FireboxHeater"), 1));
-        inventoryManager.giveItem(player, blockFactory.newInstance(blockManager.getBlockFamily("Anvil"), 1));
-        inventoryManager.giveItem(player, blockFactory.newInstance(blockManager.getBlockFamily("IronOre"), 10));
-        inventoryManager.giveItem(player, ExtendedInventoryManager.createItem(entityManager, "TerraTech:Coal", 32));
-        inventoryManager.giveItem(player, ExtendedInventoryManager.createItem(entityManager, "TerraTech:Hammer", 1));
+        player.send(new GiveItemAction(EntityRef.NULL, blockFactory.newInstance(blockManager.getBlockFamily("EnduringlyHotFurnace"), 1)));
+        player.send(new GiveItemAction(EntityRef.NULL, blockFactory.newInstance(blockManager.getBlockFamily("Bloomery"), 1)));
+        player.send(new GiveItemAction(EntityRef.NULL, blockFactory.newInstance(blockManager.getBlockFamily("FireboxHeater"), 1)));
+        player.send(new GiveItemAction(EntityRef.NULL, blockFactory.newInstance(blockManager.getBlockFamily("Anvil"), 1)));
+        player.send(new GiveItemAction(EntityRef.NULL, blockFactory.newInstance(blockManager.getBlockFamily("IronOre"), 10)));
+        player.send(new GiveItemAction(EntityRef.NULL, ExtendedInventoryManager.createItem(entityManager, "TerraTech:Coal", 32)));
+        player.send(new GiveItemAction(EntityRef.NULL, ExtendedInventoryManager.createItem(entityManager, "TerraTech:Hammer", 1)));
 
         return "You received the TerraTech starter pack";
 
@@ -70,9 +70,8 @@ public class StarterPackAuthoritySystem implements ComponentSystem {
 
         EntityRef player = client.getComponent(ClientComponent.class).character;
 
-        SlotBasedInventoryManager slotBasedInventoryManager = CoreRegistry.get(SlotBasedInventoryManager.class);
-        for (EntityRef item : ExtendedInventoryManager.iterateItems(slotBasedInventoryManager, player)) {
-            slotBasedInventoryManager.removeItem(player, item);
+        for (EntityRef item : ExtendedInventoryManager.iterateItems(inventoryManager, player)) {
+            player.send(new RemoveItemAction(EntityRef.NULL, item, true));
         }
 
         return terraTechStarterPack(client);
