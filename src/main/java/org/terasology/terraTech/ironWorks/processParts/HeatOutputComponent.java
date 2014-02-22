@@ -15,46 +15,51 @@
  */
 package org.terasology.terraTech.ironWorks.processParts;
 
+import com.google.common.collect.Sets;
 import org.terasology.entitySystem.Component;
 import org.terasology.entitySystem.entity.EntityRef;
-import org.terasology.machines.processParts.ProcessDescriptor;
-import org.terasology.machines.processParts.ProcessPart;
 import org.terasology.terraTech.ironWorks.components.HeaterComponent;
+import org.terasology.workstation.process.InvalidProcessException;
+import org.terasology.workstation.process.ProcessPart;
 
-public class HeatOutputComponent implements Component, ProcessPart, ProcessDescriptor {
+import java.util.Set;
+
+public class HeatOutputComponent implements Component, ProcessPart {
     public int temperature;
+    public long burnTime;
 
-    @Override
-    public void resolve(EntityRef outputEntity) {
-        boolean isNewComponent = outputEntity.hasComponent(HeaterComponent.class);
-
-        HeaterComponent heaterComponent = new HeaterComponent();
-        heaterComponent.temperature = temperature;
-
-        if (isNewComponent) {
-            outputEntity.addComponent(heaterComponent);
-        } else {
-            outputEntity.saveComponent(heaterComponent);
-        }
-    }
-
-    @Override
     public String getDescription() {
         return temperature + " degree heat";
     }
 
     @Override
-    public boolean validate(EntityRef entity) {
-        return true;
+    public Set<String> validate(EntityRef instigator, EntityRef workstation, String parameter) throws InvalidProcessException {
+        Set<String> results = Sets.newHashSet();
+        results.add("");
+        return results;
     }
 
     @Override
-    public boolean isOutput() {
-        return true;
+    public long getDuration(EntityRef instigator, EntityRef workstation, String result, String parameter) {
+        return burnTime;
     }
 
     @Override
-    public boolean isEnd() {
-        return false;
+    public void executeStart(EntityRef instigator, EntityRef workstation, String result, String parameter) {
+        boolean isNewComponent = workstation.hasComponent(HeaterComponent.class);
+
+        HeaterComponent heaterComponent = new HeaterComponent();
+        heaterComponent.temperature = temperature;
+
+        if (isNewComponent) {
+            workstation.addComponent(heaterComponent);
+        } else {
+            workstation.saveComponent(heaterComponent);
+        }
+    }
+
+    @Override
+    public void executeEnd(EntityRef instigator, EntityRef workstation, String result, String parameter) {
+        workstation.removeComponent(HeaterComponent.class);
     }
 }

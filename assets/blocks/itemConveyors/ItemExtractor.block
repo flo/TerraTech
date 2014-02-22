@@ -1,0 +1,12 @@
+{
+  "displayName": "Item Extractor",
+  "rotation": "directionalPlacement",
+  "tiles": {
+    "all": "conveyorbelt_solid",
+    "left": "conveyorbelt_solid_left",
+    "right": "conveyorbelt_solid_right"
+  },
+  "entity": {
+    "prefab": "ItemExtractor"
+  }
+}

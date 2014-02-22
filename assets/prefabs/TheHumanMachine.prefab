@@ -2,16 +2,13 @@
   "Workstation": {
     "uiPrefab": "Machines:DefaultMachine",
     "supportedProcessTypes": {
-      "TerraTech:Furnace": true
+      "TerraTech:Assembly": false
     }
   },
   "MachineDefinition": {
     "inputSlots": 1,
+    "requirementSlots": 1,
     "outputSlots": 1
-  },
-  "Heated": {
-    "temperatureLossPerSecond": 1,
-    "temperatureAbsorptionRate": 0.015
   },
   "Network": {
     

@@ -1,18 +1,21 @@
 {
-    "MachineDefinition":
-    {
-        "blockInputSlots":1,
-        "blockOutputSlots":1,
-        "requirementsProvided":["Furnace"]
-    },
-    "ProcessingAction":{},
-    "Heated":
-    {
-        "temperature":5000
-    },
-    "Heater":
-    {
-        "temperature":5000
-    },
-    "Network":{}
+  "Workstation": {
+    "uiPrefab": "Machines:DefaultMachine",
+    "supportedProcessTypes": {
+      "TerraTech:Furnace": false
+    }
+  },
+  "MachineDefinition": {
+    "inputSlots": 1,
+    "outputSlots": 1
+  },
+  "Heated": {
+    "temperature": 5000
+  },
+  "Heater": {
+    "temperature": 5000
+  },
+  "Network": {
+    
+  }
 }

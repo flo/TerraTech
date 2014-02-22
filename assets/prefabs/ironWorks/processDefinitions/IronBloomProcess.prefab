@@ -1,0 +1,21 @@
+{
+  "ProcessDefinition": {
+    "processType": "TerraTech:Furnace"
+  },
+  "ProcessingTime": {
+    "duration": 5000
+  },
+  "HeatInput": {
+    "temperature": 1538
+  },
+  "BlockFamilyInput": {
+    "blockCounts": {
+      "Core:IronOre": 1
+    }
+  },
+  "ItemPrefabOutput": {
+    "itemCounts": {
+      "TerraTech:IronBloom": 1
+    }
+  }
+}

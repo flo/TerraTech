@@ -15,17 +15,23 @@
  */
 package org.terasology.terraTech.gameType.systems;
 
+import org.terasology.entitySystem.entity.EntityManager;
 import org.terasology.entitySystem.entity.EntityRef;
 import org.terasology.entitySystem.event.ReceiveEvent;
-import org.terasology.entitySystem.systems.ComponentSystem;
+import org.terasology.entitySystem.systems.BaseComponentSystem;
 import org.terasology.entitySystem.systems.RegisterMode;
 import org.terasology.entitySystem.systems.RegisterSystem;
 import org.terasology.logic.characters.CharacterComponent;
 import org.terasology.logic.players.event.OnPlayerSpawnedEvent;
-import org.terasology.machines.components.MachineDefinitionComponent;
+import org.terasology.registry.In;
+import org.terasology.terraTech.gameType.components.TheHumanMachineComponent;
+import org.terasology.terraTech.gameType.events.PlayerProcessingButton;
+import org.terasology.workstation.event.OpenWorkstationRequest;
 
 @RegisterSystem(RegisterMode.AUTHORITY)
-public class TheHumanMachineAuthoritySystem implements ComponentSystem {
+public class TheHumanMachineAuthoritySystem extends BaseComponentSystem {
+    @In
+    EntityManager entityManager;
 
     @Override
     public void initialise() {
@@ -37,11 +43,24 @@ public class TheHumanMachineAuthoritySystem implements ComponentSystem {
 
     @ReceiveEvent(components = {CharacterComponent.class})
     public void onPlayerSpawn(OnPlayerSpawnedEvent event, EntityRef player) {
-        MachineDefinitionComponent machineDefinition = new MachineDefinitionComponent();
-        machineDefinition.blockInputSlots = 2;
-        machineDefinition.blockOutputSlots = 1;
-        machineDefinition.requirementInputSlots = 1;
-        machineDefinition.requirementsProvided.add("Assembly");
-        player.addComponent(machineDefinition);
+        //addTheHumanMachine(player);
+    }
+
+    private void addTheHumanMachine(EntityRef player) {
+        EntityRef machineEntity = entityManager.create("TheHumanMachine");
+        TheHumanMachineComponent theHumanAutomaticProcessingComponent = new TheHumanMachineComponent();
+        theHumanAutomaticProcessingComponent.machineEntity = machineEntity;
+        player.addComponent(theHumanAutomaticProcessingComponent);
+    }
+
+
+    @ReceiveEvent
+    public void onPlayerProcessingButton(PlayerProcessingButton event, EntityRef player) {
+        TheHumanMachineComponent theHumanMachine = player.getComponent(TheHumanMachineComponent.class);
+        if (theHumanMachine == null) {
+            addTheHumanMachine(player);
+        }
+
+        theHumanMachine.machineEntity.send(new OpenWorkstationRequest());
     }
 }

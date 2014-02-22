@@ -15,35 +15,43 @@
  */
 package org.terasology.terraTech.ironWorks.processParts;
 
+import com.google.common.collect.Sets;
 import org.terasology.entitySystem.Component;
 import org.terasology.entitySystem.entity.EntityRef;
-import org.terasology.machines.processParts.ProcessPart;
 import org.terasology.terraTech.ironWorks.components.HeatedComponent;
+import org.terasology.workstation.process.InvalidProcessException;
+import org.terasology.workstation.process.ProcessPart;
+
+import java.util.Set;
 
 public class HeatInputComponent implements Component, ProcessPart {
     public float temperature;
 
     @Override
-    public void resolve(EntityRef outputEntity) {
-    }
-
-    @Override
-    public boolean validate(EntityRef entity) {
-        HeatedComponent heatedComponent = entity.getComponent(HeatedComponent.class);
+    public Set<String> validate(EntityRef instigator, EntityRef workstation, String parameter) throws InvalidProcessException {
+        HeatedComponent heatedComponent = workstation.getComponent(HeatedComponent.class);
         if (heatedComponent != null) {
-            return heatedComponent.temperature >= temperature;
+            if (heatedComponent.temperature >= temperature ) {
+                Set<String> results = Sets.newHashSet();
+                results.add("");
+                return results;
+            }
         }
-
-        return false;
+        return null;
     }
 
     @Override
-    public boolean isOutput() {
-        return false;
+    public long getDuration(EntityRef instigator, EntityRef workstation, String result, String parameter) {
+        return 0;
     }
 
     @Override
-    public boolean isEnd() {
-        return false;
+    public void executeStart(EntityRef instigator, EntityRef workstation, String result, String parameter) {
+
+    }
+
+    @Override
+    public void executeEnd(EntityRef instigator, EntityRef workstation, String result, String parameter) {
+
     }
 }

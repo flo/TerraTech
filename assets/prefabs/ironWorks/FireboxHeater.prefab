@@ -1,10 +1,17 @@
 {
-    "MachineDefinition":
-    {
-        "blockInputSlots":1,
-        "requirementsProvided":["Heater"],
-        "automaticProcessing":true
-    },
-    "ProcessingAction":{},
-    "Network":{}
+  "Workstation": {
+    "uiPrefab": "Machines:DefaultMachine",
+    "supportedProcessTypes": {
+      "TerraTech:Heater": true
+    }
+  },
+  "MachineDefinition": {
+    "inputSlots": 1
+  },
+  "ProcessingAction": {
+    
+  },
+  "Network": {
+    
+  }
 }

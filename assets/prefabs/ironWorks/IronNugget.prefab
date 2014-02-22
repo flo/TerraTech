@@ -1,9 +1,11 @@
 {
-    "parent":"engine:iconItem",
-    "Item":{
-        "name":"Iron Nugget",
-        "icon":"ironWorks.IronNugget",
-        "stackId":"ironWorks:IronNugget",
-        "renderWithIcon":true
-    }
+  "parent": "engine:iconItem",
+  "Item": {
+    "icon": "ironWorks.IronNugget",
+    "stackId": "ironWorks:IronNugget",
+    "renderWithIcon": true
+  },
+  "DisplayName": {
+    "name": "Iron Nugget"
+  }
 }

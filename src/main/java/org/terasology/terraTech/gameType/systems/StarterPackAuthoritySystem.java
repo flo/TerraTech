@@ -17,7 +17,7 @@ package org.terasology.terraTech.gameType.systems;
 
 import org.terasology.entitySystem.entity.EntityManager;
 import org.terasology.entitySystem.entity.EntityRef;
-import org.terasology.entitySystem.systems.ComponentSystem;
+import org.terasology.entitySystem.systems.BaseComponentSystem;
 import org.terasology.entitySystem.systems.RegisterSystem;
 import org.terasology.logic.console.Command;
 import org.terasology.logic.inventory.InventoryManager;
@@ -30,7 +30,7 @@ import org.terasology.world.block.BlockManager;
 import org.terasology.world.block.items.BlockItemFactory;
 
 @RegisterSystem
-public class StarterPackAuthoritySystem implements ComponentSystem {
+public class StarterPackAuthoritySystem extends BaseComponentSystem {
     @In
     BlockManager blockManager;
     @In
@@ -59,6 +59,10 @@ public class StarterPackAuthoritySystem implements ComponentSystem {
         player.send(new GiveItemAction(EntityRef.NULL, blockFactory.newInstance(blockManager.getBlockFamily("IronOre"), 10)));
         player.send(new GiveItemAction(EntityRef.NULL, ExtendedInventoryManager.createItem(entityManager, "TerraTech:Coal", 32)));
         player.send(new GiveItemAction(EntityRef.NULL, ExtendedInventoryManager.createItem(entityManager, "TerraTech:Hammer", 1)));
+
+        player.send(new GiveItemAction(EntityRef.NULL, blockFactory.newInstance(blockManager.getBlockFamily("ConveyorBelt"), 16)));
+        player.send(new GiveItemAction(EntityRef.NULL, blockFactory.newInstance(blockManager.getBlockFamily("ConveyorTube"), 16)));
+        player.send(new GiveItemAction(EntityRef.NULL, blockFactory.newInstance(blockManager.getBlockFamily("ItemExtractor"), 16)));
 
         return "You received the TerraTech starter pack";
 

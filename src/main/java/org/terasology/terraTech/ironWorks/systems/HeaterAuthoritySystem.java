@@ -20,23 +20,20 @@ import org.terasology.entitySystem.entity.EntityManager;
 import org.terasology.entitySystem.entity.EntityRef;
 import org.terasology.entitySystem.entity.lifecycleEvents.OnChangedComponent;
 import org.terasology.entitySystem.event.ReceiveEvent;
+import org.terasology.entitySystem.systems.BaseComponentSystem;
 import org.terasology.entitySystem.systems.RegisterMode;
 import org.terasology.entitySystem.systems.RegisterSystem;
 import org.terasology.entitySystem.systems.UpdateSubscriberSystem;
 import org.terasology.logic.location.LocationComponent;
-import org.terasology.machines.components.ProcessingMachineComponent;
-import org.terasology.machines.events.ProcessingMachineChanged;
 import org.terasology.math.Vector3i;
 import org.terasology.registry.In;
 import org.terasology.terraTech.ironWorks.components.HeatedComponent;
 import org.terasology.terraTech.ironWorks.components.HeaterComponent;
+import org.terasology.workstation.event.WorkstationStateChanged;
 import org.terasology.world.BlockEntityRegistry;
 
-/**
- * Created by Josharias on 1/23/14.
- */
 @RegisterSystem(RegisterMode.AUTHORITY)
-public class HeaterAuthoritySystem implements UpdateSubscriberSystem {
+public class HeaterAuthoritySystem extends BaseComponentSystem implements UpdateSubscriberSystem {
     static final long UPDATE_INTERVAL = 500;
 
     @In
@@ -80,9 +77,9 @@ public class HeaterAuthoritySystem implements UpdateSubscriberSystem {
         }
     }
 
-    @ReceiveEvent(components = {HeatedComponent.class, ProcessingMachineComponent.class})
+    @ReceiveEvent(components = {HeatedComponent.class})
     public void onHeatedChanged(OnChangedComponent event, EntityRef processingMachine) {
-        processingMachine.send(new ProcessingMachineChanged());
+        processingMachine.send(new WorkstationStateChanged());
     }
 
     @Override

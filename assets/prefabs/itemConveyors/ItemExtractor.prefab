@@ -1,0 +1,20 @@
+{
+  "Inventory": {
+    "privateToOwner": false,
+    "itemSlots": [
+      0
+    ]
+  },
+  "PullInventoryInDirection": {
+    "direction": "FORWARD"
+  },
+  "PushInventoryInDirection": {
+    "direction": "BACKWARD"
+  },
+  "AccessInventoryAction": {
+
+  },
+  "Network": {
+    
+  }
+}

@@ -1,0 +1,23 @@
+{
+  "ProcessDefinition": {
+    "processType": "TerraTech:Anvil"
+  },
+  "ProcessingTime": {
+    "duration": 5000
+  },
+  "RequirementInput": {
+    "requirements": [
+      "Hammer"
+    ]
+  },
+  "ItemPrefabInput": {
+    "itemCounts": {
+      "TerraTech:IronBloom": 1
+    }
+  },
+  "ItemPrefabOutput": {
+    "itemCounts": {
+      "TerraTech:IronNugget": 1
+    }
+  }
+}

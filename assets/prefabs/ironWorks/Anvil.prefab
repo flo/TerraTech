@@ -1,11 +1,29 @@
 {
-    "MachineDefinition":
-    {
-        "blockInputSlots":1,
-        "blockOutputSlots":1,
-        "requirementInputSlots":1,
-        "requirementsProvided":["Anvil"]
-    },
-    "ProcessingAction":{},
-    "Network":{}
+  "Workstation": {
+    "uiPrefab": "Machines:DefaultMachine",
+    "supportedProcessTypes": {
+      "TerraTech:Anvil": false
+    }
+  },
+  "MachineDefinition": {
+    "inputSlots": 1,
+    "outputSlots": 1,
+    "requirementSlots": 1
+  },
+  "ProcessingAction": {
+    
+  },
+  "RenderInventoryInCategory": {
+    "category": "REQUIREMENTS",
+    "translate": [
+      0,
+      0.5,
+      0
+    ],
+    "itemsAreFlat": true,
+    "verticalAlignmentBottom": true
+  },
+  "Network": {
+    
+  }
 }
