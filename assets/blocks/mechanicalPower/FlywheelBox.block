@@ -1,0 +1,7 @@
+{
+    "displayName": "Flywheel Box",
+    "entity": {
+        "prefab": "FlywheelBox"
+    }
+
+}

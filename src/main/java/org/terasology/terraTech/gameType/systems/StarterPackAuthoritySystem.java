@@ -52,6 +52,10 @@ public class StarterPackAuthoritySystem extends BaseComponentSystem {
 
         EntityRef player = client.getComponent(ClientComponent.class).character;
 
+        player.send(new GiveItemAction(EntityRef.NULL, blockFactory.newInstance(blockManager.getBlockFamily("Axle"), 32)));
+        player.send(new GiveItemAction(EntityRef.NULL, blockFactory.newInstance(blockManager.getBlockFamily("Engine"), 5)));
+        player.send(new GiveItemAction(EntityRef.NULL, blockFactory.newInstance(blockManager.getBlockFamily("FlywheelBox"), 5)));
+
         player.send(new GiveItemAction(EntityRef.NULL, blockFactory.newInstance(blockManager.getBlockFamily("EnduringlyHotFurnace"), 1)));
         player.send(new GiveItemAction(EntityRef.NULL, blockFactory.newInstance(blockManager.getBlockFamily("Bloomery"), 1)));
         player.send(new GiveItemAction(EntityRef.NULL, blockFactory.newInstance(blockManager.getBlockFamily("FireboxHeater"), 1)));
@@ -63,6 +67,8 @@ public class StarterPackAuthoritySystem extends BaseComponentSystem {
         player.send(new GiveItemAction(EntityRef.NULL, blockFactory.newInstance(blockManager.getBlockFamily("ConveyorBelt"), 16)));
         player.send(new GiveItemAction(EntityRef.NULL, blockFactory.newInstance(blockManager.getBlockFamily("ConveyorTube"), 16)));
         player.send(new GiveItemAction(EntityRef.NULL, blockFactory.newInstance(blockManager.getBlockFamily("ItemExtractor"), 16)));
+
+
 
         return "You received the TerraTech starter pack";
 

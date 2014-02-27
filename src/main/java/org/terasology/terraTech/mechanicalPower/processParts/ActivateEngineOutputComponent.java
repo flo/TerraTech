@@ -5,7 +5,7 @@
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  *
- *  http://www.apache.org/licenses/LICENSE-2.0
+ *      http://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -13,39 +13,50 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.terasology.terraTech.ironWorks.processParts;
+package org.terasology.terraTech.mechanicalPower.processParts;
 
+import com.google.common.collect.Sets;
 import org.terasology.entitySystem.Component;
 import org.terasology.entitySystem.entity.EntityRef;
-import org.terasology.terraTech.ironWorks.components.HeatedComponent;
+import org.terasology.terraTech.mechanicalPower.components.MechanicalPowerProducerComponent;
 import org.terasology.workstation.process.ProcessPart;
 
-public class HeatInputComponent implements Component, ProcessPart {
-    public float temperature;
+import java.util.Set;
+
+public class ActivateEngineOutputComponent implements Component, ProcessPart {
+    public long activateTime;
 
     @Override
     public boolean validateBeforeStart(EntityRef instigator, EntityRef workstation, EntityRef processEntity) {
-        HeatedComponent heatedComponent = workstation.getComponent(HeatedComponent.class);
-        if (heatedComponent != null) {
-            if (heatedComponent.temperature >= temperature ) {
-                return true;
-            }
+        MechanicalPowerProducerComponent producer = workstation.getComponent(MechanicalPowerProducerComponent.class);
+        if (producer != null && producer.active == false) {
+            Set<String> results = Sets.newHashSet();
+            results.add("");
+            return true;
         }
         return false;
     }
 
     @Override
     public long getDuration(EntityRef instigator, EntityRef workstation, EntityRef processEntity) {
-        return 0;
+        return activateTime;
     }
 
     @Override
     public void executeStart(EntityRef instigator, EntityRef workstation, EntityRef processEntity) {
-
+        MechanicalPowerProducerComponent producer = workstation.getComponent(MechanicalPowerProducerComponent.class);
+        if (producer != null) {
+            producer.active = true;
+            workstation.saveComponent(producer);
+        }
     }
 
     @Override
     public void executeEnd(EntityRef instigator, EntityRef workstation, EntityRef processEntity) {
-
+        MechanicalPowerProducerComponent producer = workstation.getComponent(MechanicalPowerProducerComponent.class);
+        if (producer != null) {
+            producer.active = false;
+            workstation.saveComponent(producer);
+        }
     }
 }

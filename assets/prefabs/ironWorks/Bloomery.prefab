@@ -1,18 +1,19 @@
 {
+  "MachineDefinition": {
+    "inputSlots": 1,
+    "outputSlots": 1
+  },
   "Workstation": {
     "uiPrefab": "Machines:DefaultMachine",
     "supportedProcessTypes": {
       "TerraTech:Furnace": true
     }
   },
-  "MachineDefinition": {
-    "inputSlots": 1,
-    "outputSlots": 1
-  },
   "Heated": {
     "temperatureLossPerSecond": 1,
     "temperatureAbsorptionRate": 0.015
   },
+  "DropBlockInventory": {},
   "Network": {
     
   }

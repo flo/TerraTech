@@ -1,0 +1,7 @@
+{
+    "MechanicalPowerBlockNetwork": {},
+    "MechanicalPowerConsumer": {
+        "maximumStoredPower": 500
+    },
+    "Network": {}
+}

@@ -1,14 +1,14 @@
 {
+  "MachineDefinition": {
+    "inputSlots": 1,
+    "outputSlots": 1,
+    "requirementSlots": 1
+  },
   "Workstation": {
     "uiPrefab": "Machines:DefaultMachine",
     "supportedProcessTypes": {
       "TerraTech:Anvil": false
     }
-  },
-  "MachineDefinition": {
-    "inputSlots": 1,
-    "outputSlots": 1,
-    "requirementSlots": 1
   },
   "ProcessingAction": {
     
@@ -23,6 +23,7 @@
     "itemsAreFlat": true,
     "verticalAlignmentBottom": true
   },
+  "DropBlockInventory": {},
   "Network": {
     
   }

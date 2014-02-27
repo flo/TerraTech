@@ -5,6 +5,7 @@
       0
     ]
   },
+  "DropBlockInventory": {},
   "PullInventoryInDirection": {
     "direction": "FORWARD"
   },

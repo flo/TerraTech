@@ -1,0 +1,13 @@
+{
+  "ProcessDefinition": {
+    "processType": "TerraTech:Engine"
+  },
+  "ItemPrefabInput": {
+    "itemCounts": {
+      "prefab:TerraTech:Coal": 1
+    }
+  },
+  "ActivateEngineOutput": {
+    "activateTime": 20000
+  }
+}

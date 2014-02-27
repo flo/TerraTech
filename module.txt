@@ -7,6 +7,8 @@
     "dependencies" :
     [
         {"id":"Machines"},
+        {"id":"Workstation"},
+        {"id":"BlockNetwork"},
         {"id":"Core"}
     ],
     "isServerSideOnly":false

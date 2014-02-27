@@ -1,0 +1,16 @@
+{
+    "MachineDefinition": {
+      "inputSlots": 1
+    },
+    "Workstation": {
+        "uiPrefab": "Machines:DefaultMachine",
+        "supportedProcessTypes": {
+          "TerraTech:Engine": true
+        }
+      },
+    "MechanicalPowerBlockNetwork": {},
+    "MechanicalPowerProducer": {
+        "power": 5
+    },
+    "Network": {}
+}

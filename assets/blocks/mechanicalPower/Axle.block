@@ -1,0 +1,8 @@
+{
+    "displayName": "Axle",
+    "entity":
+    {
+        prefab : "Axle"
+    },
+    "shape": "axle"
+}

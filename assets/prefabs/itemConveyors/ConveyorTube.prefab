@@ -8,6 +8,7 @@
       0
     ]
   },
+  "DropBlockInventory": {},
   "PushInventoryInDirection": {
     "animateMovingItem": true
   },

@@ -5,7 +5,7 @@
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  *
- *  http://www.apache.org/licenses/LICENSE-2.0
+ *      http://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -13,21 +13,21 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.terasology.terraTech.ironWorks.processParts;
+package org.terasology.terraTech.mechanicalPower.processParts;
 
 import org.terasology.entitySystem.Component;
 import org.terasology.entitySystem.entity.EntityRef;
-import org.terasology.terraTech.ironWorks.components.HeatedComponent;
+import org.terasology.terraTech.mechanicalPower.components.MechanicalPowerConsumerComponent;
 import org.terasology.workstation.process.ProcessPart;
 
-public class HeatInputComponent implements Component, ProcessPart {
-    public float temperature;
+public class MechanicalPowerInputComponent implements Component, ProcessPart {
+    public float power;
 
     @Override
     public boolean validateBeforeStart(EntityRef instigator, EntityRef workstation, EntityRef processEntity) {
-        HeatedComponent heatedComponent = workstation.getComponent(HeatedComponent.class);
-        if (heatedComponent != null) {
-            if (heatedComponent.temperature >= temperature ) {
+        MechanicalPowerConsumerComponent consumer = workstation.getComponent(MechanicalPowerConsumerComponent.class);
+        if (consumer != null) {
+            if (consumer.currentStoredPower >= power) {
                 return true;
             }
         }
@@ -41,7 +41,11 @@ public class HeatInputComponent implements Component, ProcessPart {
 
     @Override
     public void executeStart(EntityRef instigator, EntityRef workstation, EntityRef processEntity) {
-
+        MechanicalPowerConsumerComponent consumer = workstation.getComponent(MechanicalPowerConsumerComponent.class);
+        if (consumer != null) {
+            consumer.currentStoredPower -= power;
+            workstation.saveComponent(consumer);
+        }
     }
 
     @Override

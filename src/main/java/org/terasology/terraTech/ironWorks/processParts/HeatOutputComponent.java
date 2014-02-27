@@ -15,14 +15,10 @@
  */
 package org.terasology.terraTech.ironWorks.processParts;
 
-import com.google.common.collect.Sets;
 import org.terasology.entitySystem.Component;
 import org.terasology.entitySystem.entity.EntityRef;
 import org.terasology.terraTech.ironWorks.components.HeaterComponent;
-import org.terasology.workstation.process.InvalidProcessException;
 import org.terasology.workstation.process.ProcessPart;
-
-import java.util.Set;
 
 public class HeatOutputComponent implements Component, ProcessPart {
     public int temperature;
@@ -33,19 +29,17 @@ public class HeatOutputComponent implements Component, ProcessPart {
     }
 
     @Override
-    public Set<String> validate(EntityRef instigator, EntityRef workstation, String parameter) throws InvalidProcessException {
-        Set<String> results = Sets.newHashSet();
-        results.add("");
-        return results;
+    public boolean validateBeforeStart(EntityRef instigator, EntityRef workstation, EntityRef processEntity) {
+        return true;
     }
 
     @Override
-    public long getDuration(EntityRef instigator, EntityRef workstation, String result, String parameter) {
+    public long getDuration(EntityRef instigator, EntityRef workstation, EntityRef processEntity) {
         return burnTime;
     }
 
     @Override
-    public void executeStart(EntityRef instigator, EntityRef workstation, String result, String parameter) {
+    public void executeStart(EntityRef instigator, EntityRef workstation, EntityRef processEntity) {
         boolean isNewComponent = workstation.hasComponent(HeaterComponent.class);
 
         HeaterComponent heaterComponent = new HeaterComponent();
@@ -59,7 +53,7 @@ public class HeatOutputComponent implements Component, ProcessPart {
     }
 
     @Override
-    public void executeEnd(EntityRef instigator, EntityRef workstation, String result, String parameter) {
+    public void executeEnd(EntityRef instigator, EntityRef workstation, EntityRef processEntity) {
         workstation.removeComponent(HeaterComponent.class);
     }
 }
