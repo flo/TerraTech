@@ -1,4 +1,12 @@
 {
-    "MechanicalPowerBlockNetwork": {},
+    "MechanicalPowerBlockNetwork": {
+        "sides": [
+            "FORWARD",
+            "BACKWARD"
+        ]
+    },
+    "RotatingAxle": {
+        "renderedBlockFamily": "Core:Dirt:TerraTech:Axle"
+    },
     "Network": {}
 }

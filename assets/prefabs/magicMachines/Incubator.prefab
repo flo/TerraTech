@@ -1,0 +1,15 @@
+{
+  "Workstation": {
+    "uiPrefab": "Machines:DefaultMachine",
+    "supportedProcessTypes": {
+      "TerraTech:MagicMachines": true
+    }
+  },
+  "MachineDefinition": {
+    "inputSlots": 2,
+    "requirementSlots": 0,
+    "outputSlots": 1
+  },
+  "Network": {
+  }
+}

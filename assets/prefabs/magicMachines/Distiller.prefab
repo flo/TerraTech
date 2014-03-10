@@ -1,0 +1,15 @@
+{
+  "Workstation": {
+    "uiPrefab": "Machines:DefaultMachine",
+    "supportedProcessTypes": {
+      "TerraTech:DistillEssence": true
+    }
+  },
+  "MachineDefinition": {
+    "inputSlots": 1,
+    "requirementSlots": 1,
+    "outputSlots": 1
+  },
+  "Network": {
+  }
+}

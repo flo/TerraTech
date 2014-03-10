@@ -26,7 +26,7 @@ import org.terasology.blockNetwork.NetworkNode;
 import org.terasology.blockNetwork.NetworkTopologyListener;
 import org.terasology.entitySystem.entity.EntityRef;
 import org.terasology.entitySystem.entity.lifecycleEvents.BeforeDeactivateComponent;
-import org.terasology.entitySystem.entity.lifecycleEvents.OnAddedComponent;
+import org.terasology.entitySystem.entity.lifecycleEvents.OnActivatedComponent;
 import org.terasology.entitySystem.entity.lifecycleEvents.OnChangedComponent;
 import org.terasology.entitySystem.event.ReceiveEvent;
 import org.terasology.entitySystem.systems.BaseComponentSystem;
@@ -98,6 +98,12 @@ public class MechanicalPowerNetworkImpl extends BaseComponentSystem implements N
     public Multimap<Network, NetworkNode> getLeafNodes() {
         return networkLeafNodes;
     }
+    @Override
+    public Network getNetwork(Vector3i position) {
+        NetworkNode node = networkNodes.get(position);
+        Network network = blockNetwork.findNetworkWithNetworkingBlock(node);
+        return network;
+    }
 
     //region network topology listener
 
@@ -111,7 +117,7 @@ public class MechanicalPowerNetworkImpl extends BaseComponentSystem implements N
             EntityRef entity = blockEntityRegistry.getBlockEntityAt(node.location.toVector3i());
             if( entity.hasComponent(MechanicalPowerProducerComponent.class)
                     || entity.hasComponent(MechanicalPowerConsumerComponent.class)) {
-                networkLeafNodes.put(network, node);
+                 networkLeafNodes.put(network, node);
             }
         }
     }
@@ -154,7 +160,7 @@ public class MechanicalPowerNetworkImpl extends BaseComponentSystem implements N
     }
 
     @ReceiveEvent
-    public void createNetworkNode(OnAddedComponent event, EntityRef entity, MechanicalPowerBlockNetworkComponent mechanicalPowerBlockNetwork, BlockComponent block) {
+    public void createNetworkNode(OnActivatedComponent event, EntityRef entity, MechanicalPowerBlockNetworkComponent mechanicalPowerBlockNetwork, BlockComponent block) {
         byte connectingOnSides = mechanicalPowerBlockNetwork.getConnectionSides();
         final Vector3i location = block.getPosition();
         addNetworkNode(location, connectingOnSides);

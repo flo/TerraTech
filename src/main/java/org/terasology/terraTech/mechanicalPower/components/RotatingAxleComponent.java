@@ -13,14 +13,15 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.terasology.terraTech.mechanicalPower.systems;
+package org.terasology.terraTech.mechanicalPower.components;
 
-import com.google.common.collect.Multimap;
-import org.terasology.blockNetwork.Network;
-import org.terasology.blockNetwork.NetworkNode;
-import org.terasology.math.Vector3i;
+import org.terasology.entitySystem.Component;
+import org.terasology.entitySystem.Owns;
+import org.terasology.entitySystem.entity.EntityRef;
+import org.terasology.world.block.family.BlockFamily;
 
-public interface MechanicalPowerNetwork {
-    Multimap<Network, NetworkNode> getLeafNodes();
-    Network getNetwork(Vector3i position);
+public class RotatingAxleComponent implements Component {
+    public BlockFamily renderedBlockFamily;
+    @Owns
+    public EntityRef renderedEntity;
 }

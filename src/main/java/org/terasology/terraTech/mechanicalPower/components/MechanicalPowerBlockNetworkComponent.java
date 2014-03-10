@@ -15,21 +15,32 @@
  */
 package org.terasology.terraTech.mechanicalPower.components;
 
+import com.google.common.collect.Sets;
 import org.terasology.entitySystem.Component;
 import org.terasology.math.Side;
 import org.terasology.math.SideBitFlag;
+import org.terasology.world.block.ForceBlockActive;
 
 import java.util.Set;
 
+@ForceBlockActive
 public class MechanicalPowerBlockNetworkComponent implements Component {
-    public Set<Side> sides;
-
-    public MechanicalPowerBlockNetworkComponent() {
-        // default to all sides
-        sides = SideBitFlag.getSides((byte)63);
-    }
+    public Set<Side> sides = Sets.newHashSet();
 
     public byte getConnectionSides() {
-        return SideBitFlag.getSides(sides);
+        if(sides.size() == 0) {
+            return (byte)63;
+        }else {
+           /* Block block = entity.getComponent(BlockComponent.class).getBlock();
+            Side blockDirection = block.getDirection();
+
+            // convert these directions to sides relative to the facing of the block
+            Set<Side> sides = Sets.newHashSet();
+            for(Direction direction : directions) {
+                sides.add(blockDirection.getRelativeSide(direction));
+            }
+                  */
+            return SideBitFlag.getSides(sides);
+        }
     }
 }

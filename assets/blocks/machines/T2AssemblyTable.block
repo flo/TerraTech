@@ -1,0 +1,6 @@
+{
+    "displayName": "T2 Assembly Table",
+    "entity": {
+        "prefab": "T2AssemblyTable"
+    }
+}

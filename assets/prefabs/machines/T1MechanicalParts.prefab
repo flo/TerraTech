@@ -1,0 +1,11 @@
+{
+  "parent": "engine:iconItem",
+  "Item": {
+    "icon": "machines.T1MechanicalParts",
+    "stackId": "machines:T1MechanicalParts",
+    "renderWithIcon": true
+  },
+  "DisplayName": {
+    "name": "Mechanical Parts"
+  }
+}

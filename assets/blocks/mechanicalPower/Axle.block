@@ -4,5 +4,7 @@
     {
         prefab : "Axle"
     },
-    "shape": "axle"
+    "shape": "axle",
+    "rotation": "directionalPlacement",
+    "invisible": true
 }

@@ -1,0 +1,15 @@
+{
+  "Workstation": {
+    "uiPrefab": "Machines:DefaultMachine",
+    "supportedProcessTypes": {
+      "TerraTech:CompactEssence": false
+    }
+  },
+  "MachineDefinition": {
+    "inputSlots": 4,
+    "requirementSlots": 0,
+    "outputSlots": 1
+  },
+  "Network": {
+  }
+}
