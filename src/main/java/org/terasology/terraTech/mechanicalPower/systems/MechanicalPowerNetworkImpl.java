@@ -15,15 +15,15 @@
  */
 package org.terasology.terraTech.mechanicalPower.systems;
 
-import com.google.common.collect.HashMultimap;
+import com.google.common.base.Function;
+import com.google.common.collect.Iterables;
 import com.google.common.collect.Maps;
-import com.google.common.collect.Multimap;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.terasology.blockNetwork.BlockNetwork;
 import org.terasology.blockNetwork.Network;
 import org.terasology.blockNetwork.NetworkNode;
-import org.terasology.blockNetwork.NetworkTopologyListener;
+import org.terasology.blockNetwork.SidedLocationNetworkNode;
 import org.terasology.entitySystem.entity.EntityRef;
 import org.terasology.entitySystem.entity.lifecycleEvents.BeforeDeactivateComponent;
 import org.terasology.entitySystem.entity.lifecycleEvents.OnActivatedComponent;
@@ -35,15 +35,12 @@ import org.terasology.math.Vector3i;
 import org.terasology.registry.In;
 import org.terasology.registry.Share;
 import org.terasology.terraTech.mechanicalPower.components.MechanicalPowerBlockNetworkComponent;
-import org.terasology.terraTech.mechanicalPower.components.MechanicalPowerConsumerComponent;
-import org.terasology.terraTech.mechanicalPower.components.MechanicalPowerProducerComponent;
 import org.terasology.world.BlockEntityRegistry;
 import org.terasology.world.block.BeforeDeactivateBlocks;
 import org.terasology.world.block.BlockComponent;
 import org.terasology.world.block.OnActivatedBlocks;
 
 import java.util.Map;
-import java.util.Set;
 
 /**
  * the block network is controlled by the MechanicalPowerBlockNetworkComponent.  Its removal removes both the node and
@@ -54,7 +51,7 @@ import java.util.Set;
  */
 @RegisterSystem
 @Share(MechanicalPowerNetwork.class)
-public class MechanicalPowerNetworkImpl extends BaseComponentSystem implements NetworkTopologyListener, MechanicalPowerNetwork {
+public class MechanicalPowerNetworkImpl extends BaseComponentSystem implements MechanicalPowerNetwork {
 
     @In
     BlockEntityRegistry blockEntityRegistry;
@@ -62,13 +59,11 @@ public class MechanicalPowerNetworkImpl extends BaseComponentSystem implements N
     private static final Logger logger = LoggerFactory.getLogger(MechanicalPowerNetworkImpl.class);
 
     private BlockNetwork blockNetwork;
-    private Map<Vector3i, NetworkNode> networkNodes = Maps.newHashMap();
-    private Multimap<Network, NetworkNode> networkLeafNodes = HashMultimap.create();
+    private Map<Vector3i, SidedLocationNetworkNode> networkNodes = Maps.newHashMap();
 
     @Override
     public void initialise() {
         blockNetwork = new BlockNetwork();
-        blockNetwork.addTopologyListener(this);
         logger.info("Initialized Mechanical Power System");
     }
 
@@ -77,71 +72,46 @@ public class MechanicalPowerNetworkImpl extends BaseComponentSystem implements N
         blockNetwork = null;
     }
 
+
+    @Override
+    public Network getNetwork(Vector3i position) {
+        return blockNetwork.getNetwork(networkNodes.get(position));
+    }
+
+    @Override
+    public Iterable<SidedLocationNetworkNode> getNetworkNodes(Network network) {
+        Iterable<NetworkNode> nodes = blockNetwork.getNetworkNodes(network);
+
+        return Iterables.transform(nodes, new Function<NetworkNode, SidedLocationNetworkNode>() {
+            @Override
+            public SidedLocationNetworkNode apply(NetworkNode input) {
+                return (SidedLocationNetworkNode) input;
+            }
+        });
+    }
+
+    @Override
+    public Iterable<Network> getNetworks() {
+        return blockNetwork.getNetworks();
+    }
+
+
     private void addNetworkNode(Vector3i position, byte connectionSides) {
-        NetworkNode networkNode = new NetworkNode(position, connectionSides);
+        SidedLocationNetworkNode networkNode = new SidedLocationNetworkNode(position, connectionSides);
         networkNodes.put(position, networkNode);
         blockNetwork.addNetworkingBlock(networkNode);
     }
     private void removeNetworkNode(Vector3i position) {
-        NetworkNode networkNode = networkNodes.get(position);
+        SidedLocationNetworkNode networkNode = networkNodes.get(position);
         blockNetwork.removeNetworkingBlock(networkNode);
         networkNodes.remove(position);
     }
     private void updateNetworkNode(Vector3i position, byte connectionSides) {
-        NetworkNode oldNetworkNode = networkNodes.get(position);
-        NetworkNode networkNode = new NetworkNode(position, connectionSides);
+        SidedLocationNetworkNode oldNetworkNode = networkNodes.get(position);
+        SidedLocationNetworkNode networkNode = new SidedLocationNetworkNode(position, connectionSides);
         blockNetwork.updateNetworkingBlock(oldNetworkNode, networkNode);
         networkNodes.put(position, networkNode);
     }
-
-    @Override
-    public Multimap<Network, NetworkNode> getLeafNodes() {
-        return networkLeafNodes;
-    }
-    @Override
-    public Network getNetwork(Vector3i position) {
-        NetworkNode node = networkNodes.get(position);
-        Network network = blockNetwork.findNetworkWithNetworkingBlock(node);
-        return network;
-    }
-
-    //region network topology listener
-
-    @Override
-    public void networkAdded(Network newNetwork) {
-    }
-
-    @Override
-    public void networkingNodesAdded(Network network, Set<NetworkNode> networkingNodes) {
-        for(NetworkNode node : networkingNodes) {
-            EntityRef entity = blockEntityRegistry.getBlockEntityAt(node.location.toVector3i());
-            if( entity.hasComponent(MechanicalPowerProducerComponent.class)
-                    || entity.hasComponent(MechanicalPowerConsumerComponent.class)) {
-                 networkLeafNodes.put(network, node);
-            }
-        }
-    }
-
-    @Override
-    public void networkingNodesRemoved(Network network, Set<NetworkNode> networkingNodes) {
-        for(NetworkNode node : networkingNodes) {
-            networkLeafNodes.remove(network, node);
-        }
-    }
-
-    @Override
-    public void leafNodesAdded(Network network, Set<NetworkNode> leafNodes) {
-    }
-
-    @Override
-    public void leafNodesRemoved(Network network, Set<NetworkNode> leafNodes) {
-    }
-
-    @Override
-    public void networkRemoved(Network network) {
-    }
-
-    //endregion
 
     //region adding and removing from the block network
     @ReceiveEvent
@@ -168,11 +138,9 @@ public class MechanicalPowerNetworkImpl extends BaseComponentSystem implements N
 
     @ReceiveEvent
     public void updateNetworkNode(OnChangedComponent event, EntityRef entity, MechanicalPowerBlockNetworkComponent mechanicalPowerBlockNetwork, BlockComponent block) {
-        if (entity.hasComponent(BlockComponent.class)) {
-            byte connectingOnSides = mechanicalPowerBlockNetwork.getConnectionSides();
-            final Vector3i location = block.getPosition();
-            updateNetworkNode(location, connectingOnSides);
-        }
+        byte connectingOnSides = mechanicalPowerBlockNetwork.getConnectionSides();
+        final Vector3i location = block.getPosition();
+        updateNetworkNode(location, connectingOnSides);
     }
 
     @ReceiveEvent

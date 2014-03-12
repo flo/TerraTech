@@ -15,12 +15,13 @@
  */
 package org.terasology.terraTech.mechanicalPower.systems;
 
-import com.google.common.collect.Multimap;
 import org.terasology.blockNetwork.Network;
-import org.terasology.blockNetwork.NetworkNode;
+import org.terasology.blockNetwork.SidedLocationNetworkNode;
 import org.terasology.math.Vector3i;
 
 public interface MechanicalPowerNetwork {
-    Multimap<Network, NetworkNode> getLeafNodes();
     Network getNetwork(Vector3i position);
+    Iterable<SidedLocationNetworkNode> getNetworkNodes(Network network);
+
+    Iterable<Network> getNetworks();
 }

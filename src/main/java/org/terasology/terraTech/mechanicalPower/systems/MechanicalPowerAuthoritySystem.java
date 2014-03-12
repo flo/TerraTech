@@ -19,7 +19,7 @@ import com.google.common.collect.Sets;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.terasology.blockNetwork.Network;
-import org.terasology.blockNetwork.NetworkNode;
+import org.terasology.blockNetwork.SidedLocationNetworkNode;
 import org.terasology.engine.Time;
 import org.terasology.entitySystem.entity.EntityRef;
 import org.terasology.entitySystem.systems.BaseComponentSystem;
@@ -46,6 +46,12 @@ public class MechanicalPowerAuthoritySystem extends BaseComponentSystem implemen
     @In
     MechanicalPowerNetwork mechanicalPowerNetwork;
 
+
+    @Override
+    public void initialise() {
+        super.initialise();
+    }
+
     //region Brute force power production loop
 
     @In
@@ -60,13 +66,13 @@ public class MechanicalPowerAuthoritySystem extends BaseComponentSystem implemen
         if( currentTime > nextUpdateTime) {
             nextUpdateTime = currentTime + UPDATE_INTERVAL;
 
-            for(Network network : mechanicalPowerNetwork.getLeafNodes().keys()) {
+            for(Network network : mechanicalPowerNetwork.getNetworks()) {
 
                 Set<EntityRef> consumers = Sets.newHashSet();
                 Set<EntityRef> producers = Sets.newHashSet();
                 // gather the consumers and producers for this network
-                for(NetworkNode leafNode : mechanicalPowerNetwork.getLeafNodes().get(network)) {
-                        EntityRef entity = blockEntityRegistry.getBlockEntityAt(leafNode.location.toVector3i());
+                for(SidedLocationNetworkNode leafNode : mechanicalPowerNetwork.getNetworkNodes(network)) {
+                        EntityRef entity = blockEntityRegistry.getBlockEntityAt(leafNode.location);
                         if( entity.hasComponent(MechanicalPowerConsumerComponent.class)) {
                             consumers.add(entity);
                         }

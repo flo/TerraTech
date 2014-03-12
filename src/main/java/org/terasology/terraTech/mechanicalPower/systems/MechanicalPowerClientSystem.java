@@ -15,8 +15,9 @@
  */
 package org.terasology.terraTech.mechanicalPower.systems;
 
+import com.google.common.collect.Sets;
 import org.terasology.blockNetwork.Network;
-import org.terasology.blockNetwork.NetworkNode;
+import org.terasology.blockNetwork.SidedLocationNetworkNode;
 import org.terasology.entitySystem.entity.EntityBuilder;
 import org.terasology.entitySystem.entity.EntityManager;
 import org.terasology.entitySystem.entity.EntityRef;
@@ -41,6 +42,8 @@ import org.terasology.terraTech.mechanicalPower.components.RotatingAxleComponent
 import org.terasology.world.BlockEntityRegistry;
 import org.terasology.world.block.BlockComponent;
 import org.terasology.world.block.items.BlockItemComponent;
+
+import java.util.Set;
 
 @RegisterSystem(RegisterMode.CLIENT)
 public class MechanicalPowerClientSystem extends BaseComponentSystem {
@@ -93,6 +96,7 @@ public class MechanicalPowerClientSystem extends BaseComponentSystem {
         return Rotation.rotate(yaw, pitch);
     }
 
+
     @ReceiveEvent
     public void updateAxlesInNetwork(OnChangedComponent event, EntityRef entity, MechanicalPowerProducerComponent powerProducer, BlockComponent block) {
         boolean isPowerNetworkActive = false;
@@ -100,8 +104,10 @@ public class MechanicalPowerClientSystem extends BaseComponentSystem {
         float totalPower = 0;
         Network network = mechanicalPowerNetwork.getNetwork(block.getPosition());
 
-        for (NetworkNode node : mechanicalPowerNetwork.getLeafNodes().get(network)) {
-            EntityRef nodeEntity = blockEntityRegistry.getBlockEntityAt(node.location.toVector3i());
+        Set<EntityRef> axleEntities = Sets.newHashSet();
+
+        for (SidedLocationNetworkNode node : mechanicalPowerNetwork.getNetworkNodes(network)) {
+            EntityRef nodeEntity = blockEntityRegistry.getBlockEntityAt(node.location);
 
             if (nodeEntity.hasComponent(MechanicalPowerConsumerComponent.class)) {
                 powerConsumers++;
@@ -114,12 +120,15 @@ public class MechanicalPowerClientSystem extends BaseComponentSystem {
                     totalPower += nodePowerProducer.power;
                 }
             }
+
+            if( nodeEntity.hasComponent(RotatingAxleComponent.class)) {
+                axleEntities.add(nodeEntity);
+            }
         }
 
         float speed = totalPower / powerConsumers;
 
-        for (NetworkNode node : network.getNetworkingNodes()) {
-            EntityRef nodeEntity = blockEntityRegistry.getBlockEntityAt(node.location.toVector3i());
+        for (EntityRef nodeEntity : axleEntities) {
 
             RotatingAxleComponent rotatingAxle = nodeEntity.getComponent(RotatingAxleComponent.class);
             if (rotatingAxle != null) {
@@ -143,6 +152,7 @@ public class MechanicalPowerClientSystem extends BaseComponentSystem {
                 renderedEntity.saveComponent(animateRotation);
             }
         } else {
+
             Rotation targetRotation = Rotation.rotate(Roll.CLOCKWISE_90);
             RenderItemTransformComponent renderItemTransform = renderedEntity.getComponent(RenderItemTransformComponent.class);
             if (renderItemTransform.yaw != Yaw.NONE) {
