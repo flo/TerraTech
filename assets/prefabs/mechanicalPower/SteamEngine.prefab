@@ -8,10 +8,10 @@
           "TerraTech:SteamEngine": true
         }
       },
-    "MechanicalPowerBlockNetwork": {},
     "MechanicalPowerProducer": {
         "power": 1
     },
+    "MechanicalPowerBlockNetwork": {},
     "Heated": {
         "temperatureLossPerSecond": 1,
         "temperatureAbsorptionRate": 0.015

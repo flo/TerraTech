@@ -17,29 +17,34 @@ package org.terasology.terraTech.mechanicalPower.components;
 
 import com.google.common.collect.Sets;
 import org.terasology.entitySystem.Component;
+import org.terasology.entitySystem.entity.EntityRef;
+import org.terasology.math.Direction;
 import org.terasology.math.Side;
 import org.terasology.math.SideBitFlag;
+import org.terasology.world.block.Block;
+import org.terasology.world.block.BlockComponent;
 import org.terasology.world.block.ForceBlockActive;
 
 import java.util.Set;
 
 @ForceBlockActive
 public class MechanicalPowerBlockNetworkComponent implements Component {
-    public Set<Side> sides = Sets.newHashSet();
+    public Set<String> directions = Sets.newHashSet();
 
-    public byte getConnectionSides() {
-        if(sides.size() == 0) {
+    public byte getConnectionSides(EntityRef entity) {
+        if(directions.size() == 0) {
             return (byte)63;
         }else {
-           /* Block block = entity.getComponent(BlockComponent.class).getBlock();
+            Block block = entity.getComponent(BlockComponent.class).getBlock();
             Side blockDirection = block.getDirection();
 
             // convert these directions to sides relative to the facing of the block
             Set<Side> sides = Sets.newHashSet();
-            for(Direction direction : directions) {
+            for(String directionString : directions) {
+                Direction direction = Direction.valueOf(directionString);
                 sides.add(blockDirection.getRelativeSide(direction));
             }
-                  */
+
             return SideBitFlag.getSides(sides);
         }
     }

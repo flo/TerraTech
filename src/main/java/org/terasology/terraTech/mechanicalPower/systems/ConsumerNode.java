@@ -15,21 +15,11 @@
  */
 package org.terasology.terraTech.mechanicalPower.systems;
 
-import org.terasology.blockNetwork.Network;
+import org.terasology.blockNetwork.SidedLocationNetworkNode;
+import org.terasology.math.Vector3i;
 
-public class MechanicalPowerNetwork implements Network {
-    public float totalPower;
-    public int totalConsumers;
-    public int totalProducers;
-
-    @Override
-    public void mergeTo(Network network) {
-        MechanicalPowerNetwork powerNetwork = (MechanicalPowerNetwork) network;
-        powerNetwork.totalPower += totalPower;
-        totalPower = 0;
-        powerNetwork.totalConsumers += totalConsumers;
-        totalConsumers = 0;
-        powerNetwork.totalProducers += totalProducers;
-        totalProducers = 0;
+public class ConsumerNode extends SidedLocationNetworkNode {
+    public ConsumerNode(Vector3i location, byte connectionSides) {
+        super(location, connectionSides);
     }
 }

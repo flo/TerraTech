@@ -44,15 +44,12 @@ public class MechanicalPowerAuthoritySystem extends BaseComponentSystem implemen
     @In
     BlockEntityRegistry blockEntityRegistry;
     @In
-    MechanicalPowerNetwork mechanicalPowerNetwork;
+    MechanicalPowerBlockNetwork mechanicalPowerBlockNetwork;
 
 
     @Override
     public void initialise() {
-        super.initialise();
     }
-
-    //region Brute force power production loop
 
     @In
     Time time;
@@ -66,12 +63,12 @@ public class MechanicalPowerAuthoritySystem extends BaseComponentSystem implemen
         if( currentTime > nextUpdateTime) {
             nextUpdateTime = currentTime + UPDATE_INTERVAL;
 
-            for(Network network : mechanicalPowerNetwork.getNetworks()) {
+            for(Network network : mechanicalPowerBlockNetwork.getNetworks()) {
 
                 Set<EntityRef> consumers = Sets.newHashSet();
                 Set<EntityRef> producers = Sets.newHashSet();
                 // gather the consumers and producers for this network
-                for(SidedLocationNetworkNode leafNode : mechanicalPowerNetwork.getNetworkNodes(network)) {
+                for(SidedLocationNetworkNode leafNode : mechanicalPowerBlockNetwork.getNetworkNodes(network)) {
                         EntityRef entity = blockEntityRegistry.getBlockEntityAt(leafNode.location);
                         if( entity.hasComponent(MechanicalPowerConsumerComponent.class)) {
                             consumers.add(entity);
@@ -102,7 +99,4 @@ public class MechanicalPowerAuthoritySystem extends BaseComponentSystem implemen
             }
         }
     }
-
-    //endregion
-
 }

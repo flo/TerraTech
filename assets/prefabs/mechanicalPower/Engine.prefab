@@ -8,9 +8,9 @@
           "TerraTech:Engine": true
         }
       },
-    "MechanicalPowerBlockNetwork": {},
     "MechanicalPowerProducer": {
         "power": 5
     },
+    "MechanicalPowerBlockNetwork": {},
     "Network": {}
 }

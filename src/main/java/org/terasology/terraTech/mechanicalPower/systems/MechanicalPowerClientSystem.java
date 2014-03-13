@@ -15,8 +15,9 @@
  */
 package org.terasology.terraTech.mechanicalPower.systems;
 
-import com.google.common.collect.Sets;
 import org.terasology.blockNetwork.Network;
+import org.terasology.blockNetwork.NetworkNode;
+import org.terasology.blockNetwork.NetworkTopologyListener;
 import org.terasology.blockNetwork.SidedLocationNetworkNode;
 import org.terasology.entitySystem.entity.EntityBuilder;
 import org.terasology.entitySystem.entity.EntityManager;
@@ -28,7 +29,7 @@ import org.terasology.entitySystem.systems.BaseComponentSystem;
 import org.terasology.entitySystem.systems.RegisterMode;
 import org.terasology.entitySystem.systems.RegisterSystem;
 import org.terasology.itemRendering.components.AnimateRotationComponent;
-import org.terasology.itemRendering.components.RenderItemTransformComponent;
+import org.terasology.itemRendering.components.RenderItemComponent;
 import org.terasology.logic.location.LocationComponent;
 import org.terasology.math.Pitch;
 import org.terasology.math.Roll;
@@ -36,23 +37,25 @@ import org.terasology.math.Rotation;
 import org.terasology.math.Side;
 import org.terasology.math.Yaw;
 import org.terasology.registry.In;
-import org.terasology.terraTech.mechanicalPower.components.MechanicalPowerConsumerComponent;
 import org.terasology.terraTech.mechanicalPower.components.MechanicalPowerProducerComponent;
 import org.terasology.terraTech.mechanicalPower.components.RotatingAxleComponent;
 import org.terasology.world.BlockEntityRegistry;
 import org.terasology.world.block.BlockComponent;
 import org.terasology.world.block.items.BlockItemComponent;
 
-import java.util.Set;
-
 @RegisterSystem(RegisterMode.CLIENT)
-public class MechanicalPowerClientSystem extends BaseComponentSystem {
+public class MechanicalPowerClientSystem extends BaseComponentSystem implements NetworkTopologyListener {
     @In
     BlockEntityRegistry blockEntityRegistry;
     @In
     EntityManager entityManager;
     @In
-    MechanicalPowerNetwork mechanicalPowerNetwork;
+    MechanicalPowerBlockNetwork mechanicalPowerBlockNetwork;
+
+    @Override
+    public void initialise() {
+        mechanicalPowerBlockNetwork.addTopologyListener(this);
+    }
 
     @ReceiveEvent
     public void createRenderedAxle(OnAddedComponent event, EntityRef entity, RotatingAxleComponent rotatingAxle, LocationComponent location, BlockComponent block) {
@@ -64,7 +67,7 @@ public class MechanicalPowerClientSystem extends BaseComponentSystem {
         renderedEntityBuilder.saveComponent(blockItem);
 
         // rotate the rendered entity to match the block
-        RenderItemTransformComponent renderItemTransform = renderedEntityBuilder.getComponent(RenderItemTransformComponent.class);
+        RenderItemComponent renderItemTransform = renderedEntityBuilder.getComponent(RenderItemComponent.class);
         Side direction = block.getBlock().getDirection();
         Rotation rotation = getRotation(direction);
         renderItemTransform.pitch = rotation.getPitch();
@@ -74,6 +77,10 @@ public class MechanicalPowerClientSystem extends BaseComponentSystem {
 
         rotatingAxle.renderedEntity = renderedEntityBuilder.build();
         entity.saveComponent(rotatingAxle);
+
+
+        MechanicalPowerNetwork network = mechanicalPowerBlockNetwork.getNetwork(block.getPosition());
+        updateAxlesInNetwork(network);
     }
 
 
@@ -99,45 +106,25 @@ public class MechanicalPowerClientSystem extends BaseComponentSystem {
 
     @ReceiveEvent
     public void updateAxlesInNetwork(OnChangedComponent event, EntityRef entity, MechanicalPowerProducerComponent powerProducer, BlockComponent block) {
-        boolean isPowerNetworkActive = false;
-        int powerConsumers = 1;
-        float totalPower = 0;
-        Network network = mechanicalPowerNetwork.getNetwork(block.getPosition());
+        MechanicalPowerNetwork network = mechanicalPowerBlockNetwork.getNetwork(block.getPosition());
+        updateAxlesInNetwork(network);
+    }
 
-        Set<EntityRef> axleEntities = Sets.newHashSet();
+    private void updateAxlesInNetwork(MechanicalPowerNetwork network) {
+        if (network != null) {
+            float speed = network.totalPower / (network.totalConsumers + 1);
+            for (SidedLocationNetworkNode node : mechanicalPowerBlockNetwork.getNetworkNodes(network)) {
+                EntityRef nodeEntity = blockEntityRegistry.getBlockEntityAt(node.location);
 
-        for (SidedLocationNetworkNode node : mechanicalPowerNetwork.getNetworkNodes(network)) {
-            EntityRef nodeEntity = blockEntityRegistry.getBlockEntityAt(node.location);
-
-            if (nodeEntity.hasComponent(MechanicalPowerConsumerComponent.class)) {
-                powerConsumers++;
-            }
-
-            MechanicalPowerProducerComponent nodePowerProducer = nodeEntity.getComponent(MechanicalPowerProducerComponent.class);
-            if (nodePowerProducer != null) {
-                if (nodePowerProducer.active) {
-                    isPowerNetworkActive = true;
-                    totalPower += nodePowerProducer.power;
-                }
-            }
-
-            if( nodeEntity.hasComponent(RotatingAxleComponent.class)) {
-                axleEntities.add(nodeEntity);
-            }
-        }
-
-        float speed = totalPower / powerConsumers;
-
-        for (EntityRef nodeEntity : axleEntities) {
-
-            RotatingAxleComponent rotatingAxle = nodeEntity.getComponent(RotatingAxleComponent.class);
-            if (rotatingAxle != null) {
-                if (isPowerNetworkActive) {
-                    // ensure all axle rotation is turned on
-                    turnAxleOn(rotatingAxle.renderedEntity, speed);
-                } else {
-                    // ensure all axle rotation is turned off
-                    turnAxleOff(rotatingAxle.renderedEntity);
+                RotatingAxleComponent rotatingAxle = nodeEntity.getComponent(RotatingAxleComponent.class);
+                if (rotatingAxle != null) {
+                    if (network.totalPower > 0) {
+                        // ensure all axle rotation is turned on
+                        turnAxleOn(rotatingAxle.renderedEntity, speed);
+                    } else {
+                        // ensure all axle rotation is turned off
+                        turnAxleOff(rotatingAxle.renderedEntity);
+                    }
                 }
             }
         }
@@ -154,16 +141,27 @@ public class MechanicalPowerClientSystem extends BaseComponentSystem {
         } else {
 
             Rotation targetRotation = Rotation.rotate(Roll.CLOCKWISE_90);
-            RenderItemTransformComponent renderItemTransform = renderedEntity.getComponent(RenderItemTransformComponent.class);
-            if (renderItemTransform.yaw != Yaw.NONE) {
-                targetRotation = Rotation.rotate(Pitch.CLOCKWISE_90);
-            } else if (renderItemTransform.pitch != Pitch.NONE) {
-                targetRotation = Rotation.rotate(Yaw.CLOCKWISE_90);
-            } else if (renderItemTransform.roll != Roll.NONE) {
+
+            EntityRef ownerEntity = renderedEntity.getOwner();
+            BlockComponent block = ownerEntity.getComponent(BlockComponent.class);
+            Side direction = block.getBlock().getDirection();
+
+        /*    if( direction == Side.FRONT) {
                 targetRotation = Rotation.rotate(Roll.CLOCKWISE_90);
-            }
+            } else if( direction == Side.BACK) {
+                targetRotation = Rotation.rotate(Roll.CLOCKWISE_270);
+            } else if( direction == Side.LEFT) {
+                targetRotation = Rotation.rotate(Pitch.CLOCKWISE_90);
+            } else if( direction == Side.RIGHT) {
+                targetRotation = Rotation.rotate(Pitch.CLOCKWISE_270);
+            } else if( direction == Side.TOP) {
+                targetRotation = Rotation.rotate(Yaw.CLOCKWISE_90);
+            } else if( direction == Side.BOTTOM) {
+                targetRotation = Rotation.rotate(Yaw.CLOCKWISE_270);
+            }   */
 
             animateRotation = new AnimateRotationComponent();
+            animateRotation.isSynchronized = true;
             animateRotation.pitch = targetRotation.getPitch();
             animateRotation.roll = targetRotation.getRoll();
             animateRotation.yaw = targetRotation.getYaw();
@@ -174,5 +172,25 @@ public class MechanicalPowerClientSystem extends BaseComponentSystem {
 
     private void turnAxleOff(EntityRef renderedEntity) {
         renderedEntity.removeComponent(AnimateRotationComponent.class);
+    }
+
+    @Override
+    public void networkAdded(Network network) {
+
+    }
+
+    @Override
+    public void networkingNodeAdded(Network network, NetworkNode networkingNode) {
+        updateAxlesInNetwork((MechanicalPowerNetwork) network);
+    }
+
+    @Override
+    public void networkingNodeRemoved(Network network, NetworkNode networkingNode) {
+        updateAxlesInNetwork((MechanicalPowerNetwork) network);
+    }
+
+    @Override
+    public void networkRemoved(Network network) {
+
     }
 }

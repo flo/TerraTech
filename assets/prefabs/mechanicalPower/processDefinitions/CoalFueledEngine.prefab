@@ -8,6 +8,6 @@
     }
   },
   "ActivateEngineOutput": {
-    "activateTime": 20000
+    "activateTime": 10000
   }
 }

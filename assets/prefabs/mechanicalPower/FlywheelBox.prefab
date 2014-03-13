@@ -1,7 +1,13 @@
 {
-    "MechanicalPowerBlockNetwork": {},
-    "MechanicalPowerConsumer": {
-        "maximumStoredPower": 500
+    "MachineDefinition": {
     },
+    "Workstation": {
+        "uiPrefab": "TerraTech:FlywheelBox",
+        "supportedProcessTypes": {}
+      },
+    "MechanicalPowerConsumer": {
+        "maximumStoredPower": 100
+    },
+    "MechanicalPowerBlockNetwork": {},
     "Network": {}
 }

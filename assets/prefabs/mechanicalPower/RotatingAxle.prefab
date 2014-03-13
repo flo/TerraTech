@@ -1,7 +1,7 @@
 {
     "BlockItem": {
     },
-    "RenderItemTransform": {
+    "RenderItem": {
         "size": 1
     }
 }

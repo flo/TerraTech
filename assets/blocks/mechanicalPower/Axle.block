@@ -1,10 +1,14 @@
 {
     "displayName": "Axle",
+    "tile": "Core:Plank",
     "entity":
     {
         prefab : "Axle"
     },
     "shape": "axle",
-    "rotation": "directionalPlacement",
+    "rotation" : "surfacePlacement",
+    "sides" : { },
+    "top" : { },
+    "bottom" : { },
     "invisible": true
 }

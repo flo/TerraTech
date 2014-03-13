@@ -1,6 +1,5 @@
 {
   "displayName": "Conveyor Tube",
-  "rotation": "directionalPlacement",
   "tiles": {
     "all": "tube",
     "bottom": "conveyorbelt_top"
@@ -8,6 +7,8 @@
   "entity": {
     "prefab": "ConveyorTube"
   },
+  "rotation" : "surfacePlacement",
+  "sides" : { },
   "translucent": true,
   "shadowCasting": false,
   "doubleSided": true
