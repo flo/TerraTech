@@ -79,7 +79,7 @@ public class MechanicalPowerClientSystem extends BaseComponentSystem implements 
         entity.saveComponent(rotatingAxle);
 
 
-        MechanicalPowerNetwork network = mechanicalPowerBlockNetwork.getNetwork(block.getPosition());
+        Network network = mechanicalPowerBlockNetwork.getNetwork(block.getPosition());
         updateAxlesInNetwork(network);
     }
 
@@ -106,19 +106,20 @@ public class MechanicalPowerClientSystem extends BaseComponentSystem implements 
 
     @ReceiveEvent
     public void updateAxlesInNetwork(OnChangedComponent event, EntityRef entity, MechanicalPowerProducerComponent powerProducer, BlockComponent block) {
-        MechanicalPowerNetwork network = mechanicalPowerBlockNetwork.getNetwork(block.getPosition());
+        Network network = mechanicalPowerBlockNetwork.getNetwork(block.getPosition());
         updateAxlesInNetwork(network);
     }
 
-    private void updateAxlesInNetwork(MechanicalPowerNetwork network) {
+    private void updateAxlesInNetwork(Network network) {
         if (network != null) {
-            float speed = network.totalPower / (network.totalConsumers + 1);
+            MechanicalPowerNetworkDetails details = mechanicalPowerBlockNetwork.getMechanicalPowerNetwork(network);
+            float speed = details.totalPower / (details.totalConsumers + 1);
             for (SidedLocationNetworkNode node : mechanicalPowerBlockNetwork.getNetworkNodes(network)) {
                 EntityRef nodeEntity = blockEntityRegistry.getBlockEntityAt(node.location);
 
                 RotatingAxleComponent rotatingAxle = nodeEntity.getComponent(RotatingAxleComponent.class);
                 if (rotatingAxle != null) {
-                    if (network.totalPower > 0) {
+                    if (details.totalPower > 0) {
                         // ensure all axle rotation is turned on
                         turnAxleOn(rotatingAxle.renderedEntity, speed);
                     } else {
@@ -142,11 +143,12 @@ public class MechanicalPowerClientSystem extends BaseComponentSystem implements 
 
             Rotation targetRotation = Rotation.rotate(Roll.CLOCKWISE_90);
 
+            /*
             EntityRef ownerEntity = renderedEntity.getOwner();
             BlockComponent block = ownerEntity.getComponent(BlockComponent.class);
             Side direction = block.getBlock().getDirection();
 
-        /*    if( direction == Side.FRONT) {
+            if( direction == Side.FRONT) {
                 targetRotation = Rotation.rotate(Roll.CLOCKWISE_90);
             } else if( direction == Side.BACK) {
                 targetRotation = Rotation.rotate(Roll.CLOCKWISE_270);
@@ -181,12 +183,12 @@ public class MechanicalPowerClientSystem extends BaseComponentSystem implements 
 
     @Override
     public void networkingNodeAdded(Network network, NetworkNode networkingNode) {
-        updateAxlesInNetwork((MechanicalPowerNetwork) network);
+        updateAxlesInNetwork(network);
     }
 
     @Override
     public void networkingNodeRemoved(Network network, NetworkNode networkingNode) {
-        updateAxlesInNetwork((MechanicalPowerNetwork) network);
+        updateAxlesInNetwork(network);
     }
 
     @Override

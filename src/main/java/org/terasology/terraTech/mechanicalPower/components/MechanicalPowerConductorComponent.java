@@ -15,13 +15,7 @@
  */
 package org.terasology.terraTech.mechanicalPower.components;
 
-import com.google.common.collect.Sets;
 import org.terasology.entitySystem.Component;
-import org.terasology.world.block.ForceBlockActive;
 
-import java.util.Set;
-
-@ForceBlockActive
-public class MechanicalPowerBlockNetworkComponent implements Component {
-    public Set<String> directions = Sets.newHashSet();
+public class MechanicalPowerConductorComponent implements Component {
 }

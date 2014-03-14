@@ -21,8 +21,9 @@ import org.terasology.blockNetwork.SidedLocationNetworkNode;
 import org.terasology.math.Vector3i;
 
 public interface MechanicalPowerBlockNetwork {
-    MechanicalPowerNetwork getNetwork(Vector3i position);
+    Network getNetwork(Vector3i position);
     Iterable<SidedLocationNetworkNode> getNetworkNodes(Network network);
-    Iterable<MechanicalPowerNetwork> getNetworks();
+    Iterable<Network> getNetworks();
     void addTopologyListener(NetworkTopologyListener networkTopologyListener);
+    MechanicalPowerNetworkDetails getMechanicalPowerNetwork(Network network);
 }

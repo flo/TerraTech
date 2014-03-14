@@ -5,6 +5,7 @@
             "BACKWARD"
         ]
     },
+    "MechanicalPowerConductor": {},
     "RotatingAxle": {
         "renderedBlockFamily": "Core:Plank:TerraTech:Axle"
     },
