@@ -34,9 +34,9 @@ public class FlywheelBoxWindow extends DefaultMachineWindow {
     public void update(float delta) {
         super.update(delta);
 
-        if( station.exists()) {
+        if (station.exists()) {
             MechanicalPowerConsumerComponent consumer = station.getComponent(MechanicalPowerConsumerComponent.class);
-            if( consumer != null) {
+            if (consumer != null) {
                 float value = consumer.currentStoredPower / consumer.maximumStoredPower;
                 powerMeter.setValue(value);
             }

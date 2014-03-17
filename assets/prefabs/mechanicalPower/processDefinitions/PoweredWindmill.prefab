@@ -1,0 +1,13 @@
+{
+  "ProcessDefinition": {
+    "processType": "TerraTech:Windmill"
+  },
+  "ItemPrefabInput": {
+    "itemCounts": {
+      "TerraTech:WindmillSail": 0
+    }
+  },
+  "ActivateEngineOutput": {
+    "activateTime": 10000
+  }
+}

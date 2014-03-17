@@ -1,0 +1,11 @@
+{
+    "displayName": "Windmill",
+    "entity": {
+        "prefab": "Windmill"
+    },
+    "tiles": {
+        "all": "windmill",
+        "front": "windmill_front"
+    },
+    "rotation" : "horizontal"
+}

@@ -1,0 +1,11 @@
+{
+  "parent": "engine:iconItem",
+  "Item": {
+    "icon": "mechanicalPower.WindmillSail",
+    "stackId": "mechanicalPower.WindmillSail",
+    "renderWithIcon": true
+  },
+  "DisplayName": {
+    "name": "Windmill Sail"
+  }
+}

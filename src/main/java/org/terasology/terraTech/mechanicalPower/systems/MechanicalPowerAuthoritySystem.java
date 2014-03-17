@@ -38,6 +38,7 @@ import java.util.Set;
 public class MechanicalPowerAuthoritySystem extends BaseComponentSystem implements UpdateSubscriberSystem {
 
     private static final Logger logger = LoggerFactory.getLogger(MechanicalPowerAuthoritySystem.class);
+    static final long UPDATE_INTERVAL = 1000;
 
     @In
     WorldProvider worldProvider;
@@ -45,52 +46,49 @@ public class MechanicalPowerAuthoritySystem extends BaseComponentSystem implemen
     BlockEntityRegistry blockEntityRegistry;
     @In
     MechanicalPowerBlockNetwork mechanicalPowerBlockNetwork;
+    @In
+    Time time;
 
+    long nextUpdateTime;
 
     @Override
     public void initialise() {
     }
 
-    @In
-    Time time;
-
-    long nextUpdateTime;
-    static final long UPDATE_INTERVAL = 1000;
-
     @Override
     public void update(float delta) {
-         long currentTime = time.getGameTimeInMs();
-        if( currentTime > nextUpdateTime) {
+        long currentTime = time.getGameTimeInMs();
+        if (currentTime > nextUpdateTime) {
             nextUpdateTime = currentTime + UPDATE_INTERVAL;
 
-            for(Network network : mechanicalPowerBlockNetwork.getNetworks()) {
+            for (Network network : mechanicalPowerBlockNetwork.getNetworks()) {
 
                 Set<EntityRef> consumers = Sets.newHashSet();
                 Set<EntityRef> producers = Sets.newHashSet();
                 // gather the consumers and producers for this network
-                for(SidedLocationNetworkNode leafNode : mechanicalPowerBlockNetwork.getNetworkNodes(network)) {
-                        EntityRef entity = blockEntityRegistry.getBlockEntityAt(leafNode.location);
-                        if( entity.hasComponent(MechanicalPowerConsumerComponent.class)) {
-                            consumers.add(entity);
-                        }
-                        if( entity.hasComponent(MechanicalPowerProducerComponent.class)) {
-                            producers.add(entity);
-                        }
+                for (SidedLocationNetworkNode leafNode : mechanicalPowerBlockNetwork.getNetworkNodes(network)) {
+                    EntityRef entity = blockEntityRegistry.getBlockEntityAt(leafNode.location);
+                    if (entity.hasComponent(MechanicalPowerConsumerComponent.class)) {
+                        consumers.add(entity);
+                    }
+                    if (entity.hasComponent(MechanicalPowerProducerComponent.class)) {
+                        producers.add(entity);
+                    }
                 }
 
                 float totalPower = 0;
-                for(EntityRef producerEntity : producers) {
+                for (EntityRef producerEntity : producers) {
                     MechanicalPowerProducerComponent producer = producerEntity.getComponent(MechanicalPowerProducerComponent.class);
-                    if( producer.active ) {
+                    if (producer.active) {
                         totalPower += producer.power;
                     }
                 }
 
-                if( totalPower > 0 && consumers.size() > 0) {
+                if (totalPower > 0 && consumers.size() > 0) {
                     float powerToEachConsumer = totalPower / consumers.size();
-                    for(EntityRef consumerEntity : consumers) {
+                    for (EntityRef consumerEntity : consumers) {
                         MechanicalPowerConsumerComponent consumer = consumerEntity.getComponent(MechanicalPowerConsumerComponent.class);
-                        if( consumer.currentStoredPower < consumer.maximumStoredPower) {
+                        if (consumer.currentStoredPower < consumer.maximumStoredPower) {
                             consumer.currentStoredPower = Math.min(consumer.currentStoredPower + powerToEachConsumer, consumer.maximumStoredPower);
                             consumerEntity.saveComponent(consumer);
                         }

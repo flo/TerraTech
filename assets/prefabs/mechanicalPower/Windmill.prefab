@@ -5,12 +5,14 @@
     "Workstation": {
         "uiPrefab": "Machines:DefaultMachine",
         "supportedProcessTypes": {
-          "TerraTech:Engine": true
+          "TerraTech:Windmill": true
         }
       },
     "MechanicalPowerProducer": {
-        "power":10
+        "power":5
     },
     "MechanicalPowerBlockNetwork": {},
+    "DropBlockInventory": {},
+    "RenderWindmillSail": {},
     "Network": {}
 }

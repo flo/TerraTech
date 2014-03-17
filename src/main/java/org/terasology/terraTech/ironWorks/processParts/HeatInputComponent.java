@@ -27,7 +27,7 @@ public class HeatInputComponent implements Component, ProcessPart {
     public boolean validateBeforeStart(EntityRef instigator, EntityRef workstation, EntityRef processEntity) {
         HeatedComponent heatedComponent = workstation.getComponent(HeatedComponent.class);
         if (heatedComponent != null) {
-            if (heatedComponent.temperature >= temperature ) {
+            if (heatedComponent.temperature >= temperature) {
                 return true;
             }
         }

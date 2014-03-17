@@ -60,11 +60,10 @@ import java.util.Set;
 @RegisterSystem
 @Share(MechanicalPowerBlockNetwork.class)
 public class MechanicalPowerBlockNetworkImpl extends BaseComponentSystem implements NetworkTopologyListener, MechanicalPowerBlockNetwork {
+    private static final Logger logger = LoggerFactory.getLogger(MechanicalPowerBlockNetworkImpl.class);
 
     @In
     BlockEntityRegistry blockEntityRegistry;
-
-    private static final Logger logger = LoggerFactory.getLogger(MechanicalPowerBlockNetworkImpl.class);
 
     private BlockNetwork blockNetwork;
     private Map<Vector3i, SidedLocationNetworkNode> networkNodes = Maps.newHashMap();
@@ -120,11 +119,14 @@ public class MechanicalPowerBlockNetworkImpl extends BaseComponentSystem impleme
         Vector3i position = block.getPosition();
         byte connectionSides = calculateConnectionSides(networkItem, block);
 
-        if(entity.hasComponent(MechanicalPowerProducerComponent.class)) {
-            networkNode = new ProducerNode(position, connectionSides);
-        }else if(entity.hasComponent(MechanicalPowerConsumerComponent.class)) {
+        if (entity.hasComponent(MechanicalPowerProducerComponent.class)) {
+            MechanicalPowerProducerComponent producer = entity.getComponent(MechanicalPowerProducerComponent.class);
+            ProducerNode producerNode = new ProducerNode(position, connectionSides);
+            producerNode.power = producer.active ? producer.power : 0;
+            networkNode = producerNode;
+        } else if (entity.hasComponent(MechanicalPowerConsumerComponent.class)) {
             networkNode = new ConsumerNode(position, connectionSides);
-        }else {
+        } else {
             networkNode = new SidedLocationNetworkNode(position, connectionSides);
         }
 
@@ -135,12 +137,12 @@ public class MechanicalPowerBlockNetworkImpl extends BaseComponentSystem impleme
     private byte calculateConnectionSides(MechanicalPowerBlockNetworkComponent networkItem, BlockComponent block) {
         Side blockDirection = block.getBlock().getDirection();
         byte connectionSides = 0;
-        if(networkItem.directions.size() == 0) {
-            connectionSides = (byte)63;
-        }else {
+        if (networkItem.directions.size() == 0) {
+            connectionSides = (byte) 63;
+        } else {
             // convert these directions to sides relative to the facing of the block
             Set<Side> sides = Sets.newHashSet();
-            for(String directionString : networkItem.directions) {
+            for (String directionString : networkItem.directions) {
                 Direction direction = Direction.valueOf(directionString);
                 sides.add(blockDirection.getRelativeSide(direction));
             }
@@ -166,14 +168,14 @@ public class MechanicalPowerBlockNetworkImpl extends BaseComponentSystem impleme
     //region adding and removing from the block network
 
     // this event can happen generically because the full entity will be retrieved
-    @ReceiveEvent (priority = EventPriority.PRIORITY_CRITICAL)
+    @ReceiveEvent(priority = EventPriority.PRIORITY_CRITICAL)
     public void createNetworkNodesOnWorldLoad(OnActivatedBlocks event, EntityRef blockType, MechanicalPowerBlockNetworkComponent mechanicalPowerBlockNetwork) {
         for (Vector3i location : event.getBlockPositions()) {
             addNetworkNode(blockEntityRegistry.getBlockEntityAt(location));
         }
     }
 
-    @ReceiveEvent (priority = EventPriority.PRIORITY_CRITICAL)
+    @ReceiveEvent(priority = EventPriority.PRIORITY_CRITICAL)
     public void removeNetworkNodesOnWorldUnload(BeforeDeactivateBlocks event, EntityRef blockType, MechanicalPowerBlockNetworkComponent mechanicalPowerBlockNetwork) {
         for (Vector3i location : event.getBlockPositions()) {
             removeNetworkNode(location);
@@ -181,7 +183,7 @@ public class MechanicalPowerBlockNetworkImpl extends BaseComponentSystem impleme
     }
 
     // this event can happen generically because we are only updating the connection sides
-    @ReceiveEvent (priority = EventPriority.PRIORITY_CRITICAL)
+    @ReceiveEvent(priority = EventPriority.PRIORITY_CRITICAL)
     public void updateNetworkNode(OnChangedComponent event, EntityRef entity, MechanicalPowerBlockNetworkComponent mechanicalPowerBlockNetwork, BlockComponent block) {
         byte connectingOnSides = calculateConnectionSides(mechanicalPowerBlockNetwork, block);
         final Vector3i location = block.getPosition();
@@ -189,59 +191,48 @@ public class MechanicalPowerBlockNetworkImpl extends BaseComponentSystem impleme
     }
 
     // this event can happen generically because it is position based
-    @ReceiveEvent (priority = EventPriority.PRIORITY_CRITICAL)
+    @ReceiveEvent(priority = EventPriority.PRIORITY_CRITICAL)
     public void removeNetworkNode(BeforeDeactivateComponent event, EntityRef entity, MechanicalPowerBlockNetworkComponent mechanicalPowerBlockNetwork, BlockComponent block) {
         removeNetworkNode(block.getPosition());
     }
 
-    @ReceiveEvent (priority = EventPriority.PRIORITY_CRITICAL)
-    public void createProducerNetworkNode(OnActivatedComponent event, EntityRef entity, MechanicalPowerProducerComponent type, MechanicalPowerBlockNetworkComponent mechanicalPowerBlockNetwork, BlockComponent block) {
+    @ReceiveEvent(priority = EventPriority.PRIORITY_CRITICAL)
+    public void createProducerNetworkNode(OnActivatedComponent event,
+                                          EntityRef entity,
+                                          MechanicalPowerProducerComponent type,
+                                          MechanicalPowerBlockNetworkComponent mechanicalPowerBlockNetwork,
+                                          BlockComponent block) {
         addNetworkNode(entity);
     }
 
-    @ReceiveEvent (priority = EventPriority.PRIORITY_CRITICAL)
-    public void createConsumerNetworkNode(OnActivatedComponent event, EntityRef entity, MechanicalPowerConsumerComponent type, MechanicalPowerBlockNetworkComponent mechanicalPowerBlockNetwork, BlockComponent block) {
+    @ReceiveEvent(priority = EventPriority.PRIORITY_CRITICAL)
+    public void createConsumerNetworkNode(OnActivatedComponent event,
+                                          EntityRef entity,
+                                          MechanicalPowerConsumerComponent type,
+                                          MechanicalPowerBlockNetworkComponent mechanicalPowerBlockNetwork,
+                                          BlockComponent block) {
         addNetworkNode(entity);
     }
 
-    @ReceiveEvent (priority = EventPriority.PRIORITY_CRITICAL)
-    public void createConductorNetworkNode(OnActivatedComponent event, EntityRef entity, MechanicalPowerConductorComponent type, MechanicalPowerBlockNetworkComponent mechanicalPowerBlockNetwork, BlockComponent block) {
+    @ReceiveEvent(priority = EventPriority.PRIORITY_CRITICAL)
+    public void createConductorNetworkNode(OnActivatedComponent event,
+                                           EntityRef entity,
+                                           MechanicalPowerConductorComponent type,
+                                           MechanicalPowerBlockNetworkComponent mechanicalPowerBlockNetwork,
+                                           BlockComponent block) {
         addNetworkNode(entity);
     }
 
-    @ReceiveEvent (priority = EventPriority.PRIORITY_CRITICAL)
+    @ReceiveEvent(priority = EventPriority.PRIORITY_CRITICAL)
     public void updateCurrentPowerInNetwork(OnChangedComponent event, EntityRef entity, MechanicalPowerProducerComponent producer, BlockComponent block) {
         Vector3i location = block.getPosition();
-        ProducerNode producerNode = getProducerNode(location);
-        // save the current power output so we can remove it if the node is removed
-        producerNode.power = producer.active ? producer.power : 0;
+        if (networkNodes.containsKey(location)) {
+            ProducerNode producerNode = (ProducerNode) networkNodes.get(location);
+            // save the current power output so we can remove it if the node is removed
+            producerNode.power = producer.active ? producer.power : 0;
 
-        MechanicalPowerNetworkDetails network = getMechanicalPowerNetwork(getNetwork(location));
-        network.totalPower += producer.active ? producer.power : -producer.power;
-    }
-
-    private ProducerNode getProducerNode(Vector3i location) {
-        SidedLocationNetworkNode networkNode = networkNodes.get(location);
-        if( networkNode instanceof  ProducerNode) {
-            return (ProducerNode) networkNode;
-        }else {
-            // upgrade it
-            ProducerNode producerNode = new ProducerNode(networkNode.location, networkNode.connectionSides);
-            blockNetwork.updateNetworkingBlock(networkNode, producerNode);
-            networkNodes.put(location, producerNode);
-            return producerNode;
-        }
-    }
-    private ConsumerNode getConsumerNode(Vector3i location) {
-        SidedLocationNetworkNode networkNode = networkNodes.get(location);
-        if( networkNode instanceof  ConsumerNode) {
-            return (ConsumerNode) networkNode;
-        }else {
-            // upgrade it
-            ConsumerNode consumerNode = new ConsumerNode(networkNode.location, networkNode.connectionSides);
-            blockNetwork.updateNetworkingBlock(networkNode, consumerNode);
-            networkNodes.put(location, consumerNode);
-            return consumerNode;
+            MechanicalPowerNetworkDetails network = getMechanicalPowerNetwork(getNetwork(location));
+            network.totalPower += producer.active ? producer.power : -producer.power;
         }
     }
 
@@ -255,6 +246,8 @@ public class MechanicalPowerBlockNetworkImpl extends BaseComponentSystem impleme
         MechanicalPowerNetworkDetails powerNetwork = getMechanicalPowerNetwork(network);
 
         if (networkingNode instanceof ProducerNode) {
+            ProducerNode producerNode = (ProducerNode) networkingNode;
+            powerNetwork.totalPower += producerNode.power;
             powerNetwork.totalProducers++;
         } else if (networkingNode instanceof ConsumerNode) {
             powerNetwork.totalConsumers++;

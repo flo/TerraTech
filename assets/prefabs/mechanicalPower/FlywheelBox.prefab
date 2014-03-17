@@ -6,7 +6,7 @@
         "supportedProcessTypes": {}
       },
     "MechanicalPowerConsumer": {
-        "maximumStoredPower": 100
+        "maximumStoredPower": 200
     },
     "MechanicalPowerBlockNetwork": {},
     "Network": {}

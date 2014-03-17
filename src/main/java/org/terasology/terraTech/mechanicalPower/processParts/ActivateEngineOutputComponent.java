@@ -29,7 +29,7 @@ public class ActivateEngineOutputComponent implements Component, ProcessPart {
     @Override
     public boolean validateBeforeStart(EntityRef instigator, EntityRef workstation, EntityRef processEntity) {
         MechanicalPowerProducerComponent producer = workstation.getComponent(MechanicalPowerProducerComponent.class);
-        if (producer != null && producer.active == false) {
+        if (producer != null && producer.active) {
             Set<String> results = Sets.newHashSet();
             results.add("");
             return true;
