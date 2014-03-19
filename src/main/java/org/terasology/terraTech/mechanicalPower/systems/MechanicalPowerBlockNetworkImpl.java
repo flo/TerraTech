@@ -24,7 +24,6 @@ import org.terasology.blockNetwork.BlockNetwork;
 import org.terasology.blockNetwork.Network;
 import org.terasology.blockNetwork.NetworkNode;
 import org.terasology.blockNetwork.NetworkTopologyListener;
-import org.terasology.blockNetwork.SimpleNetwork;
 import org.terasology.entitySystem.entity.EntityRef;
 import org.terasology.entitySystem.entity.lifecycleEvents.BeforeDeactivateComponent;
 import org.terasology.entitySystem.entity.lifecycleEvents.OnActivatedComponent;
@@ -77,12 +76,12 @@ public class MechanicalPowerBlockNetworkImpl extends BaseComponentSystem impleme
 
     @Override
     public Network getNetwork(Vector3i position) {
-        return blockNetwork.findNetworkWithNetworkingBlock(networkNodes.get(position));
+        return blockNetwork.getNetworkWithNetworkingBlock(networkNodes.get(position));
     }
 
     @Override
     public Iterable<NetworkNode> getNetworkNodes(Network network) {
-        Iterable<NetworkNode> nodes = ((SimpleNetwork) network).getNetworkingNodes();
+        Iterable<NetworkNode> nodes = network.getNetworkingNodes();
 
         return Iterables.filter(nodes, NetworkNode.class);
     }
