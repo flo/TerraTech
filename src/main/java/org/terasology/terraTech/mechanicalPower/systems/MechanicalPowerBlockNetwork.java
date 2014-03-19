@@ -16,14 +16,14 @@
 package org.terasology.terraTech.mechanicalPower.systems;
 
 import org.terasology.blockNetwork.Network;
+import org.terasology.blockNetwork.NetworkNode;
 import org.terasology.blockNetwork.NetworkTopologyListener;
-import org.terasology.blockNetwork.SidedLocationNetworkNode;
 import org.terasology.math.Vector3i;
 
 public interface MechanicalPowerBlockNetwork {
     Network getNetwork(Vector3i position);
 
-    Iterable<SidedLocationNetworkNode> getNetworkNodes(Network network);
+    Iterable<NetworkNode> getNetworkNodes(Network network);
 
     Iterable<Network> getNetworks();
 

@@ -15,10 +15,10 @@
  */
 package org.terasology.terraTech.mechanicalPower.systems;
 
-import org.terasology.blockNetwork.SidedLocationNetworkNode;
+import org.terasology.blockNetwork.NetworkNode;
 import org.terasology.math.Vector3i;
 
-public class ConsumerNode extends SidedLocationNetworkNode {
+public class ConsumerNode extends NetworkNode {
     public ConsumerNode(Vector3i location, byte connectionSides) {
         super(location, connectionSides);
     }

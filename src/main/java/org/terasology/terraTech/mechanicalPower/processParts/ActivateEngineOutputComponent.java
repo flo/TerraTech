@@ -15,13 +15,10 @@
  */
 package org.terasology.terraTech.mechanicalPower.processParts;
 
-import com.google.common.collect.Sets;
 import org.terasology.entitySystem.Component;
 import org.terasology.entitySystem.entity.EntityRef;
 import org.terasology.terraTech.mechanicalPower.components.MechanicalPowerProducerComponent;
 import org.terasology.workstation.process.ProcessPart;
-
-import java.util.Set;
 
 public class ActivateEngineOutputComponent implements Component, ProcessPart {
     public long activateTime;
@@ -29,9 +26,7 @@ public class ActivateEngineOutputComponent implements Component, ProcessPart {
     @Override
     public boolean validateBeforeStart(EntityRef instigator, EntityRef workstation, EntityRef processEntity) {
         MechanicalPowerProducerComponent producer = workstation.getComponent(MechanicalPowerProducerComponent.class);
-        if (producer != null && producer.active) {
-            Set<String> results = Sets.newHashSet();
-            results.add("");
+        if (producer != null && !producer.active) {
             return true;
         }
         return false;

@@ -1,0 +1,18 @@
+{
+  "ProcessDefinition": {
+    "processType": "TerraTech:Assembly"
+  },
+  "ProcessingTime": {
+    "duration": 2000
+  },
+  "BlockFamilyInput": {
+    "blockCounts": {
+      "Core:Stone": 1
+    }
+  },
+  "ItemPrefabOutput": {
+    "itemCounts": {
+      "TerraTech:StoneTool": 1
+    }
+  }
+}

@@ -1,0 +1,21 @@
+{
+    "ProcessDefinition": {
+        "processType": "TerraTech:Assembly"
+    },
+    "ProcessingTime": {
+        "duration": 1000
+    },
+    "RequirementInput": {
+        "requirements": ["Hammer"]
+    },
+    "ItemPrefabInput": {
+        "itemCounts": {
+            "TerraTech:PlantMatter": 1
+        }
+    },
+    "ItemPrefabOutput": {
+        "itemCounts": {
+            "TerraTech:String": 1
+        }
+    }
+}

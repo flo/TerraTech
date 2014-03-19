@@ -43,22 +43,23 @@ public class TheHumanMachineAuthoritySystem extends BaseComponentSystem {
 
     @ReceiveEvent(components = {CharacterComponent.class})
     public void onPlayerSpawn(OnPlayerSpawnedEvent event, EntityRef player) {
-        //addTheHumanMachine(player);
+        addTheHumanMachine(player);
     }
 
-    private void addTheHumanMachine(EntityRef player) {
+    private TheHumanMachineComponent addTheHumanMachine(EntityRef player) {
         EntityRef machineEntity = entityManager.create("TheHumanMachine");
         TheHumanMachineComponent theHumanAutomaticProcessingComponent = new TheHumanMachineComponent();
         theHumanAutomaticProcessingComponent.machineEntity = machineEntity;
         player.addComponent(theHumanAutomaticProcessingComponent);
+        return theHumanAutomaticProcessingComponent;
     }
 
 
     @ReceiveEvent
-    public void onPlayerProcessingButton(PlayerProcessingButton event, EntityRef player) {
+    public void onPlayerProcessingButton(PlayerProcessingButton event, EntityRef player, CharacterComponent character) {
         TheHumanMachineComponent theHumanMachine = player.getComponent(TheHumanMachineComponent.class);
         if (theHumanMachine == null) {
-            addTheHumanMachine(player);
+            theHumanMachine = addTheHumanMachine(player);
         }
 
         theHumanMachine.machineEntity.send(new OpenWorkstationRequest());

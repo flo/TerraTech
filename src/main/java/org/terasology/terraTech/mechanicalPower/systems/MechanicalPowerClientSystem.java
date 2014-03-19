@@ -18,7 +18,6 @@ package org.terasology.terraTech.mechanicalPower.systems;
 import org.terasology.blockNetwork.Network;
 import org.terasology.blockNetwork.NetworkNode;
 import org.terasology.blockNetwork.NetworkTopologyListener;
-import org.terasology.blockNetwork.SidedLocationNetworkNode;
 import org.terasology.entitySystem.entity.EntityBuilder;
 import org.terasology.entitySystem.entity.EntityManager;
 import org.terasology.entitySystem.entity.EntityRef;
@@ -42,6 +41,8 @@ import org.terasology.terraTech.mechanicalPower.components.RotatingAxleComponent
 import org.terasology.world.BlockEntityRegistry;
 import org.terasology.world.block.BlockComponent;
 import org.terasology.world.block.items.BlockItemComponent;
+
+import java.util.Set;
 
 @RegisterSystem(RegisterMode.CLIENT)
 public class MechanicalPowerClientSystem extends BaseComponentSystem implements NetworkTopologyListener {
@@ -67,13 +68,13 @@ public class MechanicalPowerClientSystem extends BaseComponentSystem implements 
         renderedEntityBuilder.saveComponent(blockItem);
 
         // rotate the rendered entity to match the block
-        RenderItemComponent renderItemTransform = renderedEntityBuilder.getComponent(RenderItemComponent.class);
+        RenderItemComponent itemTransform = renderedEntityBuilder.getComponent(RenderItemComponent.class);
         Side direction = block.getBlock().getDirection();
         Rotation rotation = getRotation(direction);
-        renderItemTransform.pitch = rotation.getPitch();
-        renderItemTransform.roll = rotation.getRoll();
-        renderItemTransform.yaw = rotation.getYaw();
-        renderedEntityBuilder.saveComponent(renderItemTransform);
+        itemTransform.pitch = rotation.getPitch();
+        itemTransform.roll = rotation.getRoll();
+        itemTransform.yaw = rotation.getYaw();
+        renderedEntityBuilder.saveComponent(itemTransform);
 
         rotatingAxle.renderedEntity = renderedEntityBuilder.build();
         entity.saveComponent(rotatingAxle);
@@ -84,7 +85,7 @@ public class MechanicalPowerClientSystem extends BaseComponentSystem implements 
     }
 
 
-    public Rotation getRotation(Side side) {
+    public static Rotation getRotation(Side side) {
         Pitch pitch = Pitch.NONE;
         Yaw yaw = Yaw.NONE;
 
@@ -114,17 +115,19 @@ public class MechanicalPowerClientSystem extends BaseComponentSystem implements 
         if (network != null) {
             MechanicalPowerNetworkDetails details = mechanicalPowerBlockNetwork.getMechanicalPowerNetwork(network);
             float speed = details.totalPower / (details.totalConsumers + 1);
-            for (SidedLocationNetworkNode node : mechanicalPowerBlockNetwork.getNetworkNodes(network)) {
-                EntityRef nodeEntity = blockEntityRegistry.getBlockEntityAt(node.location);
+            for (NetworkNode node : mechanicalPowerBlockNetwork.getNetworkNodes(network)) {
+                if (blockEntityRegistry.hasPermanentBlockEntity(node.location.toVector3i())) {
+                    EntityRef nodeEntity = blockEntityRegistry.getBlockEntityAt(node.location.toVector3i());
 
-                RotatingAxleComponent rotatingAxle = nodeEntity.getComponent(RotatingAxleComponent.class);
-                if (rotatingAxle != null) {
-                    if (details.totalPower > 0) {
-                        // ensure all axle rotation is turned on
-                        turnAxleOn(rotatingAxle.renderedEntity, speed);
-                    } else {
-                        // ensure all axle rotation is turned off
-                        turnAxleOff(rotatingAxle.renderedEntity);
+                    RotatingAxleComponent rotatingAxle = nodeEntity.getComponent(RotatingAxleComponent.class);
+                    if (rotatingAxle != null) {
+                        if (details.totalPower > 0) {
+                            // ensure all axle rotation is turned on
+                            turnAxleOn(rotatingAxle.renderedEntity, speed);
+                        } else {
+                            // ensure all axle rotation is turned off
+                            turnAxleOff(rotatingAxle.renderedEntity);
+                        }
                     }
                 }
             }
@@ -142,25 +145,6 @@ public class MechanicalPowerClientSystem extends BaseComponentSystem implements 
         } else {
 
             Rotation targetRotation = Rotation.rotate(Roll.CLOCKWISE_90);
-
-            /*
-            EntityRef ownerEntity = renderedEntity.getOwner();
-            BlockComponent block = ownerEntity.getComponent(BlockComponent.class);
-            Side direction = block.getBlock().getDirection();
-
-            if( direction == Side.FRONT) {
-                targetRotation = Rotation.rotate(Roll.CLOCKWISE_90);
-            } else if( direction == Side.BACK) {
-                targetRotation = Rotation.rotate(Roll.CLOCKWISE_270);
-            } else if( direction == Side.LEFT) {
-                targetRotation = Rotation.rotate(Pitch.CLOCKWISE_90);
-            } else if( direction == Side.RIGHT) {
-                targetRotation = Rotation.rotate(Pitch.CLOCKWISE_270);
-            } else if( direction == Side.TOP) {
-                targetRotation = Rotation.rotate(Yaw.CLOCKWISE_90);
-            } else if( direction == Side.BOTTOM) {
-                targetRotation = Rotation.rotate(Yaw.CLOCKWISE_270);
-            }   */
 
             animateRotation = new AnimateRotationComponent();
             animateRotation.isSynchronized = true;
@@ -182,13 +166,23 @@ public class MechanicalPowerClientSystem extends BaseComponentSystem implements 
     }
 
     @Override
-    public void networkingNodeAdded(Network network, NetworkNode networkingNode) {
+    public void networkingNodesAdded(Network network, Set<NetworkNode> networkingNode) {
         updateAxlesInNetwork(network);
     }
 
     @Override
-    public void networkingNodeRemoved(Network network, NetworkNode networkingNode) {
+    public void networkingNodesRemoved(Network network, Set<NetworkNode> networkingNode) {
         updateAxlesInNetwork(network);
+    }
+
+    @Override
+    public void leafNodesAdded(Network network, Set<NetworkNode> leafNodes) {
+
+    }
+
+    @Override
+    public void leafNodesRemoved(Network network, Set<NetworkNode> leafNodes) {
+
     }
 
     @Override

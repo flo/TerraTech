@@ -6,8 +6,8 @@
     }
   },
   "MachineDefinition": {
-    "inputSlots": 2,
-    "requirementSlots": 2,
+    "inputSlots": 3,
+    "requirementSlots": 3,
     "outputSlots": 1
   },
   "Network": {

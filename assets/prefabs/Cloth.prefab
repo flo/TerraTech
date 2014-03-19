@@ -1,0 +1,11 @@
+{
+    "parent": "engine:iconItem",
+    "Item": {
+        "icon": "TerraTech.Cloth",
+        "stackId": "TerraTech:Cloth",
+        "renderWithIcon": true
+    },
+    "DisplayName": {
+        "name": "Cloth"
+    }
+}

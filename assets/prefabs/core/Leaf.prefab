@@ -1,0 +1,5 @@
+{
+    "BlockDropGrammar": {
+        "itemDrops": ["0.3|TerraTech:PlantMatter","0.5|TerraTech:Stick"]
+    }
+}

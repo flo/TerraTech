@@ -1,0 +1,11 @@
+{
+    "parent": "engine:iconItem",
+    "Item": {
+        "icon": "TerraTech.String",
+        "stackId": "TerraTech:String",
+        "renderWithIcon": true
+    },
+    "DisplayName": {
+        "name": "String"
+    }
+}

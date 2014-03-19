@@ -24,7 +24,7 @@ import org.terasology.blockNetwork.BlockNetwork;
 import org.terasology.blockNetwork.Network;
 import org.terasology.blockNetwork.NetworkNode;
 import org.terasology.blockNetwork.NetworkTopologyListener;
-import org.terasology.blockNetwork.SidedLocationNetworkNode;
+import org.terasology.blockNetwork.SimpleNetwork;
 import org.terasology.entitySystem.entity.EntityRef;
 import org.terasology.entitySystem.entity.lifecycleEvents.BeforeDeactivateComponent;
 import org.terasology.entitySystem.entity.lifecycleEvents.OnActivatedComponent;
@@ -66,37 +66,30 @@ public class MechanicalPowerBlockNetworkImpl extends BaseComponentSystem impleme
     BlockEntityRegistry blockEntityRegistry;
 
     private BlockNetwork blockNetwork;
-    private Map<Vector3i, SidedLocationNetworkNode> networkNodes = Maps.newHashMap();
+    private Map<Vector3i, NetworkNode> networkNodes = Maps.newHashMap();
     private Map<Network, MechanicalPowerNetworkDetails> networks = Maps.newHashMap();
 
-    @Override
-    public void initialise() {
+    public MechanicalPowerBlockNetworkImpl() {
         blockNetwork = new BlockNetwork();
         blockNetwork.addTopologyListener(this);
         logger.info("Initialized Mechanical Power System");
     }
 
     @Override
-    public void shutdown() {
-        blockNetwork = null;
-    }
-
-
-    @Override
     public Network getNetwork(Vector3i position) {
-        return blockNetwork.getNetwork(networkNodes.get(position));
+        return blockNetwork.findNetworkWithNetworkingBlock(networkNodes.get(position));
     }
 
     @Override
-    public Iterable<SidedLocationNetworkNode> getNetworkNodes(Network network) {
-        Iterable<NetworkNode> nodes = blockNetwork.getNetworkNodes(network);
+    public Iterable<NetworkNode> getNetworkNodes(Network network) {
+        Iterable<NetworkNode> nodes = ((SimpleNetwork) network).getNetworkingNodes();
 
-        return Iterables.filter(nodes, SidedLocationNetworkNode.class);
+        return Iterables.filter(nodes, NetworkNode.class);
     }
 
     @Override
     public Iterable<Network> getNetworks() {
-        return blockNetwork.getNetworks();
+        return Sets.newHashSet(blockNetwork.getNetworks());
     }
 
     @Override
@@ -111,7 +104,7 @@ public class MechanicalPowerBlockNetworkImpl extends BaseComponentSystem impleme
 
 
     private void addNetworkNode(EntityRef entity) {
-        SidedLocationNetworkNode networkNode = null;
+        NetworkNode networkNode = null;
 
         MechanicalPowerBlockNetworkComponent networkItem = entity.getComponent(MechanicalPowerBlockNetworkComponent.class);
 
@@ -127,7 +120,7 @@ public class MechanicalPowerBlockNetworkImpl extends BaseComponentSystem impleme
         } else if (entity.hasComponent(MechanicalPowerConsumerComponent.class)) {
             networkNode = new ConsumerNode(position, connectionSides);
         } else {
-            networkNode = new SidedLocationNetworkNode(position, connectionSides);
+            networkNode = new NetworkNode(position, connectionSides);
         }
 
         networkNodes.put(position, networkNode);
@@ -153,14 +146,14 @@ public class MechanicalPowerBlockNetworkImpl extends BaseComponentSystem impleme
     }
 
     private void removeNetworkNode(Vector3i position) {
-        SidedLocationNetworkNode networkNode = networkNodes.get(position);
+        NetworkNode networkNode = networkNodes.get(position);
         blockNetwork.removeNetworkingBlock(networkNode);
         networkNodes.remove(position);
     }
 
     private void updateNetworkNode(Vector3i position, byte connectionSides) {
-        SidedLocationNetworkNode oldNetworkNode = networkNodes.get(position);
-        SidedLocationNetworkNode networkNode = new SidedLocationNetworkNode(position, connectionSides);
+        NetworkNode oldNetworkNode = networkNodes.get(position);
+        NetworkNode networkNode = new NetworkNode(position, connectionSides);
         blockNetwork.updateNetworkingBlock(oldNetworkNode, networkNode);
         networkNodes.put(position, networkNode);
     }
@@ -242,29 +235,43 @@ public class MechanicalPowerBlockNetworkImpl extends BaseComponentSystem impleme
     }
 
     @Override
-    public void networkingNodeAdded(Network network, NetworkNode networkingNode) {
+    public void networkingNodesAdded(Network network, Set<NetworkNode> networkingNodes) {
         MechanicalPowerNetworkDetails powerNetwork = getMechanicalPowerNetwork(network);
 
-        if (networkingNode instanceof ProducerNode) {
-            ProducerNode producerNode = (ProducerNode) networkingNode;
-            powerNetwork.totalPower += producerNode.power;
-            powerNetwork.totalProducers++;
-        } else if (networkingNode instanceof ConsumerNode) {
-            powerNetwork.totalConsumers++;
+        for (NetworkNode networkingNode : networkingNodes) {
+            if (networkingNode instanceof ProducerNode) {
+                ProducerNode producerNode = (ProducerNode) networkingNode;
+                powerNetwork.totalPower += producerNode.power;
+                powerNetwork.totalProducers++;
+            } else if (networkingNode instanceof ConsumerNode) {
+                powerNetwork.totalConsumers++;
+            }
         }
     }
 
     @Override
-    public void networkingNodeRemoved(Network network, NetworkNode networkingNode) {
+    public void networkingNodesRemoved(Network network, Set<NetworkNode> networkingNodes) {
         MechanicalPowerNetworkDetails powerNetwork = getMechanicalPowerNetwork(network);
 
-        if (networkingNode instanceof ProducerNode) {
-            ProducerNode producerNode = (ProducerNode) networkingNode;
-            powerNetwork.totalPower -= producerNode.power;
-            powerNetwork.totalProducers--;
-        } else if (networkingNode instanceof ConsumerNode) {
-            powerNetwork.totalConsumers--;
+        for (NetworkNode networkingNode : networkingNodes) {
+            if (networkingNode instanceof ProducerNode) {
+                ProducerNode producerNode = (ProducerNode) networkingNode;
+                powerNetwork.totalPower -= producerNode.power;
+                powerNetwork.totalProducers--;
+            } else if (networkingNode instanceof ConsumerNode) {
+                powerNetwork.totalConsumers--;
+            }
         }
+    }
+
+    @Override
+    public void leafNodesAdded(Network network, Set<NetworkNode> leafNodes) {
+
+    }
+
+    @Override
+    public void leafNodesRemoved(Network network, Set<NetworkNode> leafNodes) {
+
     }
 
     @Override

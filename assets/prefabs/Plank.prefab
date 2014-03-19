@@ -1,0 +1,11 @@
+{
+    "parent": "engine:iconItem",
+    "Item": {
+        "icon": "TerraTech.Plank",
+        "stackId": "TerraTech:Plank",
+        "renderWithIcon": true
+    },
+    "DisplayName": {
+        "name": "Plank"
+    }
+}

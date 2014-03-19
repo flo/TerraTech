@@ -27,6 +27,7 @@ import org.terasology.logic.inventory.InventoryManager;
 import org.terasology.logic.inventory.events.InventorySlotChangedEvent;
 import org.terasology.math.Direction;
 import org.terasology.math.Roll;
+import org.terasology.math.Rotation;
 import org.terasology.math.Side;
 import org.terasology.registry.In;
 import org.terasology.rendering.logic.MeshComponent;
@@ -70,6 +71,10 @@ public class RenderWindmillSailClientSystem extends BaseComponentSystem {
             RenderItemComponent renderItem = new RenderItemComponent();
             renderItem.translate = direction.getRelativeSide(Direction.FORWARD).getVector3i().toVector3f();
             renderItem.size = 1;
+            Rotation rotation = MechanicalPowerClientSystem.getRotation(direction);
+            renderItem.pitch = rotation.getPitch();
+            renderItem.roll = rotation.getRoll();
+            renderItem.yaw = rotation.getYaw();
 
             if (newItem.hasComponent(RenderItemComponent.class)) {
                 newItem.saveComponent(renderItem);

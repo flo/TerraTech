@@ -1,0 +1,26 @@
+{
+    "ProcessDefinition": {
+        "processType": "TerraTech:Assembly"
+    },
+    "ProcessingTime": {
+        "duration": 4000
+    },
+    "RequirementInput": {
+        "requirements": ["Hammer"]
+    },
+    "ItemPrefabInput": {
+        "itemCounts": {
+            "TerraTech:Plank": 1
+        }
+    },
+    "BlockFamilyInput": {
+        "blockCounts": {
+            "TerraTech:WoodenBox": 1
+        }
+    },
+    "BlockFamilyOutput": {
+        "blockCounts": {
+            "TerraTech:T1AssemblyTable": 1
+        }
+    }
+}

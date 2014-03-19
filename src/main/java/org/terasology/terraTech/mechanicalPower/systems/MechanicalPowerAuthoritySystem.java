@@ -19,7 +19,7 @@ import com.google.common.collect.Sets;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.terasology.blockNetwork.Network;
-import org.terasology.blockNetwork.SidedLocationNetworkNode;
+import org.terasology.blockNetwork.NetworkNode;
 import org.terasology.engine.Time;
 import org.terasology.entitySystem.entity.EntityRef;
 import org.terasology.entitySystem.systems.BaseComponentSystem;
@@ -36,9 +36,8 @@ import java.util.Set;
 
 @RegisterSystem(RegisterMode.AUTHORITY)
 public class MechanicalPowerAuthoritySystem extends BaseComponentSystem implements UpdateSubscriberSystem {
-
+    private static final long UPDATE_INTERVAL = 1000;
     private static final Logger logger = LoggerFactory.getLogger(MechanicalPowerAuthoritySystem.class);
-    static final long UPDATE_INTERVAL = 1000;
 
     @In
     WorldProvider worldProvider;
@@ -66,8 +65,8 @@ public class MechanicalPowerAuthoritySystem extends BaseComponentSystem implemen
                 Set<EntityRef> consumers = Sets.newHashSet();
                 Set<EntityRef> producers = Sets.newHashSet();
                 // gather the consumers and producers for this network
-                for (SidedLocationNetworkNode leafNode : mechanicalPowerBlockNetwork.getNetworkNodes(network)) {
-                    EntityRef entity = blockEntityRegistry.getBlockEntityAt(leafNode.location);
+                for (NetworkNode leafNode : mechanicalPowerBlockNetwork.getNetworkNodes(network)) {
+                    EntityRef entity = blockEntityRegistry.getBlockEntityAt(leafNode.location.toVector3i());
                     if (entity.hasComponent(MechanicalPowerConsumerComponent.class)) {
                         consumers.add(entity);
                     }

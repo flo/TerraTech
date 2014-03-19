@@ -1,0 +1,7 @@
+{
+    "displayName": "Wooden Box",
+    "entity": {
+        "prefab": "WoodenBox"
+    },
+    "tile": "Core:Plank"
+}

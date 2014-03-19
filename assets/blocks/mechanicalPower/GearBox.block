@@ -1,0 +1,7 @@
+{
+    "displayName": "Gear Box",
+    "entity": {
+        "prefab": "GearBox"
+    }
+
+}

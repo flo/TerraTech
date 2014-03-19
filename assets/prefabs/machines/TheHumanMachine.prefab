@@ -6,11 +6,12 @@
     }
   },
   "MachineDefinition": {
-    "inputSlots": 1,
+    "inputSlots": 2,
     "requirementSlots": 1,
     "outputSlots": 1
   },
   "Network": {
-    
-  }
+
+  },
+  "NestedMachine": { }
 }

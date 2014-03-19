@@ -21,7 +21,6 @@ import org.terasology.entitySystem.systems.BaseComponentSystem;
 import org.terasology.entitySystem.systems.RegisterSystem;
 import org.terasology.logic.console.Command;
 import org.terasology.logic.inventory.InventoryManager;
-import org.terasology.logic.inventory.action.GiveItemAction;
 import org.terasology.logic.inventory.action.RemoveItemAction;
 import org.terasology.machines.ExtendedInventoryManager;
 import org.terasology.network.ClientComponent;
@@ -52,24 +51,25 @@ public class StarterPackAuthoritySystem extends BaseComponentSystem {
 
         EntityRef player = client.getComponent(ClientComponent.class).character;
 
-        player.send(new GiveItemAction(EntityRef.NULL, blockFactory.newInstance(blockManager.getBlockFamily("Windmill"), 5)));
-        player.send(new GiveItemAction(EntityRef.NULL, ExtendedInventoryManager.createItem(entityManager, "TerraTech:WindmillSail", 32)));
+        inventoryManager.giveItem(player, EntityRef.NULL, blockFactory.newInstance(blockManager.getBlockFamily("Windmill"), 5));
+        inventoryManager.giveItem(player, EntityRef.NULL, ExtendedInventoryManager.createItem(entityManager, "TerraTech:WindmillSail", 5));
 
-        player.send(new GiveItemAction(EntityRef.NULL, blockFactory.newInstance(blockManager.getBlockFamily("Axle"), 32)));
-        player.send(new GiveItemAction(EntityRef.NULL, blockFactory.newInstance(blockManager.getBlockFamily("Engine"), 5)));
-        player.send(new GiveItemAction(EntityRef.NULL, blockFactory.newInstance(blockManager.getBlockFamily("FlywheelBox"), 5)));
+        inventoryManager.giveItem(player, EntityRef.NULL, blockFactory.newInstance(blockManager.getBlockFamily("Axle"), 32));
+        inventoryManager.giveItem(player, EntityRef.NULL, blockFactory.newInstance(blockManager.getBlockFamily("Engine"), 5));
+        inventoryManager.giveItem(player, EntityRef.NULL, blockFactory.newInstance(blockManager.getBlockFamily("GearBox"), 5));
+        inventoryManager.giveItem(player, EntityRef.NULL, blockFactory.newInstance(blockManager.getBlockFamily("FlywheelBox"), 5));
 
-        player.send(new GiveItemAction(EntityRef.NULL, blockFactory.newInstance(blockManager.getBlockFamily("EnduringlyHotFurnace"), 1)));
-        player.send(new GiveItemAction(EntityRef.NULL, blockFactory.newInstance(blockManager.getBlockFamily("Bloomery"), 1)));
-        player.send(new GiveItemAction(EntityRef.NULL, blockFactory.newInstance(blockManager.getBlockFamily("FireboxHeater"), 1)));
-        player.send(new GiveItemAction(EntityRef.NULL, blockFactory.newInstance(blockManager.getBlockFamily("Anvil"), 1)));
-        player.send(new GiveItemAction(EntityRef.NULL, blockFactory.newInstance(blockManager.getBlockFamily("IronOre"), 10)));
-        player.send(new GiveItemAction(EntityRef.NULL, ExtendedInventoryManager.createItem(entityManager, "TerraTech:Coal", 32)));
-        player.send(new GiveItemAction(EntityRef.NULL, ExtendedInventoryManager.createItem(entityManager, "TerraTech:Hammer", 1)));
+        inventoryManager.giveItem(player, EntityRef.NULL, blockFactory.newInstance(blockManager.getBlockFamily("EnduringlyHotFurnace"), 1));
+        inventoryManager.giveItem(player, EntityRef.NULL, blockFactory.newInstance(blockManager.getBlockFamily("Bloomery"), 1));
+        inventoryManager.giveItem(player, EntityRef.NULL, blockFactory.newInstance(blockManager.getBlockFamily("FireboxHeater"), 1));
+        inventoryManager.giveItem(player, EntityRef.NULL, blockFactory.newInstance(blockManager.getBlockFamily("Anvil"), 1));
+        inventoryManager.giveItem(player, EntityRef.NULL, blockFactory.newInstance(blockManager.getBlockFamily("IronOre"), 10));
+        inventoryManager.giveItem(player, EntityRef.NULL, ExtendedInventoryManager.createItem(entityManager, "TerraTech:Coal", 32));
+        inventoryManager.giveItem(player, EntityRef.NULL, ExtendedInventoryManager.createItem(entityManager, "TerraTech:Hammer", 1));
 
-        player.send(new GiveItemAction(EntityRef.NULL, blockFactory.newInstance(blockManager.getBlockFamily("ConveyorBelt"), 16)));
-        player.send(new GiveItemAction(EntityRef.NULL, blockFactory.newInstance(blockManager.getBlockFamily("ConveyorTube"), 16)));
-        player.send(new GiveItemAction(EntityRef.NULL, blockFactory.newInstance(blockManager.getBlockFamily("ItemExtractor"), 16)));
+        inventoryManager.giveItem(player, EntityRef.NULL, blockFactory.newInstance(blockManager.getBlockFamily("ConveyorBelt"), 16));
+        inventoryManager.giveItem(player, EntityRef.NULL, blockFactory.newInstance(blockManager.getBlockFamily("ConveyorTube"), 16));
+        inventoryManager.giveItem(player, EntityRef.NULL, blockFactory.newInstance(blockManager.getBlockFamily("ItemExtractor"), 16));
 
 
         return "You received the TerraTech starter pack";
