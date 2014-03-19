@@ -6,10 +6,10 @@
     "description":"Use Metals to make useful things",
     "dependencies" :
     [
-        {"id":"Machines"},
-        {"id":"Workstation"},
-        {"id":"BlockNetwork"},
-        {"id":"Core"}
+        {"id": "Machines", "minVersion": "0.1.0"},
+        {"id": "Workstation", "minVersion": "0.1.0"},
+        {"id": "BlockNetwork", "minVersion": "0.1.0"},
+        {"id": "Core", "minVersion": "0.1.0"}
     ],
     "isServerSideOnly":false
 }
