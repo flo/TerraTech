@@ -51,6 +51,11 @@ public class StarterPackAuthoritySystem extends BaseComponentSystem {
 
         EntityRef player = client.getComponent(ClientComponent.class).character;
 
+        inventoryManager.giveItem(player, EntityRef.NULL, blockFactory.newInstance(blockManager.getBlockFamily("Incubator"), 16));
+        inventoryManager.giveItem(player, EntityRef.NULL, blockFactory.newInstance(blockManager.getBlockFamily("Distiller"), 16));
+        inventoryManager.giveItem(player, EntityRef.NULL, blockFactory.newInstance(blockManager.getBlockFamily("Compactor"), 16));
+        inventoryManager.giveItem(player, EntityRef.NULL, ExtendedInventoryManager.createItem(entityManager, "TerraTech:MagicTool", 1));
+
         inventoryManager.giveItem(player, EntityRef.NULL, blockFactory.newInstance(blockManager.getBlockFamily("Windmill"), 5));
         inventoryManager.giveItem(player, EntityRef.NULL, ExtendedInventoryManager.createItem(entityManager, "TerraTech:WindmillSail", 5));
 

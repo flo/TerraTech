@@ -1,0 +1,11 @@
+{
+    "parent": "engine:iconItem",
+    "Item": {
+        "icon": "magicMachines.WaterEssence",
+        "stackId": "magicMachines:WaterEssence",
+        "renderWithIcon": true
+    },
+    "DisplayName": {
+        "name": "Essence of Water"
+    }
+}

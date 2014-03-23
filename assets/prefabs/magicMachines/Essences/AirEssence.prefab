@@ -1,0 +1,11 @@
+{
+    "parent": "engine:iconItem",
+    "Item": {
+        "icon": "magicMachines.AirEssence",
+        "stackId": "magicMachines:AirEssence",
+        "renderWithIcon": true
+    },
+    "DisplayName": {
+        "name": "Essence of Air"
+    }
+}

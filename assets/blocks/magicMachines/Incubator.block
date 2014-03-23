@@ -1,0 +1,6 @@
+{
+    "displayName": "Incubator",
+    "entity": {
+        "prefab": "Incubator"
+    }
+}

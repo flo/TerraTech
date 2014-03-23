@@ -1,0 +1,11 @@
+{
+    "displayName": "Compactor",
+    "entity": {
+        "prefab": "Compactor"
+    },
+    "tiles": {
+        "sides": "compacter_side",
+        "top": "stone",
+        "bottom": "stone"
+    }
+}

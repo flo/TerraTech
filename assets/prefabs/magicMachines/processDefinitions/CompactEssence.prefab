@@ -1,0 +1,13 @@
+{
+    "ProcessDefinition": {
+        "processType": "TerraTech:CompactEssence"
+    },
+    "ProcessingTime": {
+        "duration": 10000
+    },
+    "RequirementInput": {
+        "requirements": []
+    },
+    "CompactEssence": {
+    }
+}

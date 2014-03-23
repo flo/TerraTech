@@ -1,0 +1,41 @@
+{
+  "EssenceRegistryPage": {
+    "categories": {
+        "wood": {
+            "earth": 1,
+            "air": 0,
+            "fire": 1,
+            "water": 1,
+            "life": 1
+        },
+        "mineral": {
+            "earth": 4,
+            "air": 0,
+            "fire": 0,
+            "water": 0,
+            "life": 0
+        },
+        "soil": {
+            "earth": 2,
+            "air": 0,
+            "fire": 0,
+            "water": 1,
+            "life": 0
+        },
+        "stone": {
+            "earth": 3,
+            "air": 0,
+            "fire": 0,
+            "water": 0,
+            "life": 0
+        },
+        "plant": {
+            "earth": 0,
+            "air": 1,
+            "fire": 0,
+            "water": 3,
+            "life": 3
+        }
+    }
+  }
+}

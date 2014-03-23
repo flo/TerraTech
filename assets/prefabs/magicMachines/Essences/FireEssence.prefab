@@ -1,0 +1,11 @@
+{
+    "parent": "engine:iconItem",
+    "Item": {
+        "icon": "magicMachines.FireEssence",
+        "stackId": "magicMachines:FireEssence",
+        "renderWithIcon": true
+    },
+    "DisplayName": {
+        "name": "Essence of Fire"
+    }
+}

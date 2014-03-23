@@ -1,0 +1,13 @@
+{
+    "ProcessDefinition": {
+        "processType": "TerraTech:DistillEssence"
+    },
+    "ProcessingTime": {
+        "duration": 1000
+    },
+    "RequirementInput": {
+        "requirements": ["MagicTool"]
+    },
+    "DistillEssence": {
+    }
+}

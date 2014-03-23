@@ -1,0 +1,11 @@
+{
+    "displayName": "Distiller",
+    "entity": {
+        "prefab": "Distiller"
+    },
+    "tiles": {
+        "sides": "distiller_side",
+        "top": "stone",
+        "bottom": "stone"
+    }
+}

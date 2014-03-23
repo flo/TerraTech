@@ -1,0 +1,14 @@
+{
+    "parent": "engine:iconItem",
+    "Item": {
+        "icon": "magicMachines.MagicTool",
+        "stackId": "magicMachines:MagicTool",
+        "renderWithIcon": true
+    },
+    "DisplayName": {
+        "name": "Magic Tool"
+    },
+    "ProcessRequirementsProvider": {
+        "requirements": ["MagicTool"]
+    }
+}

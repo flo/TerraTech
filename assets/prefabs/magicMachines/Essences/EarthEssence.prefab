@@ -1,0 +1,11 @@
+{
+    "parent": "engine:iconItem",
+    "Item": {
+        "icon": "magicMachines.EarthEssence",
+        "stackId": "magicMachines:EarthEssence",
+        "renderWithIcon": true
+    },
+    "DisplayName": {
+        "name": "Essence of Earth"
+    }
+}
