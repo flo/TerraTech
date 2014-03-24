@@ -8,7 +8,9 @@
   "MachineDefinition": {
     "inputSlots": 1,
     "requirementSlots": 1,
-    "outputSlots": 5
+    "requirementSlotsTitle": "Magic Tool",
+    "outputSlots": 5,
+    "actionTitle": "Distill"
   },
   "Network": {
   }

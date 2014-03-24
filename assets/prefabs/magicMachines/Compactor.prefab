@@ -7,8 +7,11 @@
   },
   "MachineDefinition": {
     "inputSlots": 5,
+    "inputSlotsTitle": "Essences",
     "requirementSlots": 1,
-    "outputSlots": 1
+    "requirementSlotsTitle": "Template",
+    "outputSlots": 1,
+    "actionTitle": "Compact"
   },
   "Network": {
   }
