@@ -10,5 +10,8 @@
   "HeatOutput": {
     "temperature": 2000,
     "burnTime": 20000
+  },
+  "SmokeOutput": {
+    "timeBetweenSmoke": 3000
   }
 }

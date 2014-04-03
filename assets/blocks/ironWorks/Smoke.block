@@ -1,0 +1,15 @@
+{
+    "hardness" : 0,
+    "attachmentAllowed" : false,
+    "translucent" : true,
+    "targetable" : false,
+    "penetrable" : true,
+    "shadowCasting" : false,
+    "replacementAllowed" : false,
+    "entity" : {
+        "prefab" : "smoke"
+    },
+    "tiles": {
+        "all": "anvil"
+    }
+}

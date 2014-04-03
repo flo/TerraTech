@@ -67,6 +67,7 @@ public class StarterPackAuthoritySystem extends BaseComponentSystem {
         inventoryManager.giveItem(player, EntityRef.NULL, blockFactory.newInstance(blockManager.getBlockFamily("EnduringlyHotFurnace"), 1));
         inventoryManager.giveItem(player, EntityRef.NULL, blockFactory.newInstance(blockManager.getBlockFamily("Bloomery"), 1));
         inventoryManager.giveItem(player, EntityRef.NULL, blockFactory.newInstance(blockManager.getBlockFamily("FireboxHeater"), 1));
+        inventoryManager.giveItem(player, EntityRef.NULL, blockFactory.newInstance(blockManager.getBlockFamily("TransparentVent"), 32));
         inventoryManager.giveItem(player, EntityRef.NULL, blockFactory.newInstance(blockManager.getBlockFamily("Anvil"), 1));
         inventoryManager.giveItem(player, EntityRef.NULL, blockFactory.newInstance(blockManager.getBlockFamily("IronOre"), 10));
         inventoryManager.giveItem(player, EntityRef.NULL, ExtendedInventoryManager.createItem(entityManager, "TerraTech:Coal", 32));

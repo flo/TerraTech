@@ -1,0 +1,23 @@
+{
+  "Inventory": {
+    "privateToOwner": false,
+    "itemSlots": [
+      0
+    ]
+  },
+  "PushInventoryInDirection": {
+    "animateMovingItem": false,
+    "direction": "UP"
+  },
+  "CategorizedInventory": {
+    "slotMapping": {
+      "ALL": [
+        0
+      ]
+    }
+  },
+  "Network": {
+
+  },
+  "Vent": { }
+}

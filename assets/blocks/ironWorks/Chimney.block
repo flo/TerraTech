@@ -1,0 +1,9 @@
+{
+  "displayName": "Chimney",
+  "tiles": {
+    "all": "brick"
+  },
+  "entity": {
+    "prefab": "Chimney"
+  }
+}
