@@ -21,7 +21,6 @@ import org.terasology.entitySystem.systems.BaseComponentSystem;
 import org.terasology.entitySystem.systems.RegisterSystem;
 import org.terasology.logic.console.Command;
 import org.terasology.logic.inventory.InventoryManager;
-import org.terasology.logic.inventory.action.RemoveItemAction;
 import org.terasology.machines.ExtendedInventoryManager;
 import org.terasology.network.ClientComponent;
 import org.terasology.registry.In;
@@ -89,7 +88,7 @@ public class StarterPackAuthoritySystem extends BaseComponentSystem {
         EntityRef player = client.getComponent(ClientComponent.class).character;
 
         for (EntityRef item : ExtendedInventoryManager.iterateItems(inventoryManager, player)) {
-            player.send(new RemoveItemAction(EntityRef.NULL, item, true));
+            inventoryManager.removeItem(player, EntityRef.NULL, item, true);
         }
 
         return terraTechStarterPack(client);
