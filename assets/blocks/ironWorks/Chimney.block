@@ -1,7 +1,9 @@
 {
   "displayName": "Chimney",
+  "shape": "StructuralResources:ObeliskPillarMiddle",
   "tiles": {
-    "all": "brick"
+    "all": "chimney",
+    "topBottom": "fireplace_top"
   },
   "entity": {
     "prefab": "Chimney"
