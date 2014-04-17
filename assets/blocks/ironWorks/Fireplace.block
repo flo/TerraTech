@@ -1,0 +1,10 @@
+{
+  "displayName": "Fireplace",
+  "rotation": "horizontal",
+  "tiles": {
+    "sides": "fireplace_side",
+    "front": "fireplace_front",
+    "top": "fireplace_top",
+    "bottom": "fireplace_bottom"
+  }
+}
