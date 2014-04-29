@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.terasology.terraTech.magic.processParts;
+package org.terasology.terraTech.magicMachines.processParts;
 
 import org.terasology.entitySystem.Component;
 import org.terasology.entitySystem.entity.EntityManager;
@@ -23,9 +23,9 @@ import org.terasology.logic.inventory.InventoryManager;
 import org.terasology.logic.inventory.InventoryUtils;
 import org.terasology.machines.ExtendedInventoryManager;
 import org.terasology.registry.CoreRegistry;
-import org.terasology.terraTech.magic.components.CompactEssenceOutputComponent;
-import org.terasology.terraTech.magic.components.EssenceContainerComponent;
-import org.terasology.terraTech.magic.systems.EssenceRegistry;
+import org.terasology.terraTech.magicMachines.components.CompactEssenceOutputComponent;
+import org.terasology.terraTech.magicMachines.components.EssenceContainerComponent;
+import org.terasology.terraTech.magicMachines.systems.EssenceRegistry;
 import org.terasology.workstation.process.DescribeProcess;
 import org.terasology.workstation.process.ProcessPart;
 import org.terasology.workstation.process.WorkstationInventoryUtils;

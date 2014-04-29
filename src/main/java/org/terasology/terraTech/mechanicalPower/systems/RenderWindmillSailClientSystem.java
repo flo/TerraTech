@@ -29,6 +29,7 @@ import org.terasology.math.Direction;
 import org.terasology.math.Roll;
 import org.terasology.math.Rotation;
 import org.terasology.math.Side;
+import org.terasology.mechanicalPower.systems.MechanicalPowerClientSystem;
 import org.terasology.registry.In;
 import org.terasology.rendering.logic.MeshComponent;
 import org.terasology.terraTech.mechanicalPower.components.RenderWindmillSailComponent;

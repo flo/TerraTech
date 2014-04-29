@@ -177,19 +177,6 @@ public class SmokeAuthoritySystem extends BaseComponentSystem implements UpdateS
         giveSmoke(targetPosition, smokeBlock);
     }
 
-    /*@ReceiveEvent(components = {RisingSmokeComponent.class, SmokeComponent.class})
-    public void dissapateRisingSmoke(OnAddedComponent event, EntityRef entity, BlockComponent block) {
-        Vector3i testPosition = new Vector3i(block.getPosition());
-        for (int i = 0; i < 15; i++) {
-            testPosition.add(0, 1, 0);
-            if (worldProvider.getBlock(testPosition) != BlockManager.getAir()) {
-                return;
-            }
-        }
-
-        worldProvider.setBlock(block.getPosition(), BlockManager.getAir());
-    } */
-
     @ReceiveEvent
     public void ventSmokeFromChimney(ConveyorItemStuckEvent event, EntityRef entity, VentComponent vent) {
         if (isValidTarget(event.getTargetPosition())) {
@@ -201,10 +188,4 @@ public class SmokeAuthoritySystem extends BaseComponentSystem implements UpdateS
             }
         }
     }
-
-    /*
-    @ReceiveEvent
-    public void removeSmokeAfterParticleEffect(BeforeDeactivateComponent event, EntityRef entity, SmokeComponent smoke, BlockParticleEffectComponent particleEffect, BlockComponent block) {
-        worldProvider.setBlock(block.getPosition(), BlockManager.getAir());
-    } */
 }

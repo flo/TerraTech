@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.terasology.terraTech.magic.components;
+package org.terasology.terraTech.magicMachines.components;
 
 import org.terasology.entitySystem.Component;
 import org.terasology.reflection.MappedContainer;

@@ -13,15 +13,11 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.terasology.terraTech.mechanicalPower.components;
+package org.terasology.terraTech.magicMachines.systems;
 
-import org.terasology.entitySystem.Component;
-import org.terasology.network.Replicate;
-import org.terasology.world.block.ForceBlockActive;
+import org.terasology.entitySystem.entity.EntityRef;
+import org.terasology.terraTech.magicMachines.components.EssenceContainerComponent;
 
-@ForceBlockActive
-@Replicate
-public class MechanicalPowerProducerComponent implements Component {
-    public float power;
-    public boolean active;
+public interface EssenceRegistry {
+    EssenceContainerComponent getContainedEssence(EntityRef item);
 }

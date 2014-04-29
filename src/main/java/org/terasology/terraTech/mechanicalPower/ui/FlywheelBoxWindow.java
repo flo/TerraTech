@@ -18,7 +18,7 @@ package org.terasology.terraTech.mechanicalPower.ui;
 import org.terasology.entitySystem.entity.EntityRef;
 import org.terasology.machines.ui.DefaultMachineWindow;
 import org.terasology.machines.ui.VerticalProgressBar;
-import org.terasology.terraTech.mechanicalPower.components.MechanicalPowerConsumerComponent;
+import org.terasology.mechanicalPower.components.MechanicalPowerConsumerComponent;
 
 public class FlywheelBoxWindow extends DefaultMachineWindow {
     private VerticalProgressBar powerMeter;

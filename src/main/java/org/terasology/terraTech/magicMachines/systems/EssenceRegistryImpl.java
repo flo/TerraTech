@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.terasology.terraTech.magic.systems;
+package org.terasology.terraTech.magicMachines.systems;
 
 import com.google.common.collect.Maps;
 import org.terasology.entitySystem.entity.EntityRef;
@@ -23,8 +23,8 @@ import org.terasology.entitySystem.systems.BaseComponentSystem;
 import org.terasology.entitySystem.systems.RegisterSystem;
 import org.terasology.registry.In;
 import org.terasology.registry.Share;
-import org.terasology.terraTech.magic.components.EssenceContainerComponent;
-import org.terasology.terraTech.magic.components.EssenceRegistryPageComponent;
+import org.terasology.terraTech.magicMachines.components.EssenceContainerComponent;
+import org.terasology.terraTech.magicMachines.components.EssenceRegistryPageComponent;
 import org.terasology.world.block.items.BlockItemComponent;
 
 import java.util.Map;

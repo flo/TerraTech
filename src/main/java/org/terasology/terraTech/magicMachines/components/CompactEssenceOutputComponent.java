@@ -13,17 +13,19 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.terasology.terraTech.magic.components;
+package org.terasology.terraTech.magicMachines.components;
 
-import com.google.common.collect.Maps;
+import com.google.common.collect.Lists;
 import org.terasology.entitySystem.Component;
+import org.terasology.entitySystem.prefab.Prefab;
+import org.terasology.world.block.family.BlockFamily;
 
-import java.util.Map;
+import java.util.List;
 
-public class EssenceRegistryPageComponent implements Component {
-    public Map<String, EssenceContainerComponent> blocks = Maps.newHashMap();
-    public Map<String, EssenceContainerComponent> items = Maps.newHashMap();
-    public Map<String, EssenceContainerComponent> categories = Maps.newHashMap();
+public class CompactEssenceOutputComponent implements Component {
+    public List<BlockFamily> blockFamilies = Lists.newArrayList();
+    public List<Prefab> itemPrefabs = Lists.newArrayList();
 
-
+    public CompactEssenceOutputComponent() {
+    }
 }

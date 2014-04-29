@@ -13,15 +13,17 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.terasology.terraTech.mechanicalPower.systems;
+package org.terasology.terraTech.magicMachines.components;
 
-import org.terasology.blockNetwork.NetworkNode;
-import org.terasology.math.Vector3i;
+import com.google.common.collect.Maps;
+import org.terasology.entitySystem.Component;
 
-public class ProducerNode extends NetworkNode {
-    public float power;
+import java.util.Map;
 
-    public ProducerNode(Vector3i location, byte connectionSides) {
-        super(location, connectionSides);
-    }
+public class EssenceRegistryPageComponent implements Component {
+    public Map<String, EssenceContainerComponent> blocks = Maps.newHashMap();
+    public Map<String, EssenceContainerComponent> items = Maps.newHashMap();
+    public Map<String, EssenceContainerComponent> categories = Maps.newHashMap();
+
+
 }
