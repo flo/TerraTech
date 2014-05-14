@@ -18,9 +18,10 @@ package org.terasology.terraTech.ironWorks.processParts;
 import org.terasology.entitySystem.Component;
 import org.terasology.entitySystem.entity.EntityRef;
 import org.terasology.terraTech.ironWorks.components.HeaterComponent;
+import org.terasology.workstation.process.DescribeProcess;
 import org.terasology.workstation.process.ProcessPart;
 
-public class HeatOutputComponent implements Component, ProcessPart {
+public class HeatOutputComponent implements Component, ProcessPart, DescribeProcess {
     public int temperature;
     public long burnTime;
 
@@ -55,5 +56,20 @@ public class HeatOutputComponent implements Component, ProcessPart {
     @Override
     public void executeEnd(EntityRef instigator, EntityRef workstation, EntityRef processEntity) {
         workstation.removeComponent(HeaterComponent.class);
+    }
+
+    @Override
+    public String getOutputDescription() {
+        return temperature + " degress for " + (burnTime / 1000) + " sec";
+    }
+
+    @Override
+    public String getInputDescription() {
+        return null;
+    }
+
+    @Override
+    public int getComplexity() {
+        return 0;
     }
 }

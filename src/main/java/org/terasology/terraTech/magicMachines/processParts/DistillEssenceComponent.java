@@ -113,7 +113,12 @@ public class DistillEssenceComponent implements Component, ProcessPart, Describe
     }
 
     @Override
-    public String getDescription() {
+    public String getInputDescription() {
+        return "Input";
+    }
+
+    @Override
+    public String getOutputDescription() {
         return "Essence";
     }
 

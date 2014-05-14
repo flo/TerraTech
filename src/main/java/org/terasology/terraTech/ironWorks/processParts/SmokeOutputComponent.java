@@ -18,9 +18,10 @@ package org.terasology.terraTech.ironWorks.processParts;
 import org.terasology.entitySystem.Component;
 import org.terasology.entitySystem.entity.EntityRef;
 import org.terasology.terraTech.ironWorks.components.SmokeProducerComponent;
+import org.terasology.workstation.process.DescribeProcess;
 import org.terasology.workstation.process.ProcessPart;
 
-public class SmokeOutputComponent implements Component, ProcessPart {
+public class SmokeOutputComponent implements Component, ProcessPart, DescribeProcess {
     public int timeBetweenSmoke;
 
     @Override
@@ -50,5 +51,20 @@ public class SmokeOutputComponent implements Component, ProcessPart {
     @Override
     public void executeEnd(EntityRef instigator, EntityRef workstation, EntityRef processEntity) {
         workstation.removeComponent(SmokeProducerComponent.class);
+    }
+
+    @Override
+    public String getOutputDescription() {
+        return "Smoke";
+    }
+
+    @Override
+    public String getInputDescription() {
+        return null;
+    }
+
+    @Override
+    public int getComplexity() {
+        return 0;
     }
 }

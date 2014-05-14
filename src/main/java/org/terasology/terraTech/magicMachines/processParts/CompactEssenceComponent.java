@@ -114,7 +114,10 @@ public class CompactEssenceComponent implements Component, ProcessPart, Describe
         CompactEssenceOutputComponent compactEssenceOutput = processEntity.getComponent(CompactEssenceOutputComponent.class);
         if (compactEssenceOutput != null) {
             for (BlockFamily blockFamily : compactEssenceOutput.blockFamilies) {
-                inventoryManager.giveItem(workstation, instigator, blockItemFactory.newInstance(blockFamily), WorkstationInventoryUtils.getAssignedSlots(workstation, "OUTPUT"));
+                inventoryManager.giveItem(workstation,
+                        instigator,
+                        blockItemFactory.newInstance(blockFamily),
+                        WorkstationInventoryUtils.getAssignedSlots(workstation, "OUTPUT"));
             }
             for (Prefab itemPrefab : compactEssenceOutput.itemPrefabs) {
                 inventoryManager.giveItem(workstation, instigator, entityManager.create(itemPrefab), WorkstationInventoryUtils.getAssignedSlots(workstation, "OUTPUT"));
@@ -124,8 +127,13 @@ public class CompactEssenceComponent implements Component, ProcessPart, Describe
     }
 
     @Override
-    public String getDescription() {
+    public String getInputDescription() {
         return "Compact Essence";
+    }
+
+    @Override
+    public String getOutputDescription() {
+        return "Output";
     }
 
     @Override

@@ -18,9 +18,10 @@ package org.terasology.terraTech.ironWorks.processParts;
 import org.terasology.entitySystem.Component;
 import org.terasology.entitySystem.entity.EntityRef;
 import org.terasology.terraTech.ironWorks.components.HeatedComponent;
+import org.terasology.workstation.process.DescribeProcess;
 import org.terasology.workstation.process.ProcessPart;
 
-public class HeatInputComponent implements Component, ProcessPart {
+public class HeatInputComponent implements Component, ProcessPart, DescribeProcess {
     public float temperature;
 
     @Override
@@ -47,5 +48,20 @@ public class HeatInputComponent implements Component, ProcessPart {
     @Override
     public void executeEnd(EntityRef instigator, EntityRef workstation, EntityRef processEntity) {
 
+    }
+
+    @Override
+    public String getOutputDescription() {
+        return null;
+    }
+
+    @Override
+    public String getInputDescription() {
+        return temperature + " degrees";
+    }
+
+    @Override
+    public int getComplexity() {
+        return 0;
     }
 }
