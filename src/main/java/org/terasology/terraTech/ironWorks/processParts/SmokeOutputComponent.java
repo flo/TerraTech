@@ -20,6 +20,7 @@ import org.terasology.entitySystem.entity.EntityRef;
 import org.terasology.terraTech.ironWorks.components.SmokeProducerComponent;
 import org.terasology.workstation.process.DescribeProcess;
 import org.terasology.workstation.process.ProcessPart;
+import org.terasology.workstation.process.ProcessPartDescription;
 
 public class SmokeOutputComponent implements Component, ProcessPart, DescribeProcess {
     public int timeBetweenSmoke;
@@ -54,12 +55,12 @@ public class SmokeOutputComponent implements Component, ProcessPart, DescribePro
     }
 
     @Override
-    public String getOutputDescription() {
-        return "Smoke";
+    public ProcessPartDescription getOutputDescription() {
+        return new ProcessPartDescription("Smoke");
     }
 
     @Override
-    public String getInputDescription() {
+    public ProcessPartDescription getInputDescription() {
         return null;
     }
 

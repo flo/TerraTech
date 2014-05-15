@@ -28,6 +28,7 @@ import org.terasology.terraTech.magicMachines.components.EssenceContainerCompone
 import org.terasology.terraTech.magicMachines.systems.EssenceRegistry;
 import org.terasology.workstation.process.DescribeProcess;
 import org.terasology.workstation.process.ProcessPart;
+import org.terasology.workstation.process.ProcessPartDescription;
 import org.terasology.workstation.process.WorkstationInventoryUtils;
 import org.terasology.workstation.process.inventory.ValidateInventoryItem;
 import org.terasology.world.block.family.BlockFamily;
@@ -127,13 +128,13 @@ public class CompactEssenceComponent implements Component, ProcessPart, Describe
     }
 
     @Override
-    public String getInputDescription() {
-        return "Compact Essence";
+    public ProcessPartDescription getInputDescription() {
+        return new ProcessPartDescription("Compact Essence");
     }
 
     @Override
-    public String getOutputDescription() {
-        return "Output";
+    public ProcessPartDescription getOutputDescription() {
+        return new ProcessPartDescription("Output");
     }
 
     @Override

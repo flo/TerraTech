@@ -30,6 +30,7 @@ import org.terasology.terraTech.magicMachines.components.EssenceContainerCompone
 import org.terasology.terraTech.magicMachines.systems.EssenceRegistry;
 import org.terasology.workstation.process.DescribeProcess;
 import org.terasology.workstation.process.ProcessPart;
+import org.terasology.workstation.process.ProcessPartDescription;
 import org.terasology.workstation.process.WorkstationInventoryUtils;
 import org.terasology.workstation.process.inventory.ValidateInventoryItem;
 
@@ -113,13 +114,13 @@ public class DistillEssenceComponent implements Component, ProcessPart, Describe
     }
 
     @Override
-    public String getInputDescription() {
-        return "Input";
+    public ProcessPartDescription getInputDescription() {
+        return new ProcessPartDescription("Input");
     }
 
     @Override
-    public String getOutputDescription() {
-        return "Essence";
+    public ProcessPartDescription getOutputDescription() {
+        return new ProcessPartDescription("Essence");
     }
 
     @Override
