@@ -25,6 +25,7 @@ import org.terasology.entitySystem.systems.RegisterMode;
 import org.terasology.entitySystem.systems.RegisterSystem;
 import org.terasology.entitySystem.systems.UpdateSubscriberSystem;
 import org.terasology.logic.location.LocationComponent;
+import org.terasology.math.Side;
 import org.terasology.math.Vector3i;
 import org.terasology.registry.In;
 import org.terasology.terraTech.ironWorks.components.HeatedComponent;
@@ -55,15 +56,18 @@ public class HeaterAuthoritySystem extends BaseComponentSystem implements Update
                 HeaterComponent heaterComponent = entity.getComponent(HeaterComponent.class);
                 LocationComponent locationComponent = entity.getComponent(LocationComponent.class);
 
-                // distribute the heat to the defined direction
-                EntityRef targetEntity = blockEntityRegistry.getEntityAt(heaterComponent.heatDirection.getAdjacentPos(new Vector3i(locationComponent.getWorldPosition())));
-                HeatedComponent heatedComponent = targetEntity.getComponent(HeatedComponent.class);
-                if (heatedComponent != null) {
-                    heatedComponent.temperature += (heaterComponent.temperature - heatedComponent.temperature) * heatedComponent.temperatureAbsorptionRate;
-                    targetEntity.saveComponent(heatedComponent);
+                // distribute the heat to the defined directions
+                for (Side side : heaterComponent.getHeatDirections()) {
+                    EntityRef targetEntity = blockEntityRegistry.getEntityAt(side.getAdjacentPos(new Vector3i(locationComponent.getWorldPosition())));
+                    HeatedComponent heatedComponent = targetEntity.getComponent(HeatedComponent.class);
+                    if (heatedComponent != null) {
+                        heatedComponent.temperature += (heaterComponent.temperature - heatedComponent.temperature) * heatedComponent.temperatureAbsorptionRate;
+                        targetEntity.saveComponent(heatedComponent);
+                    }
                 }
             }
 
+            // dissipate heat
             for (EntityRef entity : entityManager.getEntitiesWith(HeatedComponent.class, LocationComponent.class)) {
                 HeatedComponent heated = entity.getComponent(HeatedComponent.class);
                 if (heated.temperature > 0) {

@@ -1,6 +1,6 @@
 {
   "ProcessDefinition": {
-    "processType": "TerraTech:Furnace"
+    "processType": "TerraTech:Hearth"
   },
   "ProcessingTime": {
     "duration": 5000

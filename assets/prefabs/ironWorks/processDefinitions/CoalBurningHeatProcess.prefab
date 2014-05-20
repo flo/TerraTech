@@ -1,6 +1,6 @@
 {
   "ProcessDefinition": {
-    "processType": "TerraTech:Heater"
+    "processType": "TerraTech:Fireplace"
   },
   "ItemPrefabInput": {
     "itemCounts": {

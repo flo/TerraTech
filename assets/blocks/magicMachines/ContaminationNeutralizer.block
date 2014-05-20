@@ -1,0 +1,11 @@
+{
+    "displayName": "Contamination Neutralizer",
+    "entity": {
+        "prefab": "ContaminationNeutralizer"
+    },
+    "tiles": {
+        "sides": "contaminationneutralizer_side",
+        "top": "stone",
+        "bottom": "stone"
+    }
+}

@@ -1,0 +1,11 @@
+{
+    "ProcessDefinition": {
+        "processType": "TerraTech:ContaminationNeutralization"
+    },
+    "ProcessingTime": {
+        "duration": 1000
+    },
+    "HealContamination": {
+        "radius": 15
+    }
+}

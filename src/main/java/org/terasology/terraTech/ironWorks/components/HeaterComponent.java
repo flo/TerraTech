@@ -15,18 +15,30 @@
  */
 package org.terasology.terraTech.ironWorks.components;
 
+import com.google.common.collect.Lists;
 import org.terasology.entitySystem.Component;
 import org.terasology.math.Side;
 import org.terasology.network.Replicate;
 import org.terasology.world.block.ForceBlockActive;
 
-/**
- * Created by Josharias on 1/23/14.
- */
+import java.util.List;
+
 @ForceBlockActive
 public class HeaterComponent implements Component {
     @Replicate
     public float temperature;
     @Replicate
-    public Side heatDirection = Side.TOP;
+    public List<Side> heatDirections = Lists.newArrayList();
+
+    public HeaterComponent() {
+        heatDirections.add(Side.TOP);
+    }
+
+    public HeaterComponent(Iterable<Side> sides) {
+        heatDirections = Lists.newArrayList(sides);
+    }
+
+    public Iterable<Side> getHeatDirections() {
+        return heatDirections;
+    }
 }

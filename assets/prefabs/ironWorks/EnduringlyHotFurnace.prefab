@@ -6,7 +6,7 @@
   "Workstation": {
     "uiPrefab": "Machines:DefaultMachine",
     "supportedProcessTypes": {
-      "TerraTech:Furnace": false
+      "TerraTech:Hearth": false
     }
   },
   "Heated": {
@@ -17,6 +17,6 @@
   },
   "DropBlockInventory": {},
   "Network": {
-    
+
   }
 }

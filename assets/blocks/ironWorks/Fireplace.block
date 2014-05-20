@@ -6,5 +6,8 @@
     "front": "fireplace_front",
     "top": "fireplace_top",
     "bottom": "fireplace_bottom"
+  },
+  "entity": {
+    "prefab": "Fireplace"
   }
 }

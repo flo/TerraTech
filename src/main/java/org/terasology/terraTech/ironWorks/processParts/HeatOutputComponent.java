@@ -17,10 +17,13 @@ package org.terasology.terraTech.ironWorks.processParts;
 
 import org.terasology.entitySystem.Component;
 import org.terasology.entitySystem.entity.EntityRef;
+import org.terasology.math.Side;
 import org.terasology.terraTech.ironWorks.components.HeaterComponent;
 import org.terasology.workstation.process.DescribeProcess;
 import org.terasology.workstation.process.ProcessPart;
 import org.terasology.workstation.process.ProcessPartDescription;
+
+import java.util.Arrays;
 
 public class HeatOutputComponent implements Component, ProcessPart, DescribeProcess {
     public int temperature;
@@ -44,7 +47,7 @@ public class HeatOutputComponent implements Component, ProcessPart, DescribeProc
     public void executeStart(EntityRef instigator, EntityRef workstation, EntityRef processEntity) {
         boolean isNewComponent = workstation.hasComponent(HeaterComponent.class);
 
-        HeaterComponent heaterComponent = new HeaterComponent();
+        HeaterComponent heaterComponent = new HeaterComponent(Arrays.asList(Side.horizontalSides()));
         heaterComponent.temperature = temperature;
 
         if (isNewComponent) {

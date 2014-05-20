@@ -1,0 +1,15 @@
+{
+  "Workstation": {
+    "uiPrefab": "Machines:DefaultMachine",
+    "supportedProcessTypes": {
+      "TerraTech:ContaminationNeutralization": true
+    }
+  },
+  "MachineDefinition": {
+    "inputSlots": 1,
+    "requirementSlots": 0,
+    "outputSlots": 0
+  },
+  "Network": {
+  }
+}
