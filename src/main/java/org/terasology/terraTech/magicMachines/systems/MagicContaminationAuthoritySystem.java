@@ -27,11 +27,13 @@ import org.terasology.registry.In;
 import org.terasology.registry.Share;
 import org.terasology.terraTech.magicMachines.components.ContaminatedBlockComponent;
 import org.terasology.terraTech.magicMachines.events.EmitContaminationEvent;
+import org.terasology.terraTech.magicMachines.events.HealContaminationEvent;
 import org.terasology.utilities.random.FastRandom;
 import org.terasology.world.BlockEntityRegistry;
 import org.terasology.world.WorldProvider;
 import org.terasology.world.block.Block;
 import org.terasology.world.block.BlockManager;
+import org.terasology.world.block.family.BlockFamilyFactoryRegistry;
 
 @RegisterSystem(RegisterMode.AUTHORITY)
 @Share(MagicContaminationSystem.class)
@@ -42,6 +44,8 @@ public class MagicContaminationAuthoritySystem extends BaseComponentSystem imple
     BlockManager blockManager;
     @In
     BlockEntityRegistry blockEntityRegistry;
+    @In
+    BlockFamilyFactoryRegistry blockFamilyFactoryRegistry;
 
     @ReceiveEvent
     public void onEmitContamination(EmitContaminationEvent event, EntityRef entity, LocationComponent location) {
@@ -65,7 +69,7 @@ public class MagicContaminationAuthoritySystem extends BaseComponentSystem imple
     }
 
     @ReceiveEvent
-    public void onHealContamination(EmitContaminationEvent event, EntityRef entity, LocationComponent location) {
+    public void onHealContamination(HealContaminationEvent event, EntityRef entity, LocationComponent location) {
         event.setResult(healContamination(new Vector3i(location.getWorldPosition()), event.radius));
     }
 
@@ -91,16 +95,16 @@ public class MagicContaminationAuthoritySystem extends BaseComponentSystem imple
             return false;
         }
 
-        // turn the current block into a storable form
-        ContaminatedBlockComponent contaminated = new ContaminatedBlockComponent(currentBlock.getBlockFamily());
+        // place a contaminated block back in the world
         Block newBlock = blockManager.getBlock("TerraTech:ContaminatedBlock");
-        EntityRef newBlockEntity = newBlock.getEntity();
-
-        // store this in a new block
-        newBlockEntity.addComponent(contaminated);
-
-        // place the contaminated block back in the world
         worldProvider.setBlock(position, newBlock);
+
+        // store this original block on this contaminated block
+        EntityRef newBlockEntity = blockEntityRegistry.getBlockEntityAt(position);
+        ContaminatedBlockComponent contaminated = newBlockEntity.getComponent(ContaminatedBlockComponent.class);
+        contaminated.block = currentBlock.getURI().toString();
+        newBlockEntity.saveComponent(contaminated);
+
 
         return true;
     }
@@ -120,10 +124,10 @@ public class MagicContaminationAuthoritySystem extends BaseComponentSystem imple
     public boolean decontaminate(Vector3i position) {
         EntityRef entityRef = blockEntityRegistry.getBlockEntityAt(position);
         ContaminatedBlockComponent contaminatedBlock = entityRef.getComponent(ContaminatedBlockComponent.class);
-        if (contaminatedBlock == null) {
+        if (contaminatedBlock == null || contaminatedBlock.block == null || contaminatedBlock.block.isEmpty()) {
             return false;
         }
-        Block originalBlock = blockManager.getBlock(contaminatedBlock.blockFamily.getURI());
+        Block originalBlock = blockManager.getBlock(contaminatedBlock.block);
         worldProvider.setBlock(position, originalBlock);
         return true;
     }

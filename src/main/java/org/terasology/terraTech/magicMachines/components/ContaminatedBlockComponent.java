@@ -16,14 +16,11 @@
 package org.terasology.terraTech.magicMachines.components;
 
 import org.terasology.entitySystem.Component;
+import org.terasology.network.Replicate;
 import org.terasology.world.block.ForceBlockActive;
-import org.terasology.world.block.family.BlockFamily;
 
 @ForceBlockActive
 public class ContaminatedBlockComponent implements Component {
-    public BlockFamily blockFamily;
-
-    public ContaminatedBlockComponent(BlockFamily blockFamily) {
-        this.blockFamily = blockFamily;
-    }
+    @Replicate
+    public String block;
 }

@@ -1,3 +1,6 @@
 {
-    "displayName": "Contaminated Block"
+    "displayName": "Contaminated Block",
+    "entity": {
+        "prefab": "ContaminatedBlock"
+    }
 }
