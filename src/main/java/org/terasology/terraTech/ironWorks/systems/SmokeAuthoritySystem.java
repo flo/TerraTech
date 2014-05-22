@@ -27,6 +27,7 @@ import org.terasology.entitySystem.systems.RegisterSystem;
 import org.terasology.entitySystem.systems.UpdateSubscriberSystem;
 import org.terasology.itemTransport.events.ConveyorItemStuckEvent;
 import org.terasology.logic.inventory.InventoryManager;
+import org.terasology.logic.location.LocationComponent;
 import org.terasology.machines.ExtendedInventoryManager;
 import org.terasology.math.Vector3i;
 import org.terasology.registry.In;
@@ -152,17 +153,12 @@ public class SmokeAuthoritySystem extends BaseComponentSystem implements UpdateS
             }
 
             worldProvider.setBlock(targetPosition, BlockManager.getAir());
-            /*
+
             // create particles
-            worldProvider.setBlock(targetPosition, smokeBlock);
-            Prefab prefab = Assets.getPrefab("TerraTech:SmokeParticle");
-            BlockParticleEffectComponent particle = prefab.getComponent(BlockParticleEffectComponent.class);
-            particle.blockType = smokeBlock.getBlockFamily();
-            if (targetEntity.hasComponent(BlockParticleEffectComponent.class)) {
-                targetEntity.saveComponent(particle);
-            } else {
-                targetEntity.addComponent(particle);
-            }  */
+            EntityRef particleEntity = entityManager.create("TerraTech:SmokeParticle");
+            LocationComponent location = new LocationComponent();
+            location.setWorldPosition(targetPosition.toVector3f());
+            particleEntity.addComponent(location);
         } else {
             // create a pickup and put into the vent's inventory
             BlockItemFactory blockItemFactory = new BlockItemFactory(entityManager);

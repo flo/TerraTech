@@ -1,18 +1,17 @@
 {
     "blockParticleEffect": {
         "spawnCount": 5,
-        "initialVelocityRange": [0.2, 0, 0.2],
+        "initialVelocityRange": [0, 0, 0],
         "spawnRange": [0, 0, 0],
-        "destroyEntityOnCompletion": false,
+        "destroyEntityOnCompletion": true,
         "minSize": 1,
         "maxSize": 2,
-        "minLifespan": 5,
-        "maxLifespan": 10,
-        "targetVelocity": [0, 10, 0],
-        "acceleration": [0, 0.5, 0],
+        "minLifespan": 3,
+        "maxLifespan": 5,
+        "targetVelocity": [0, 6, 0],
+        "acceleration": [0, 0.1, 0],
         "collideWithBlocks": true,
         "texture": "engine:fx_smoke",
-        "blendMode": "ADD",
-        "color": [0, 0, 0, 0.2]
+        "color": [0, 0, 0, 1]
     }
 }
