@@ -7,12 +7,13 @@
     },
     "ItemPrefabInput": {
         "itemCounts": {
-            "TerraTech:WindmillArmCovered": 4
+            "TerraTech:Cloth": 1,
+            "TerraTech:WindmillArm": 1
         }
     },
     "ItemPrefabOutput": {
         "itemCounts": {
-            "TerraTech:WindmillSail": 1
+            "TerraTech:WindmillArmCovered": 1
         }
     }
 }

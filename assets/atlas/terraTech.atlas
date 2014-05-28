@@ -7,9 +7,9 @@
         "tileNames":[
             "Stick", "Plank", "WoodenPeg", "", "", "", "", "",
             "PlantMatter", "", "", "", "", "", "", "",
+            "StoneTool", "", "", "", "", "", "", "",
+            "WoodenGear", "", "", "", "", "", "", "",
             "", "", "", "", "", "", "", "",
-            "", "", "", "", "", "", "", "",
-            "Coal", "IronNuget", "IronBloom", "", "", "", "", "",
             "String", "", "", "", "", "", "", "",
             "Cloth", "ClothBlue", "ClothGreen", "ClothRed", "", "", "", "",
             "", "", "", "", "", "", "", ""

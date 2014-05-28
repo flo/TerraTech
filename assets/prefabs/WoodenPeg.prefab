@@ -1,7 +1,7 @@
 {
     "parent": "engine:iconItem",
     "Item": {
-        "icon": "TerraTech.WoodenPeg",
+        "icon": "TerraTech:TerraTech.WoodenPeg",
         "stackId": "TerraTech:WoodenPeg",
         "renderWithIcon": true
     },

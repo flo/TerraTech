@@ -1,7 +1,7 @@
 {
     "parent": "engine:iconItem",
     "Item": {
-        "icon": "TerraTech.Plank",
+        "icon": "TerraTech:TerraTech.Plank",
         "stackId": "TerraTech:Plank",
         "renderWithIcon": true
     },

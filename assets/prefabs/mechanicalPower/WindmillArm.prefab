@@ -1,0 +1,11 @@
+{
+  "parent": "engine:iconItem",
+  "Item": {
+    "icon": "TerraTech:MechanicalPower.WingMesh",
+    "stackId": "TerraTech.WindmillArm",
+    "renderWithIcon": true
+  },
+  "DisplayName": {
+    "name": "Windmill Arm"
+  }
+}

@@ -5,9 +5,6 @@
     "ProcessingTime": {
         "duration": 4000
     },
-    "RequirementInput": {
-        "requirements": []
-    },
     "ItemPrefabInput": {
         "itemCounts": {
             "TerraTech:String": 16

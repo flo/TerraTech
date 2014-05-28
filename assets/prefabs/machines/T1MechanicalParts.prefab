@@ -1,7 +1,7 @@
 {
   "parent": "engine:iconItem",
   "Item": {
-    "icon": "machines.T1MechanicalParts",
+    "icon": "TerraTech:TerraTech.WoodenGear",
     "stackId": "machines:T1MechanicalParts",
     "renderWithIcon": true
   },

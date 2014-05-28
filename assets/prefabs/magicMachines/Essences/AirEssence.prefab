@@ -1,8 +1,8 @@
 {
     "parent": "engine:iconItem",
     "Item": {
-        "icon": "magicMachines.AirEssence",
-        "stackId": "magicMachines:AirEssence",
+        "icon": "TerraTech:MagicMachines.AirEssence",
+        "stackId": "TerraTech:AirEssence",
         "renderWithIcon": true
     },
     "DisplayName": {

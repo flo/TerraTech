@@ -1,7 +1,7 @@
 {
     "parent": "engine:iconItem",
     "Item": {
-        "icon": "TerraTech.Stick",
+        "icon": "TerraTech:TerraTech.Stick",
         "stackId": "TerraTech:Stick",
         "renderWithIcon": true
     },

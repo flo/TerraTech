@@ -1,0 +1,27 @@
+{
+    "ProcessDefinition": {
+        "processType": "TerraTech:Assembly"
+    },
+    "ProcessingTime": {
+        "duration": 4000
+    },
+    "RequirementInput": {
+        "requirements": ["Hammer"]
+    },
+    "BlockFamilyInput": {
+        "blockCounts": {
+            "TerraTech:Axle": 2
+        }
+    },
+    "ItemPrefabInput": {
+        "itemCounts": {
+            "TerraTech:T1MechanicalParts": 3,
+            "TerraTech:Cloth": 4
+        }
+    },
+    "BlockFamilyOutput": {
+        "blockCounts": {
+            "TerraTech:ConveyorBelt": 1
+        }
+    }
+}

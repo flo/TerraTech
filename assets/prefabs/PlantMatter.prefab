@@ -1,7 +1,7 @@
 {
     "parent": "engine:iconItem",
     "Item": {
-        "icon": "TerraTech.PlantMatter",
+        "icon": "TerraTech:TerraTech.PlantMatter",
         "stackId": "TerraTech:PlantMatter",
         "renderWithIcon": true
     },

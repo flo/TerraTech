@@ -6,7 +6,7 @@
     }
   },
   "MachineDefinition": {
-    "inputSlots": 2,
+    "inputSlots": 3,
     "requirementSlots": 2,
     "outputSlots": 1,
     "actionTitle": "Assemble"

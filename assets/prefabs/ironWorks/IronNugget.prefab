@@ -1,8 +1,8 @@
 {
   "parent": "engine:iconItem",
   "Item": {
-    "icon": "ironWorks.IronNugget",
-    "stackId": "ironWorks:IronNugget",
+    "icon": "TerraTech:IronWorks.IronNugget",
+    "stackId": "TerraTech:IronNugget",
     "renderWithIcon": true
   },
   "DisplayName": {
