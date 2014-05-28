@@ -5,7 +5,7 @@
     },
     "tiles": {
         "sides": "distiller_side",
-        "top": "stone",
-        "bottom": "stone"
+        "top": "magicMachine_top",
+        "bottom": "magicMachine_bottom"
     }
 }
