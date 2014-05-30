@@ -1,0 +1,6 @@
+{
+  "type": "TerraTech:SmokedStatus",
+  "content": {
+        "type": "UILabel"
+    }
+}

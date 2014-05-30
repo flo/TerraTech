@@ -16,30 +16,47 @@
 package org.terasology.terraTech.mechanicalPower.ui;
 
 import org.terasology.entitySystem.entity.EntityRef;
-import org.terasology.machines.ui.DefaultMachineWindow;
 import org.terasology.machines.ui.VerticalProgressBar;
+import org.terasology.math.Vector2i;
 import org.terasology.mechanicalPower.components.MechanicalPowerConsumerComponent;
+import org.terasology.rendering.nui.Canvas;
+import org.terasology.rendering.nui.CoreWidget;
+import org.terasology.rendering.nui.LayoutConfig;
+import org.terasology.rendering.nui.UIWidget;
+import org.terasology.workstation.ui.WorkstationUI;
 
-public class FlywheelBoxWindow extends DefaultMachineWindow {
-    private VerticalProgressBar powerMeter;
+public class MechanicalPowerGauge extends CoreWidget implements WorkstationUI {
+    private EntityRef station;
+
+    @LayoutConfig
+    private UIWidget content;
 
     @Override
     public void initializeWorkstation(EntityRef entity) {
-        super.initializeWorkstation(entity);
+        station = entity;
+    }
 
-        powerMeter = find("powerMeter", VerticalProgressBar.class);
+    @Override
+    public void onDraw(Canvas canvas) {
+        canvas.drawWidget(content);
     }
 
     @Override
     public void update(float delta) {
         super.update(delta);
 
-        if (station.exists()) {
+        if (content instanceof VerticalProgressBar && station.exists()) {
+            VerticalProgressBar powerMeter = (VerticalProgressBar) content;
             MechanicalPowerConsumerComponent consumer = station.getComponent(MechanicalPowerConsumerComponent.class);
             if (consumer != null) {
                 float value = consumer.currentStoredPower / consumer.maximumStoredPower;
                 powerMeter.setValue(value);
             }
         }
+    }
+
+    @Override
+    public Vector2i getPreferredContentSize(Canvas canvas, Vector2i sizeHint) {
+        return content.getPreferredContentSize(canvas, sizeHint);
     }
 }

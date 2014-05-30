@@ -1,5 +1,6 @@
 {
   "MachineDefinition": {
+    "extraWidget": "TerraTech:TemperatureGauge",
     "inputSlots": 1,
     "outputSlots": 1
   },

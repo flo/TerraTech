@@ -1,8 +1,9 @@
 {
     "MachineDefinition": {
+        "extraWidget": "TerraTech:MechanicalPowerGauge"
     },
     "Workstation": {
-        "uiPrefab": "TerraTech:FlywheelBox",
+        "uiPrefab": "Machines:DefaultMachine",
         "supportedProcessTypes": {}
       },
     "MechanicalPowerConsumer": {

@@ -1,0 +1,6 @@
+{
+  "type": "TerraTech:TemperatureGauge",
+  "content": {
+        "type": "UILabel"
+    }
+}

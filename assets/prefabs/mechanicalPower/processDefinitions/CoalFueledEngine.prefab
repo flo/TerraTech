@@ -9,5 +9,8 @@
   },
   "ActivateEngineOutput": {
     "activateTime": 10000
+  },
+  "SmokeOutput": {
+    "timeBetweenSmoke": 3000
   }
 }

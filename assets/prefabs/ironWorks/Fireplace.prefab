@@ -1,5 +1,6 @@
 {
   "MachineDefinition": {
+    "extraWidget": "TerraTech:SmokedStatus",
     "inputSlots": 1
   },
   "Workstation": {

@@ -17,6 +17,7 @@ package org.terasology.terraTech.ironWorks.processParts;
 
 import org.terasology.entitySystem.Component;
 import org.terasology.entitySystem.entity.EntityRef;
+import org.terasology.terraTech.ironWorks.components.SmokeComponent;
 import org.terasology.terraTech.ironWorks.components.SmokeProducerComponent;
 import org.terasology.workstation.process.DescribeProcess;
 import org.terasology.workstation.process.ProcessPart;
@@ -27,7 +28,8 @@ public class SmokeOutputComponent implements Component, ProcessPart, DescribePro
 
     @Override
     public boolean validateBeforeStart(EntityRef instigator, EntityRef workstation, EntityRef processEntity) {
-        return true;
+        // this workstation has smoke damage, don't allow processes to run
+        return !workstation.hasComponent(SmokeComponent.class);
     }
 
     @Override

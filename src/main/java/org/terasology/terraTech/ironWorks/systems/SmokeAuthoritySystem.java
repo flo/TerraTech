@@ -15,6 +15,7 @@
  */
 package org.terasology.terraTech.ironWorks.systems;
 
+import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
 import com.google.common.collect.Sets;
 import org.terasology.engine.Time;
@@ -29,12 +30,15 @@ import org.terasology.itemTransport.events.ConveyorItemStuckEvent;
 import org.terasology.logic.inventory.InventoryManager;
 import org.terasology.logic.location.LocationComponent;
 import org.terasology.machines.ExtendedInventoryManager;
+import org.terasology.math.Side;
 import org.terasology.math.Vector3i;
 import org.terasology.registry.In;
 import org.terasology.terraTech.ironWorks.components.RisingSmokeComponent;
 import org.terasology.terraTech.ironWorks.components.SmokeComponent;
 import org.terasology.terraTech.ironWorks.components.SmokeProducerComponent;
 import org.terasology.terraTech.ironWorks.components.VentComponent;
+import org.terasology.utilities.random.FastRandom;
+import org.terasology.utilities.random.Random;
 import org.terasology.world.BlockEntityRegistry;
 import org.terasology.world.WorldProvider;
 import org.terasology.world.block.Block;
@@ -43,6 +47,7 @@ import org.terasology.world.block.BlockManager;
 import org.terasology.world.block.items.BlockItemComponent;
 import org.terasology.world.block.items.BlockItemFactory;
 
+import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
@@ -66,6 +71,16 @@ public class SmokeAuthoritySystem extends BaseComponentSystem implements UpdateS
 
     long nextUpdateTime;
     Map<Long, Long> cachedTimes = Maps.newHashMap();
+    List<Side> prioritizedSides = Lists.newLinkedList();
+    Random random = new FastRandom();
+
+    public SmokeAuthoritySystem() {
+        prioritizedSides.add(Side.TOP);
+        prioritizedSides.add(Side.BACK);
+        prioritizedSides.add(Side.FRONT);
+        prioritizedSides.add(Side.LEFT);
+        prioritizedSides.add(Side.RIGHT);
+    }
 
     @Override
     public void update(float delta) {
@@ -102,7 +117,7 @@ public class SmokeAuthoritySystem extends BaseComponentSystem implements UpdateS
                         nextTarget.add(nextRelativePosition);
                     }
 
-                    if (isValidTarget(nextTarget)) {
+                    if (worldProvider.getBlock(nextTarget) == BlockManager.getAir() || blockEntityRegistry.getBlockEntityAt(nextTarget).hasComponent(VentComponent.class)) {
                         moveToPosition(block.getPosition(), nextTarget);
                         movedBlock = true;
                         break;
@@ -120,11 +135,26 @@ public class SmokeAuthoritySystem extends BaseComponentSystem implements UpdateS
 
                 if (!cachedTimes.containsKey(smokeProducer.timeBetweenSmoke)
                         || cachedTimes.get(smokeProducer.timeBetweenSmoke) < currentTime) {
-                    Vector3i targetPosition = new Vector3i(block.getPosition());
-                    targetPosition.add(0, 1, 0);
 
-                    if (isValidTarget(targetPosition)) {
-                        giveSmoke(targetPosition, blockManager.getBlock("TerraTech:Smoke"));
+                    // choose a random side
+                    Vector3i targetPosition = prioritizedSides.get(random.nextInt(prioritizedSides.size())).getAdjacentPos(block.getPosition());
+
+                    // check to see if there is a vent attached
+                    for (Side side : prioritizedSides) {
+                        Vector3i potentialPosition = side.getAdjacentPos(block.getPosition());
+
+                        if (blockEntityRegistry.getBlockEntityAt(potentialPosition).hasComponent(VentComponent.class)) {
+                            // prefer to output to a vent
+                            targetPosition = potentialPosition;
+                            break;
+                        }
+                    }
+
+                    if (!giveSmoke(targetPosition, blockManager.getBlock("TerraTech:Smoke"))) {
+                        // add smoke damage to this entity
+                        if (!entity.hasComponent(SmokeComponent.class)) {
+                            entity.addComponent(new SmokeComponent());
+                        }
                     }
 
                     cachedTimes.put(smokeProducer.timeBetweenSmoke, currentTime + smokeProducer.timeBetweenSmoke);
@@ -133,37 +163,39 @@ public class SmokeAuthoritySystem extends BaseComponentSystem implements UpdateS
         }
     }
 
-    private boolean isValidTarget(Vector3i position) {
-        return worldProvider.getBlock(position) == BlockManager.getAir() || blockEntityRegistry.getBlockEntityAt(position).hasComponent(VentComponent.class);
-    }
-
-    private void giveSmoke(Vector3i targetPosition, Block smokeBlock) {
+    private boolean giveSmoke(Vector3i targetPosition, Block smokeBlock) {
         EntityRef targetEntity = blockEntityRegistry.getBlockEntityAt(targetPosition);
         VentComponent vent = targetEntity.getComponent(VentComponent.class);
         if (vent == null) {
-            // create a smoke block
-            Vector3i testPosition = new Vector3i(targetPosition);
-            for (int i = 0; i < 15; i++) {
-                testPosition.add(0, 1, 0);
-                if (worldProvider.getBlock(testPosition) != BlockManager.getAir()) {
-                    // this target position does not have 15 blocks of air above it
-                    worldProvider.setBlock(targetPosition, smokeBlock);
-                    return;
+            if (worldProvider.getBlock(targetPosition) == BlockManager.getAir()) {
+                // create a smoke block if it should not dissipate
+                Vector3i testPosition = new Vector3i(targetPosition);
+                for (int i = 0; i < 15; i++) {
+                    testPosition.add(0, 1, 0);
+                    if (worldProvider.getBlock(testPosition) != BlockManager.getAir()) {
+                        // this target position does not have 15 blocks of air above it
+                        worldProvider.setBlock(targetPosition, smokeBlock);
+                        return true;
+                    }
                 }
+
+                // this block should dissipate
+                worldProvider.setBlock(targetPosition, BlockManager.getAir());
+                // create particles
+                EntityRef particleEntity = entityManager.create("TerraTech:SmokeParticle");
+                LocationComponent location = new LocationComponent();
+                location.setWorldPosition(targetPosition.toVector3f());
+                particleEntity.addComponent(location);
+                return true;
+            } else {
+                return false;
             }
-
-            worldProvider.setBlock(targetPosition, BlockManager.getAir());
-
-            // create particles
-            EntityRef particleEntity = entityManager.create("TerraTech:SmokeParticle");
-            LocationComponent location = new LocationComponent();
-            location.setWorldPosition(targetPosition.toVector3f());
-            particleEntity.addComponent(location);
         } else {
             // create a pickup and put into the vent's inventory
             BlockItemFactory blockItemFactory = new BlockItemFactory(entityManager);
             EntityRef item = blockItemFactory.newInstance(smokeBlock.getBlockFamily(), 1);
             inventoryManager.giveItem(targetEntity, EntityRef.NULL, item);
+            return true;
         }
     }
 
@@ -175,13 +207,11 @@ public class SmokeAuthoritySystem extends BaseComponentSystem implements UpdateS
 
     @ReceiveEvent
     public void ventSmokeFromChimney(ConveyorItemStuckEvent event, EntityRef entity, VentComponent vent) {
-        if (isValidTarget(event.getTargetPosition())) {
-            for (EntityRef item : ExtendedInventoryManager.iterateItems(inventoryManager, entity)) {
-                BlockItemComponent blockItem = item.getComponent(BlockItemComponent.class);
-                giveSmoke(event.getTargetPosition(), blockItem.blockFamily.getArchetypeBlock());
+        for (EntityRef item : ExtendedInventoryManager.iterateItems(inventoryManager, entity)) {
+            BlockItemComponent blockItem = item.getComponent(BlockItemComponent.class);
+            giveSmoke(event.getTargetPosition(), blockItem.blockFamily.getArchetypeBlock());
 
-                inventoryManager.removeItem(entity, entity, item, true);
-            }
+            inventoryManager.removeItem(entity, entity, item, true);
         }
     }
 }
