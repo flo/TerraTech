@@ -1,0 +1,26 @@
+{
+    "ProcessDefinition": {
+        "processType": "TerraTech:Assembly"
+    },
+    "ProcessingTime": {
+        "duration": 1000
+    },
+    "RequirementInput": {
+        "requirements": ["MagicTool"]
+    },
+    "BlockFamilyInput": {
+        "blockCounts": {
+            "Core:GlowbellBloom": 1
+        }
+    }
+    "ItemPrefabInput": {
+        "itemCounts": {
+            "TerraTech:Stick": 1
+        }
+    },
+    "ItemPrefabOutput": {
+        "itemCounts": {
+            "TerraTech:MagicTool": 1
+        }
+    }
+}

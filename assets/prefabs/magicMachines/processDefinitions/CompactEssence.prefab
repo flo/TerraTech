@@ -6,5 +6,7 @@
         "duration": 10000
     },
     "CompactEssence": {
+    },
+    "EmitContamination": {
     }
 }

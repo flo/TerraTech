@@ -1,0 +1,26 @@
+{
+    "ProcessDefinition": {
+        "processType": "TerraTech:Assembly"
+    },
+    "ProcessingTime": {
+        "duration": 4000
+    },
+    "RequirementInput": {
+        "requirements": ["MagicTool"]
+    },
+    "BlockFamilyInput": {
+        "blockCounts": {
+            "TerraTech:Distiller": 1
+        }
+    },
+    "ItemPrefabInput": {
+        "itemCounts": {
+            "TerraTech:MagicTool": 1
+        }
+    },
+    "BlockFamilyOutput": {
+        "blockCounts": {
+            "TerraTech:Compactor": 1
+        }
+    }
+}
