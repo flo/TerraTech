@@ -1,18 +1,16 @@
 {
   "ProcessDefinition": {
-    "processType": "TerraTech:Anvil"
+    "processType": "TerraTech:Hearth"
   },
   "ProcessingTime": {
     "duration": 5000
   },
-  "RequirementInput": {
-    "requirements": [
-      "Hammer"
-    ]
+  "HeatInput": {
+    "temperature": 1538
   },
-  "ItemPrefabInput": {
-    "itemCounts": {
-      "TerraTech:IronBloom": 1
+  "BlockFamilyInput": {
+    "blockCounts": {
+      "Core:IronOre": 1
     }
   },
   "ItemPrefabOutput": {
