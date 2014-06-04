@@ -22,8 +22,6 @@ import org.terasology.workstation.process.DescribeProcess;
 import org.terasology.workstation.process.ProcessPart;
 import org.terasology.workstation.process.ProcessPartDescription;
 
-import java.text.DecimalFormat;
-
 public class HeatInputComponent implements Component, ProcessPart, DescribeProcess {
     public float temperature;
 
@@ -60,7 +58,7 @@ public class HeatInputComponent implements Component, ProcessPart, DescribeProce
 
     @Override
     public ProcessPartDescription getInputDescription() {
-        return new ProcessPartDescription(new DecimalFormat("#").format(temperature) + " degrees");
+        return new ProcessPartDescription((int) temperature + " degrees");
     }
 
     @Override

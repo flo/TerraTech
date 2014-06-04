@@ -25,8 +25,6 @@ import org.terasology.rendering.nui.widgets.UILabel;
 import org.terasology.terraTech.ironWorks.components.HeatedComponent;
 import org.terasology.workstation.ui.WorkstationUI;
 
-import java.text.DecimalFormat;
-
 public class TemperatureGauge extends CoreWidget implements WorkstationUI {
     private EntityRef station;
 
@@ -51,7 +49,7 @@ public class TemperatureGauge extends CoreWidget implements WorkstationUI {
             UILabel status = (UILabel) content;
             HeatedComponent heated = station.getComponent(HeatedComponent.class);
             if (heated != null) {
-                status.setText(new DecimalFormat("#").format(heated.temperature) + " degrees");
+                status.setText((int) heated.temperature + " degrees");
             } else {
                 status.setText("");
             }

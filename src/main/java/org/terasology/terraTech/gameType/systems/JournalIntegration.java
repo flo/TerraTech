@@ -53,7 +53,7 @@ public class JournalIntegration extends BaseComponentSystem {
         List<JournalManager.JournalEntryPart> introduction = Arrays.asList(
                 new TitleJournalPart("Terra Tech"),
                 new TextJournalPart("This module is still being developed. Recipes work for Flat and Perlin world generators.  There is no support for Through the Ages yet."),
-                new TextJournalPart("To begin, press 'M' to begin and open your character's assembly screen. Different things you can assemble are listed on the right.")
+                new TextJournalPart("To begin, press 'U' to begin and open your character's assembly screen. Different things you can assemble are listed on the right.")
         );
         chapterHandler.registerJournalEntry("introduction", introduction);
 

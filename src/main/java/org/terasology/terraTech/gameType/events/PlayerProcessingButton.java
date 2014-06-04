@@ -21,11 +21,8 @@ import org.terasology.input.DefaultBinding;
 import org.terasology.input.InputType;
 import org.terasology.input.RegisterBindButton;
 
-/**
- * @author Immortius
- */
 @RegisterBindButton(id = "humanMachine", description = "Open Player Machine")
-@DefaultBinding(type = InputType.KEY, id = Keyboard.KEY_M)
+@DefaultBinding(type = InputType.KEY, id = Keyboard.KEY_U)
 public class PlayerProcessingButton extends BindButtonEvent {
 
 }

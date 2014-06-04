@@ -23,7 +23,6 @@ import org.terasology.workstation.process.DescribeProcess;
 import org.terasology.workstation.process.ProcessPart;
 import org.terasology.workstation.process.ProcessPartDescription;
 
-import java.text.DecimalFormat;
 import java.util.Arrays;
 
 public class HeatOutputComponent implements Component, ProcessPart, DescribeProcess {
@@ -31,7 +30,7 @@ public class HeatOutputComponent implements Component, ProcessPart, DescribeProc
     public long burnTime;
 
     public String getDescription() {
-        return new DecimalFormat("#").format(temperature) + " degree heat";
+        return (int) temperature + " degree heat";
     }
 
     @Override
@@ -65,7 +64,7 @@ public class HeatOutputComponent implements Component, ProcessPart, DescribeProc
 
     @Override
     public ProcessPartDescription getOutputDescription() {
-        return new ProcessPartDescription(new DecimalFormat("#").format(temperature) + " degress for " + (burnTime / 1000) + " sec");
+        return new ProcessPartDescription((int) temperature + " degress for " + (burnTime / 1000) + " sec");
     }
 
     @Override
