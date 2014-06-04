@@ -151,8 +151,6 @@ public class CompactEssenceComponent implements Component, ProcessPart, Describe
 
     @Override
     public boolean isValid(EntityRef workstation, int slotNo, EntityRef instigator, EntityRef item) {
-        EssenceRegistry essenceRegistry = CoreRegistry.get(EssenceRegistry.class);
-
         if (WorkstationInventoryUtils.getAssignedSlots(workstation, "INPUT").contains(slotNo)) {
             return DistillEssenceComponent.createEssenceToPrefabMapping(new EssenceContainerComponent(1, 1, 1, 1, 1)).keySet().contains(item.getParentPrefab());
         } else if (WorkstationInventoryUtils.getAssignedSlots(workstation, "OUTPUT").contains(slotNo)) {

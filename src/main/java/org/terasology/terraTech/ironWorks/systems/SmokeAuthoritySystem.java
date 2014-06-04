@@ -150,11 +150,9 @@ public class SmokeAuthoritySystem extends BaseComponentSystem implements UpdateS
                         }
                     }
 
-                    if (!giveSmoke(targetPosition, blockManager.getBlock("TerraTech:Smoke"))) {
+                    if (!giveSmoke(targetPosition, blockManager.getBlock("TerraTech:Smoke")) && !entity.hasComponent(SmokeComponent.class)) {
                         // add smoke damage to this entity
-                        if (!entity.hasComponent(SmokeComponent.class)) {
-                            entity.addComponent(new SmokeComponent());
-                        }
+                        entity.addComponent(new SmokeComponent());
                     }
 
                     cachedTimes.put(smokeProducer.timeBetweenSmoke, currentTime + smokeProducer.timeBetweenSmoke);

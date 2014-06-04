@@ -47,11 +47,9 @@ public class RenderWindmillSailClientSystem extends BaseComponentSystem {
                                  RenderWindmillSailComponent renderWindmillSail,
                                  BlockComponent block) {
         EntityRef oldItem = event.getOldItem();
-        if (oldItem.exists()) {
-            if (!oldItem.getOwner().hasComponent(RenderWindmillSailComponent.class)) {
-                // ensure that rendered items get reset
-                oldItem.removeComponent(RenderItemComponent.class);
-            }
+        if (oldItem.exists() && !oldItem.getOwner().hasComponent(RenderWindmillSailComponent.class)) {
+            // ensure that rendered items get reset
+            oldItem.removeComponent(RenderItemComponent.class);
         }
 
         EntityRef newItem = event.getNewItem();

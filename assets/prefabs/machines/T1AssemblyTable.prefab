@@ -11,6 +11,16 @@
     "outputSlots": 1,
     "actionTitle": "Assemble"
   },
+  "RenderInventoryInCategory": {
+    "category": "REQUIREMENTS",
+    "translate": [
+      0,
+      0.5,
+      0
+    ],
+    "itemsAreFlat": true,
+    "verticalAlignmentBottom": true
+  },
   "Network": {
   }
 }

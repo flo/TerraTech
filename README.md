@@ -1,8 +1,9 @@
 ## Terra Tech
 
-### Getting started
-Currently there is no world generation,  so trying out new things requires getting a starter pack of items.
-Open the console window and type terraTechStarterPack.  This will give you some basic items to try.
+### Demo
+You can use the in game command terraTechStarterPack to get some basic items to try.
+
+Supplying no parameter gives everything.  Or,  you can specify a specific pack of items: IronWorks, ItemConveyors, MechanicalPower, or Magic.
 
 ### Iron Works
 Your hearth needs to be heated in order to melt iron.  Put coal into a fireplace next to your herath. Iron melts at 1538 degrees.

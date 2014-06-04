@@ -10,9 +10,6 @@
       "TerraTech:Anvil": false
     }
   },
-  "ProcessingAction": {
-    
-  },
   "RenderInventoryInCategory": {
     "category": "REQUIREMENTS",
     "translate": [
@@ -25,6 +22,6 @@
   },
   "DropBlockInventory": {},
   "Network": {
-    
+
   }
 }

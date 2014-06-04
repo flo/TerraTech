@@ -37,14 +37,6 @@ public class StarterPackAuthoritySystem extends BaseComponentSystem {
     @In
     EntityManager entityManager;
 
-    @Override
-    public void initialise() {
-    }
-
-    @Override
-    public void shutdown() {
-    }
-
     @Command(shortDescription = "Gives items to get started with TerraTech", runOnServer = true)
     public String terraTechStarterPack(EntityRef client) {
         return terraTechStarterPack("", client);
@@ -55,19 +47,15 @@ public class StarterPackAuthoritySystem extends BaseComponentSystem {
         BlockItemFactory blockFactory = new BlockItemFactory(entityManager);
         EntityRef player = client.getComponent(ClientComponent.class).character;
 
-        if (pack.isEmpty() || pack.equalsIgnoreCase("Magic")) {
-            inventoryManager.giveItem(player, EntityRef.NULL, blockFactory.newInstance(blockManager.getBlockFamily("Incubator"), 16));
-            inventoryManager.giveItem(player, EntityRef.NULL, blockFactory.newInstance(blockManager.getBlockFamily("Distiller"), 16));
-            inventoryManager.giveItem(player, EntityRef.NULL, blockFactory.newInstance(blockManager.getBlockFamily("Compactor"), 16));
-            inventoryManager.giveItem(player, EntityRef.NULL, blockFactory.newInstance(blockManager.getBlockFamily("ContaminationNeutralizer"), 16));
-            inventoryManager.giveItem(player, EntityRef.NULL, ExtendedInventoryManager.createItem(entityManager, "TerraTech:MagicTool", 1));
-        }
+        inventoryManager.giveItem(player, EntityRef.NULL, blockFactory.newInstance(blockManager.getBlockFamily("T1AssemblyTable"), 5));
+        inventoryManager.giveItem(player, EntityRef.NULL, ExtendedInventoryManager.createItem(entityManager, "TerraTech:Hammer", 1));
 
         if (pack.isEmpty() || pack.equalsIgnoreCase("MechanicalPower")) {
             inventoryManager.giveItem(player, EntityRef.NULL, blockFactory.newInstance(blockManager.getBlockFamily("Windmill"), 5));
             inventoryManager.giveItem(player, EntityRef.NULL, ExtendedInventoryManager.createItem(entityManager, "TerraTech:WindmillSail", 5));
             inventoryManager.giveItem(player, EntityRef.NULL, blockFactory.newInstance(blockManager.getBlockFamily("Axle"), 32));
             inventoryManager.giveItem(player, EntityRef.NULL, blockFactory.newInstance(blockManager.getBlockFamily("Engine"), 5));
+            inventoryManager.giveItem(player, EntityRef.NULL, ExtendedInventoryManager.createItem(entityManager, "TerraTech:Coal", 16));
             inventoryManager.giveItem(player, EntityRef.NULL, blockFactory.newInstance(blockManager.getBlockFamily("GearBox"), 5));
             inventoryManager.giveItem(player, EntityRef.NULL, blockFactory.newInstance(blockManager.getBlockFamily("FlywheelBox"), 5));
         }
@@ -76,11 +64,8 @@ public class StarterPackAuthoritySystem extends BaseComponentSystem {
             inventoryManager.giveItem(player, EntityRef.NULL, blockFactory.newInstance(blockManager.getBlockFamily("Fireplace"), 1));
             inventoryManager.giveItem(player, EntityRef.NULL, blockFactory.newInstance(blockManager.getBlockFamily("Hearth"), 1));
             inventoryManager.giveItem(player, EntityRef.NULL, blockFactory.newInstance(blockManager.getBlockFamily("Chimney"), 1));
-            inventoryManager.giveItem(player, EntityRef.NULL, blockFactory.newInstance(blockManager.getBlockFamily("TransparentVent"), 32));
-            inventoryManager.giveItem(player, EntityRef.NULL, blockFactory.newInstance(blockManager.getBlockFamily("Anvil"), 1));
-            inventoryManager.giveItem(player, EntityRef.NULL, blockFactory.newInstance(blockManager.getBlockFamily("IronOre"), 10));
-            inventoryManager.giveItem(player, EntityRef.NULL, ExtendedInventoryManager.createItem(entityManager, "TerraTech:Coal", 32));
-            inventoryManager.giveItem(player, EntityRef.NULL, ExtendedInventoryManager.createItem(entityManager, "TerraTech:Hammer", 1));
+            inventoryManager.giveItem(player, EntityRef.NULL, blockFactory.newInstance(blockManager.getBlockFamily("IronOre"), 16));
+            inventoryManager.giveItem(player, EntityRef.NULL, ExtendedInventoryManager.createItem(entityManager, "TerraTech:Coal", 16));
         }
 
         if (pack.isEmpty() || pack.equalsIgnoreCase("ItemConveyors")) {
@@ -89,9 +74,14 @@ public class StarterPackAuthoritySystem extends BaseComponentSystem {
             inventoryManager.giveItem(player, EntityRef.NULL, blockFactory.newInstance(blockManager.getBlockFamily("ItemExtractor"), 16));
         }
 
+        if (pack.isEmpty() || pack.equalsIgnoreCase("Magic")) {
+            inventoryManager.giveItem(player, EntityRef.NULL, blockFactory.newInstance(blockManager.getBlockFamily("Distiller"), 5));
+            inventoryManager.giveItem(player, EntityRef.NULL, blockFactory.newInstance(blockManager.getBlockFamily("Compactor"), 5));
+            inventoryManager.giveItem(player, EntityRef.NULL, blockFactory.newInstance(blockManager.getBlockFamily("ContaminationNeutralizer"), 5));
+            inventoryManager.giveItem(player, EntityRef.NULL, ExtendedInventoryManager.createItem(entityManager, "TerraTech:MagicTool", 1));
+        }
 
         return "You received the TerraTech " + pack + " starter pack";
-
     }
 
     @Command(shortDescription = "Resets your inventory and gives items to get started with TerraTech", runOnServer = true)

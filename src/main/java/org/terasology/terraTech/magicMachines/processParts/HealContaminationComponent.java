@@ -22,7 +22,6 @@ import org.terasology.machines.ExtendedInventoryManager;
 import org.terasology.registry.CoreRegistry;
 import org.terasology.terraTech.magicMachines.components.EssenceContainerComponent;
 import org.terasology.terraTech.magicMachines.events.HealContaminationEvent;
-import org.terasology.terraTech.magicMachines.systems.EssenceRegistry;
 import org.terasology.workstation.process.ProcessPart;
 import org.terasology.workstation.process.WorkstationInventoryUtils;
 import org.terasology.workstation.process.inventory.ValidateInventoryItem;
@@ -68,8 +67,6 @@ public class HealContaminationComponent implements Component, ProcessPart, Valid
 
     @Override
     public boolean isValid(EntityRef workstation, int slotNo, EntityRef instigator, EntityRef item) {
-        EssenceRegistry essenceRegistry = CoreRegistry.get(EssenceRegistry.class);
-
         if (WorkstationInventoryUtils.getAssignedSlots(workstation, "INPUT").contains(slotNo)) {
             return DistillEssenceComponent.createEssenceToPrefabMapping(new EssenceContainerComponent(1, 1, 1, 1, 1)).keySet().contains(item.getParentPrefab());
         }
