@@ -13,5 +13,7 @@
         {"id": "Journal", "minVersion": "0.1.0"},
         {"id": "Core", "minVersion": "0.1.0"}
     ],
-    "isServerSideOnly":false
+    "isServerSideOnly":false,
+    "isGameplay" : "true",
+    "defaultWorldGenerator" : "Core:FacetedPerlin"
 }
