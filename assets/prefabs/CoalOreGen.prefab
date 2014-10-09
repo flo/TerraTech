@@ -1,0 +1,10 @@
+{
+    "OreGenDefinition" :  {},
+    "DepthPocketOreGen" :
+    {
+        "block" : "Core:CoalOre",
+        "frequency" : 1,
+        "depth" : 138,
+        "depthRange" : 118
+    }
+}

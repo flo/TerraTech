@@ -1,7 +1,7 @@
 {
     "id":"TerraTech",
     "version":"0.1.0",
-    "author":"",
+    "author":"Josharias",
     "displayName":"TerraTech",
     "description":"Use Metals to make useful things",
     "dependencies" :
@@ -11,9 +11,10 @@
         {"id": "BlockNetwork", "minVersion": "0.1.0"},
         {"id": "StructuralResources", "minVersion": "0.1.0"},
         {"id": "Journal", "minVersion": "0.1.0"},
-        {"id": "Core", "minVersion": "0.1.0"}
+        {"id": "Core", "minVersion": "0.1.0"},
+        {"id": "OreGeneration", "minVersion": "0.1.0"},
+        {"id": "CustomOreGen", "minVersion": "0.1.0"}
     ],
-    "isServerSideOnly":false,
     "isGameplay" : "true",
     "defaultWorldGenerator" : "Core:FacetedPerlin"
 }
