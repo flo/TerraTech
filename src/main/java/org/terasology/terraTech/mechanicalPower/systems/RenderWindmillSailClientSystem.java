@@ -47,13 +47,17 @@ public class RenderWindmillSailClientSystem extends BaseComponentSystem {
                                  RenderWindmillSailComponent renderWindmillSail,
                                  BlockComponent block) {
         EntityRef oldItem = event.getOldItem();
-        if (oldItem.exists() && !oldItem.getOwner().hasComponent(RenderWindmillSailComponent.class)) {
+        if (oldItem.exists()) {
             // ensure that rendered items get reset
+            oldItem.setOwner(EntityRef.NULL);
             oldItem.removeComponent(RenderItemComponent.class);
+            oldItem.removeComponent(MeshComponent.class);
+            oldItem.removeComponent(AnimateRotationComponent.class);
         }
 
         EntityRef newItem = event.getNewItem();
         if (newItem.exists()) {
+            newItem.setOwner(inventoryEntity);
 
             MeshComponent mesh = new MeshComponent();
             mesh.material = Assets.getMaterial("TerraTech:WindmillSail");

@@ -3,8 +3,11 @@
       "extraWidget": "TerraTech:SmokedStatus",
       "inputSlots": 1
     },
+    "InteractionTarget": {},
+    "InteractionScreen": {
+      "screen": "Machines:DefaultMachine"
+    },
     "Workstation": {
-        "uiPrefab": "Machines:DefaultMachine",
         "supportedProcessTypes": {
           "TerraTech:Engine": true
         }

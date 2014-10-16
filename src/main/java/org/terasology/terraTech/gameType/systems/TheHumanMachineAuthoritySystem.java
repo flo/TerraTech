@@ -26,20 +26,11 @@ import org.terasology.logic.players.event.OnPlayerSpawnedEvent;
 import org.terasology.registry.In;
 import org.terasology.terraTech.gameType.components.TheHumanMachineComponent;
 import org.terasology.terraTech.gameType.events.PlayerProcessingButton;
-import org.terasology.workstation.event.OpenWorkstationRequest;
 
 @RegisterSystem(RegisterMode.AUTHORITY)
 public class TheHumanMachineAuthoritySystem extends BaseComponentSystem {
     @In
     EntityManager entityManager;
-
-    @Override
-    public void initialise() {
-    }
-
-    @Override
-    public void shutdown() {
-    }
 
     @ReceiveEvent(components = {CharacterComponent.class})
     public void onPlayerSpawn(OnPlayerSpawnedEvent event, EntityRef player) {
@@ -56,12 +47,10 @@ public class TheHumanMachineAuthoritySystem extends BaseComponentSystem {
 
 
     @ReceiveEvent
-    public void onPlayerProcessingButton(PlayerProcessingButton event, EntityRef player, CharacterComponent character) {
+    public void onPlayerProcessingButton(PlayerProcessingButton event, EntityRef player, CharacterComponent characterComponent) {
         TheHumanMachineComponent theHumanMachine = player.getComponent(TheHumanMachineComponent.class);
         if (theHumanMachine == null) {
             theHumanMachine = addTheHumanMachine(player);
         }
-
-        theHumanMachine.machineEntity.send(new OpenWorkstationRequest());
     }
 }

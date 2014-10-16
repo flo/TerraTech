@@ -1,0 +1,6 @@
+{
+    "displayName": "Powered Sawmill",
+    "entity": {
+        "prefab": "PoweredSawmill"
+    }
+}

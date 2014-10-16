@@ -5,24 +5,23 @@
   },
   "Workstation": {
     "supportedProcessTypes": {
-      "TerraTech:Assembly": false
+      "TerraTech:Assembly": true
     }
   },
   "MachineDefinition": {
-    "inputSlots": 2,
-    "requirementSlots": 1,
+    "inputSlots": 1,
+    "requirementSlots": 0,
     "outputSlots": 1,
-    "actionTitle": "Assemble",
-    "requirementSlotsTitle": "Tools",
+    "actionTitle": "Saw",
     "extraWidget": "TerraTech:MechanicalPowerGauge"
   },
-  "Network": {
+  "ProcessRequirementsProvider": {
+     "requirements": ["Axe"]
   },
   "MechanicalPowerConsumer": {
     "maximumStoredPower": 200
   },
-  "MechanicalPowerRegen": {
-    "power": 5
-  },
-  "NestedMachine": { }
+  "MechanicalPowerBlockNetwork": {},
+  "Network": {
+  }
 }

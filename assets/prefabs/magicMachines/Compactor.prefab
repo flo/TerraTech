@@ -1,6 +1,9 @@
 {
+  "InteractionTarget": {},
+  "InteractionScreen": {
+    "screen": "Machines:DefaultMachine"
+  },
   "Workstation": {
-    "uiPrefab": "Machines:DefaultMachine",
     "supportedProcessTypes": {
       "TerraTech:CompactEssence": true
     }

@@ -15,20 +15,30 @@
  */
 package org.terasology.terraTech.gameType.systems;
 
+import org.terasology.entitySystem.entity.EntityRef;
+import org.terasology.entitySystem.event.ReceiveEvent;
 import org.terasology.entitySystem.systems.BaseComponentSystem;
 import org.terasology.entitySystem.systems.RegisterMode;
 import org.terasology.entitySystem.systems.RegisterSystem;
+import org.terasology.input.ButtonState;
+import org.terasology.logic.characters.CharacterComponent;
+import org.terasology.registry.In;
+import org.terasology.rendering.nui.NUIManager;
+import org.terasology.terraTech.gameType.components.TheHumanMachineComponent;
+import org.terasology.terraTech.gameType.events.PlayerProcessingButton;
 
 @RegisterSystem(RegisterMode.CLIENT)
 public class TheHumanMachineClientSystem extends BaseComponentSystem {
+    @In
+    NUIManager nuiManager;
 
-
-    @Override
-    public void initialise() {
+    @ReceiveEvent
+    public void onPlayerProcessingButton(PlayerProcessingButton event, EntityRef player, CharacterComponent characterComponent) {
+        if (event.getState() == ButtonState.DOWN) {
+            TheHumanMachineComponent theHumanMachine = player.getComponent(TheHumanMachineComponent.class);
+            characterComponent.predictedInteractionTarget = theHumanMachine.machineEntity;
+            nuiManager.toggleScreen("Machines:DefaultMachine");
+            event.consume();
+        }
     }
-
-    @Override
-    public void shutdown() {
-    }
-
 }

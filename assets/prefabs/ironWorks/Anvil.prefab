@@ -4,8 +4,11 @@
     "outputSlots": 1,
     "requirementSlots": 1
   },
+  "InteractionTarget": {},
+  "InteractionScreen": {
+    "screen": "Machines:DefaultMachine"
+  },
   "Workstation": {
-    "uiPrefab": "Machines:DefaultMachine",
     "supportedProcessTypes": {
       "TerraTech:Anvil": false
     }

@@ -1,6 +1,9 @@
 {
+  "InteractionTarget": {},
+  "InteractionScreen": {
+    "screen": "Machines:DefaultMachine"
+  },
   "Workstation": {
-    "uiPrefab": "Machines:DefaultMachine",
     "supportedProcessTypes": {
       "TerraTech:Assembly": false
     }
@@ -9,7 +12,8 @@
     "inputSlots": 4,
     "requirementSlots": 4,
     "outputSlots": 1,
-    "actionTitle": "Assemble"
+    "actionTitle": "Assemble",
+    "requirementSlotsTitle": "Tools"
   },
   "Network": {
   }

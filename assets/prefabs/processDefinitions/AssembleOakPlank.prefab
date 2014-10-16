@@ -8,6 +8,9 @@
     "RequirementInput": {
         "requirements": ["Axe"]
     },
+    "MechanicalPowerInput": {
+        "power": 10
+    },
     "BlockFamilyInput": {
         "blockCounts": {
             "Core:OakTrunk": 1
