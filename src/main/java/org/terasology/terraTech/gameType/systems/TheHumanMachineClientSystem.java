@@ -22,6 +22,7 @@ import org.terasology.entitySystem.systems.RegisterMode;
 import org.terasology.entitySystem.systems.RegisterSystem;
 import org.terasology.input.ButtonState;
 import org.terasology.logic.characters.CharacterComponent;
+import org.terasology.logic.players.LocalPlayer;
 import org.terasology.registry.In;
 import org.terasology.rendering.nui.NUIManager;
 import org.terasology.terraTech.gameType.components.TheHumanMachineComponent;
@@ -32,12 +33,14 @@ public class TheHumanMachineClientSystem extends BaseComponentSystem {
     @In
     NUIManager nuiManager;
 
+    @In
+    LocalPlayer localPlayer;
+
     @ReceiveEvent
     public void onPlayerProcessingButton(PlayerProcessingButton event, EntityRef player, CharacterComponent characterComponent) {
         if (event.getState() == ButtonState.DOWN) {
             TheHumanMachineComponent theHumanMachine = player.getComponent(TheHumanMachineComponent.class);
-            characterComponent.predictedInteractionTarget = theHumanMachine.machineEntity;
-            nuiManager.toggleScreen("Machines:DefaultMachine");
+            localPlayer.activateOwnedEntityAsClient(theHumanMachine.machineEntity);
             event.consume();
         }
     }
